@@ -1,5 +1,11 @@
 import { useState, useEffect, useRef } from "react";
-import { Menu, X, ExternalLink, Linkedin, Mail, ArrowLeft, CheckCircle, AlertTriangle, Terminal, Eye, Database, Shield, Code, Server, Zap } from "lucide-react";
+import {
+  Menu, X, ExternalLink, Linkedin, Mail, ArrowLeft,
+  CheckCircle, AlertTriangle, Terminal, Eye, Database,
+  Shield, Code, Server, Zap, ChevronDown, ChevronUp
+} from "lucide-react";
+
+// ─── DATA ─────────────────────────────────────────────────────────────────────
 
 const NAV_ITEMS = ["About", "Projects", "Experience", "Skills", "Contact"];
 
@@ -12,7 +18,7 @@ const PROJECTS = [
     status: "In Progress",
     tags: ["AI Agents", "Azure DevOps", "Compliance Automation", "Python", "Prompt Engineering"],
     summary: "An AI-driven compliance automation platform that converts complex regulatory requirements into structured, actionable Azure DevOps work items — complete with gap analysis, traceability, and remediation planning.",
-    icon: <Shield size={28} />,
+    icon: <Shield size={22} />,
     color: "from-blue-500 to-cyan-500",
     featured: true,
     microsoft: true,
@@ -32,7 +38,7 @@ const PROJECTS = [
     status: "Completed",
     tags: ["Incident Response", "IOC Analysis", "PCI DSS", "MITRE ATT&CK", "Threat Intelligence"],
     summary: "Investigated a simulated zero-day exploit targeting SecureShare, identifying IOCs including malicious .aspx webshells, SQL injection chains, and DLL hijacking — delivering a full IR plan with SEC disclosure guidance.",
-    icon: <AlertTriangle size={28} />,
+    icon: <AlertTriangle size={22} />,
     color: "from-red-500 to-orange-500",
     featured: true,
     microsoft: false,
@@ -63,7 +69,7 @@ const PROJECTS = [
     status: "Completed",
     tags: ["Penetration Testing", "Burp Suite", "Nmap", "OWASP Top 10", "Vulnerability Assessment"],
     summary: "Conducted a comprehensive black-box penetration test on a sandbox web application, identifying critical vulnerabilities including SQLi, XSS, and broken authentication — with full remediation guidance.",
-    icon: <Terminal size={28} />,
+    icon: <Terminal size={22} />,
     color: "from-purple-500 to-pink-500",
     featured: false,
     microsoft: false,
@@ -94,7 +100,7 @@ const PROJECTS = [
     status: "Completed",
     tags: ["PowerShell", "SIEM", "NIST CSF", "Windows Events", "Splunk"],
     summary: "Built an automated Windows event log monitoring system in PowerShell that detects unauthorized access in real time, generates alerts, and produces HTML SOC dashboards — simulating enterprise SIEM workflows.",
-    icon: <Eye size={28} />,
+    icon: <Eye size={22} />,
     color: "from-green-500 to-teal-500",
     featured: false,
     microsoft: false,
@@ -125,7 +131,7 @@ const PROJECTS = [
     status: "Completed",
     tags: ["Flask", "Python", "SQL", "Authentication", "Security Best Practices"],
     summary: "A Flask web app with secure authentication and full CRUD workflows for 200+ users, featuring parameterized queries, input validation, and admin dashboards — achieving a ~40% improvement in data retrieval efficiency.",
-    icon: <Database size={28} />,
+    icon: <Database size={22} />,
     color: "from-yellow-500 to-orange-400",
     featured: false,
     microsoft: false,
@@ -200,118 +206,234 @@ const EXPERIENCE = [
 const SKILLS_DATA = [
   {
     category: "Cybersecurity",
-    icon: <Shield size={18} />,
+    icon: <Shield size={16} />,
     color: "text-blue-400",
     items: ["Incident Response", "Vulnerability Assessment", "Risk Assessment", "Governance & Compliance", "Gap Assessment", "Compliance Reporting", "MITRE ATT&CK", "NIST CSF", "Networking", "Firewalls", "TCP Wrappers"]
   },
   {
     category: "Security Tools",
-    icon: <Terminal size={18} />,
+    icon: <Terminal size={16} />,
     color: "text-red-400",
     items: ["Splunk (SIEM)", "Burp Suite", "Wireshark", "Nmap", "Metasploit", "Fail2Ban", "Dirb"]
   },
   {
     category: "Programming & Scripting",
-    icon: <Code size={18} />,
+    icon: <Code size={16} />,
     color: "text-green-400",
     items: ["Python", "PowerShell", "SQL", "JavaScript", "Java", "R", "Git", "Prompt Engineering", "AI Agent Development"]
   },
   {
     category: "Systems & Networks",
-    icon: <Server size={18} />,
+    icon: <Server size={16} />,
     color: "text-purple-400",
     items: ["Linux", "Windows", "Network Security", "Vulnerability Scanning", "Firewall Management"]
   },
   {
     category: "Data & Web",
-    icon: <Database size={18} />,
+    icon: <Database size={16} />,
     color: "text-yellow-400",
     items: ["Flask", "React", "HTML", "CSS", "MySQL", "Firebase", "Azure DevOps", "Matplotlib", "Seaborn", "Data Visualization"]
   }
 ];
 
-function FadeIn({ children, delay = 0 }) {
+// ─── HOOKS & UTILITIES ────────────────────────────────────────────────────────
+
+function useScrollProgress() {
+  const [progress, setProgress] = useState(0);
+  useEffect(() => {
+    const update = () => {
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      setProgress(total > 0 ? (window.scrollY / total) * 100 : 0);
+    };
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
+  }, []);
+  return progress;
+}
+
+function FadeIn({ children, delay = 0, className = "" }) {
   const [visible, setVisible] = useState(false);
   const ref = useRef();
   useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVisible(true); }, { threshold: 0.05 });
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) setVisible(true); },
+      { threshold: 0.05 }
+    );
     if (ref.current) obs.observe(ref.current);
     return () => obs.disconnect();
   }, []);
   return (
-    <div ref={ref} style={{ transitionDelay: `${delay}ms` }}
-      className={`transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
+    <div
+      ref={ref}
+      style={{ transitionDelay: `${delay}ms` }}
+      className={`transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"} ${className}`}
+    >
       {children}
     </div>
   );
 }
 
-function ProjectPage({ project, onBack }) {
-  useEffect(() => { window.scrollTo(0, 0); }, []);
+function TypingText({ words }) {
+  const [display, setDisplay] = useState("");
+  const [wordIdx, setWordIdx] = useState(0);
+  const [phase, setPhase] = useState("typing");
+
+  useEffect(() => {
+    const word = words[wordIdx];
+    let t;
+    if (phase === "typing") {
+      if (display.length < word.length) {
+        t = setTimeout(() => setDisplay(word.slice(0, display.length + 1)), 75);
+      } else {
+        t = setTimeout(() => setPhase("deleting"), 2400);
+      }
+    } else {
+      if (display.length > 0) {
+        t = setTimeout(() => setDisplay(display.slice(0, -1)), 40);
+      } else {
+        setWordIdx((wordIdx + 1) % words.length);
+        setPhase("typing");
+      }
+    }
+    return () => clearTimeout(t);
+  }, [display, wordIdx, phase, words]);
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-slate-100">
-      <nav className="sticky top-0 z-50 backdrop-blur-md bg-slate-900/80 border-b border-slate-700/50">
+    <span>
+      {display}
+      <span className="cursor text-blue-400">|</span>
+    </span>
+  );
+}
+
+function BackToTop() {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const h = () => setVisible(window.scrollY > 600);
+    window.addEventListener("scroll", h, { passive: true });
+    return () => window.removeEventListener("scroll", h);
+  }, []);
+  return (
+    <button
+      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      aria-label="Back to top"
+      className={`fixed bottom-8 right-8 z-50 w-11 h-11 rounded-full bg-blue-500 hover:bg-blue-600 text-white shadow-lg shadow-blue-500/30 flex items-center justify-center transition-all duration-300 hover:scale-110 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"}`}
+    >
+      <ChevronUp size={20} />
+    </button>
+  );
+}
+
+function SectionLabel({ text, dm }) {
+  return (
+    <div className="flex items-center gap-3 mb-3">
+      <div className="h-px w-8 bg-gradient-to-r from-blue-500 to-cyan-400" />
+      <span className={`text-xs font-bold tracking-[0.2em] uppercase font-mono ${dm ? "text-blue-400" : "text-blue-500"}`}>{text}</span>
+    </div>
+  );
+}
+
+// ─── PROJECT PAGE ─────────────────────────────────────────────────────────────
+
+function ProjectPage({ project, onBack, dm }) {
+  const progress = useScrollProgress();
+  useEffect(() => { window.scrollTo(0, 0); }, []);
+
+  const muted = dm ? "text-slate-400" : "text-slate-500";
+  const subtle = dm ? "text-slate-500" : "text-slate-400";
+  const card = dm ? "bg-slate-900/70 border-slate-800" : "bg-white border-slate-200 shadow-sm";
+
+  return (
+    <div className={`min-h-screen font-sans ${dm ? "bg-[#030712] text-slate-100" : "bg-slate-50 text-slate-900"}`}>
+      <div className="scroll-progress" style={{ width: `${progress}%` }} />
+
+      <nav className={`sticky top-0 z-50 backdrop-blur-xl border-b ${dm ? "bg-[#030712]/85 border-slate-800/60" : "bg-white/85 border-slate-200"}`}>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4 flex items-center gap-4">
-          <button onClick={onBack} className="flex items-center gap-2 text-slate-400 hover:text-blue-400 transition-colors text-sm">
-            <ArrowLeft size={16} /> Back to Portfolio
+          <button
+            onClick={onBack}
+            className={`flex items-center gap-2 text-sm font-medium transition-colors hover:text-blue-400 ${muted}`}
+          >
+            <ArrowLeft size={15} /> Back to Portfolio
           </button>
-          <span className="text-slate-600">|</span>
-          <span className="text-slate-300 text-sm font-medium truncate">{project.title}</span>
+          <span className={subtle}>·</span>
+          <span className={`text-sm font-medium truncate ${dm ? "text-slate-300" : "text-slate-700"}`}>{project.title}</span>
         </div>
       </nav>
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-16">
+
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
+        {/* Header */}
         <div className="mb-12">
-          <div className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br ${project.color} mb-6 text-white shadow-lg`}>{project.icon}</div>
-          <div className="flex flex-wrap items-center gap-3 mb-4">
-            <span className="text-xs font-bold px-3 py-1 rounded-full bg-green-500/20 text-green-300 border border-green-500/30">✅ Completed</span>
-            <span className="text-slate-400 text-sm">{project.period}</span>
+          <div className={`inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br ${project.color} text-white mb-6 shadow-lg`}>
+            {project.icon}
           </div>
-          <h1 className="text-3xl sm:text-4xl font-bold mb-3">{project.title}</h1>
-          <p className={`text-lg font-semibold bg-gradient-to-r ${project.color} bg-clip-text text-transparent mb-6`}>{project.role}</p>
-          <p className="text-slate-300 text-lg leading-relaxed">{project.overview}</p>
-        </div>
-        <div className="flex flex-wrap gap-2 mb-12">
-          {project.tags.map(t => <span key={t} className="px-3 py-1.5 bg-slate-800 border border-slate-700 rounded-full text-xs text-slate-300">{t}</span>)}
-        </div>
-        <div className="grid md:grid-cols-2 gap-6 mb-12">
-          <div className="bg-red-500/5 border border-red-500/20 rounded-xl p-6">
-            <h2 className="text-red-400 font-bold text-sm uppercase tracking-wider mb-3">The Problem</h2>
-            <p className="text-slate-300 leading-relaxed">{project.problem}</p>
+          <div className="flex flex-wrap items-center gap-3 mb-5">
+            <span className="text-xs font-bold px-3 py-1.5 rounded-full bg-green-500/12 text-green-400 border border-green-500/25 font-mono">
+              ✓ Completed
+            </span>
+            <span className={`text-xs font-mono ${subtle}`}>{project.period}</span>
           </div>
-          <div className="bg-green-500/5 border border-green-500/20 rounded-xl p-6">
-            <h2 className="text-green-400 font-bold text-sm uppercase tracking-wider mb-3">My Solution</h2>
-            <p className="text-slate-300 leading-relaxed">{project.solution}</p>
+          <h1 className="text-3xl sm:text-4xl font-bold mb-3 leading-tight">{project.title}</h1>
+          <p className={`text-base font-semibold bg-gradient-to-r ${project.color} bg-clip-text text-transparent mb-6`}>{project.role}</p>
+          <p className={`text-base leading-relaxed max-w-2xl ${muted}`}>{project.overview}</p>
+        </div>
+
+        {/* Tags */}
+        <div className="flex flex-wrap gap-2 mb-14">
+          {project.tags.map(t => (
+            <span key={t} className={`px-3 py-1.5 rounded-full text-xs font-medium font-mono border ${dm ? "bg-slate-800/70 border-slate-700/60 text-slate-300" : "bg-white border-slate-200 text-slate-600"}`}>
+              {t}
+            </span>
+          ))}
+        </div>
+
+        {/* Problem / Solution */}
+        <div className="grid md:grid-cols-2 gap-5 mb-12">
+          <div className={`rounded-2xl p-6 border ${dm ? "bg-red-500/5 border-red-500/20" : "bg-red-50 border-red-100"}`}>
+            <div className="text-red-400 font-bold text-xs uppercase tracking-[0.18em] mb-3 font-mono">The Problem</div>
+            <p className={`text-sm leading-relaxed ${dm ? "text-slate-300" : "text-slate-600"}`}>{project.problem}</p>
+          </div>
+          <div className={`rounded-2xl p-6 border ${dm ? "bg-green-500/5 border-green-500/20" : "bg-green-50 border-green-100"}`}>
+            <div className="text-green-400 font-bold text-xs uppercase tracking-[0.18em] mb-3 font-mono">My Solution</div>
+            <p className={`text-sm leading-relaxed ${dm ? "text-slate-300" : "text-slate-600"}`}>{project.solution}</p>
           </div>
         </div>
-        <div className="bg-slate-800/50 border border-slate-700/50 rounded-xl p-6 mb-12">
-          <h2 className="text-slate-400 font-bold text-sm uppercase tracking-wider mb-4">Pipeline / Architecture</h2>
+
+        {/* Architecture */}
+        <div className={`rounded-2xl p-6 mb-12 border ${card}`}>
+          <div className={`font-bold text-xs uppercase tracking-[0.18em] mb-5 font-mono ${subtle}`}>Pipeline / Architecture</div>
           <div className="flex flex-wrap items-center gap-2">
             {project.architecture.split("→").map((step, i, arr) => (
               <div key={i} className="flex items-center gap-2">
-                <span className={`px-3 py-1.5 rounded-lg text-xs font-medium bg-gradient-to-r ${project.color} text-white shadow`}>{step.trim()}</span>
-                {i < arr.length - 1 && <span className="text-slate-600 text-lg">→</span>}
+                <span className={`px-3 py-1.5 rounded-lg text-xs font-medium font-mono bg-gradient-to-r ${project.color} text-white shadow-sm`}>
+                  {step.trim()}
+                </span>
+                {i < arr.length - 1 && <span className={`text-sm ${subtle}`}>›</span>}
               </div>
             ))}
           </div>
         </div>
+
+        {/* Technical Deep Dive */}
         <div className="mb-12">
-          <h2 className="text-xl font-bold mb-6">Technical Deep Dive</h2>
-          <div className="space-y-4">
+          <h2 className="text-xl font-bold mb-5">Technical Deep Dive</h2>
+          <div className="space-y-3">
             {project.techDetails.map((d, i) => (
-              <div key={i} className="flex gap-4 bg-slate-800/30 border border-slate-700/50 rounded-lg p-4">
-                <div className="text-xs font-bold text-blue-400 uppercase tracking-wider min-w-32 pt-0.5">{d.label}</div>
-                <div className="text-slate-300 text-sm leading-relaxed">{d.value}</div>
+              <div key={i} className={`flex gap-5 rounded-xl p-4 border ${card}`}>
+                <div className="text-xs font-bold text-blue-400 uppercase tracking-wider font-mono min-w-[110px] pt-0.5 flex-shrink-0">{d.label}</div>
+                <div className={`text-sm leading-relaxed ${dm ? "text-slate-300" : "text-slate-600"}`}>{d.value}</div>
               </div>
             ))}
           </div>
         </div>
-        <div className="bg-slate-800/30 border border-slate-700/50 rounded-xl p-6">
+
+        {/* Outcomes */}
+        <div className={`rounded-2xl p-6 border ${card}`}>
           <h2 className="text-xl font-bold mb-6">Key Outcomes</h2>
-          <div className="grid sm:grid-cols-2 gap-3">
+          <div className="grid sm:grid-cols-2 gap-4">
             {project.outcomes.map((o, i) => (
               <div key={i} className="flex items-start gap-3">
-                <CheckCircle size={16} className="text-green-400 mt-0.5 flex-shrink-0" />
-                <span className="text-slate-300 text-sm leading-relaxed">{o}</span>
+                <CheckCircle size={15} className="text-green-400 mt-0.5 flex-shrink-0" />
+                <span className={`text-sm leading-relaxed ${dm ? "text-slate-300" : "text-slate-600"}`}>{o}</span>
               </div>
             ))}
           </div>
@@ -321,27 +443,63 @@ function ProjectPage({ project, onBack }) {
   );
 }
 
-function ContactForm({ darkMode }) {
+// ─── CONTACT FORM ─────────────────────────────────────────────────────────────
+
+function ContactForm({ dm }) {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [sent, setSent] = useState(false);
-  const handleSubmit = () => { if (!form.name || !form.email || !form.message) return; setSent(true); };
+
+  const inputCls = `w-full px-4 py-3 rounded-xl text-sm outline-none transition-all border font-sans ${
+    dm
+      ? "bg-slate-800/60 border-slate-700 text-slate-100 placeholder-slate-500 focus:border-blue-500 focus:bg-slate-800"
+      : "bg-slate-50 border-slate-200 text-slate-900 placeholder-slate-400 focus:border-blue-400 focus:bg-white"
+  }`;
+
   if (sent) return (
-    <div className="text-center py-8">
-      <CheckCircle size={40} className="text-green-400 mx-auto mb-3" />
-      <p className="font-semibold text-green-400">Message sent!</p>
-      <p className="text-sm mt-1 text-slate-400">Thanks for reaching out — I'll get back to you soon.</p>
+    <div className="text-center py-10">
+      <div className="w-14 h-14 rounded-2xl bg-green-500/12 border border-green-500/25 flex items-center justify-center mx-auto mb-4">
+        <CheckCircle size={24} className="text-green-400" />
+      </div>
+      <p className="font-semibold text-green-400 text-lg mb-1">Message sent!</p>
+      <p className={`text-sm ${dm ? "text-slate-400" : "text-slate-500"}`}>Thanks for reaching out — I'll get back to you soon.</p>
     </div>
   );
-  const cls = `w-full px-4 py-3 rounded-xl text-sm outline-none transition-colors border focus:border-blue-400 ${darkMode ? "bg-slate-700/50 border-slate-600 text-slate-100 placeholder-slate-500" : "bg-slate-50 border-slate-200 text-slate-900 placeholder-slate-400"}`;
+
   return (
     <div className="space-y-4">
-      <input placeholder="Your name" value={form.name} onChange={e => setForm({...form, name: e.target.value})} className={cls} />
-      <input placeholder="Your email" type="email" value={form.email} onChange={e => setForm({...form, email: e.target.value})} className={cls} />
-      <textarea placeholder="Your message..." rows={4} value={form.message} onChange={e => setForm({...form, message: e.target.value})} className={cls + " resize-none"} />
-      <button onClick={handleSubmit} className="w-full py-3 bg-blue-500 hover:bg-blue-600 rounded-xl font-semibold text-white transition-all hover:scale-[1.02]">Send Message</button>
+      <div className="grid sm:grid-cols-2 gap-4">
+        <input
+          placeholder="Your name"
+          value={form.name}
+          onChange={e => setForm({ ...form, name: e.target.value })}
+          className={inputCls}
+        />
+        <input
+          placeholder="Your email"
+          type="email"
+          value={form.email}
+          onChange={e => setForm({ ...form, email: e.target.value })}
+          className={inputCls}
+        />
+      </div>
+      <textarea
+        placeholder="Your message..."
+        rows={5}
+        value={form.message}
+        onChange={e => setForm({ ...form, message: e.target.value })}
+        className={inputCls + " resize-none"}
+      />
+      <button
+        onClick={() => { if (form.name && form.email && form.message) setSent(true); }}
+        className="w-full py-3.5 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 rounded-xl font-semibold text-white transition-all hover:shadow-lg hover:shadow-blue-500/20 hover:scale-[1.01] active:scale-[0.99]"
+      >
+        Send Message
+      </button>
     </div>
   );
 }
+
+// ─── MAIN PORTFOLIO ───────────────────────────────────────────────────────────
 
 export default function Portfolio() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -349,7 +507,13 @@ export default function Portfolio() {
   const [currentPage, setCurrentPage] = useState(null);
   const [darkMode, setDarkMode] = useState(true);
 
-  const scrollTo = (id) => { document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }); setMobileMenuOpen(false); };
+  const progress = useScrollProgress();
+  const dm = darkMode;
+
+  const scrollTo = (id) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    setMobileMenuOpen(false);
+  };
 
   useEffect(() => {
     const handler = () => {
@@ -359,254 +523,522 @@ export default function Portfolio() {
         if (el && window.scrollY >= el.offsetTop - 120) { setActiveSection(id); break; }
       }
     };
-    window.addEventListener("scroll", handler);
+    window.addEventListener("scroll", handler, { passive: true });
     return () => window.removeEventListener("scroll", handler);
   }, []);
 
   if (currentPage) {
     const p = PROJECTS.find(p => p.id === currentPage);
-    return <ProjectPage project={p} onBack={() => { setCurrentPage(null); setTimeout(() => scrollTo("projects"), 100); }} />;
+    return (
+      <ProjectPage
+        project={p}
+        onBack={() => { setCurrentPage(null); setTimeout(() => scrollTo("projects"), 100); }}
+        dm={dm}
+      />
+    );
   }
 
-  const dm = darkMode;
-  const border = dm ? "border-slate-700/50" : "border-slate-200";
+  const muted = dm ? "text-slate-400" : "text-slate-500";
+  const subtle = dm ? "text-slate-500" : "text-slate-400";
+  const border = dm ? "border-slate-800/70" : "border-slate-200";
+  const card = dm
+    ? "bg-slate-900/60 border border-slate-800 hover:border-slate-700"
+    : "bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-slate-300";
 
   return (
-    <div className={`min-h-screen ${dm ? "bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-slate-100" : "bg-gray-50 text-slate-900"}`}>
+    <div className={`min-h-screen font-sans ${dm ? "bg-[#030712] text-slate-100" : "bg-slate-50 text-slate-900"}`}>
+      <div className="scroll-progress" style={{ width: `${progress}%` }} />
+      <BackToTop />
 
-      {/* NAV */}
-      <nav className={`sticky top-0 z-50 backdrop-blur-md ${dm ? "bg-slate-900/80" : "bg-white/80"} border-b ${border}`}>
+      {/* ── NAVIGATION ── */}
+      <nav className={`sticky top-0 z-50 backdrop-blur-xl border-b ${dm ? "bg-[#030712]/85 border-slate-800/60" : "bg-white/85 border-slate-200"}`}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="text-xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">Nathan Salman</div>
-            <div className="hidden md:flex items-center gap-8">
+            <div className="font-bold text-lg tracking-tight select-none">
+              <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">Nathan</span>
+              <span className={dm ? " text-slate-200" : " text-slate-800"}> Salman</span>
+            </div>
+
+            <div className="hidden md:flex items-center gap-1">
               {NAV_ITEMS.map(item => (
-                <button key={item} onClick={() => scrollTo(item.toLowerCase())}
-                  className={`text-sm font-medium transition-colors ${activeSection === item.toLowerCase() ? "text-blue-400" : dm ? "text-slate-400 hover:text-slate-100" : "text-slate-600 hover:text-slate-900"}`}>
+                <button
+                  key={item}
+                  onClick={() => scrollTo(item.toLowerCase())}
+                  className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-all ${
+                    activeSection === item.toLowerCase()
+                      ? "text-blue-400"
+                      : dm
+                      ? "text-slate-400 hover:text-slate-100 hover:bg-slate-800/60"
+                      : "text-slate-500 hover:text-slate-900 hover:bg-slate-100"
+                  }`}
+                >
+                  {item}
+                  {activeSection === item.toLowerCase() && (
+                    <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-blue-400" />
+                  )}
+                </button>
+              ))}
+              <div className={`w-px h-4 mx-2 ${dm ? "bg-slate-700" : "bg-slate-200"}`} />
+              <button
+                onClick={() => setDarkMode(!dm)}
+                className={`px-3 py-2 rounded-lg text-sm transition-colors ${dm ? "text-slate-400 hover:text-slate-200 hover:bg-slate-800/60" : "text-slate-500 hover:text-slate-900 hover:bg-slate-100"}`}
+              >
+                {dm ? "☀️" : "🌙"}
+              </button>
+            </div>
+
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className={`md:hidden p-2 rounded-lg transition-colors ${dm ? "text-slate-400 hover:bg-slate-800" : "text-slate-500 hover:bg-slate-100"}`}
+            >
+              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
+        </div>
+
+        {mobileMenuOpen && (
+          <div className={`md:hidden border-t ${dm ? "border-slate-800 bg-[#030712]" : "border-slate-200 bg-white"}`}>
+            <div className="max-w-6xl mx-auto px-4 py-3 space-y-1">
+              {NAV_ITEMS.map(item => (
+                <button
+                  key={item}
+                  onClick={() => scrollTo(item.toLowerCase())}
+                  className={`block w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                    activeSection === item.toLowerCase()
+                      ? "text-blue-400 bg-blue-500/10"
+                      : dm ? "text-slate-300 hover:bg-slate-800/60" : "text-slate-600 hover:bg-slate-100"
+                  }`}
+                >
                   {item}
                 </button>
               ))}
-              <button onClick={() => setDarkMode(!dm)} className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors ${dm ? "border-slate-600 text-slate-400 hover:border-slate-400" : "border-slate-300 text-slate-600 hover:border-slate-500"}`}>
-                {dm ? "☀️ Light" : "🌙 Dark"}
+              <button
+                onClick={() => setDarkMode(!dm)}
+                className={`block w-full text-left px-4 py-2.5 rounded-lg text-sm transition-colors ${muted}`}
+              >
+                {dm ? "☀️  Light Mode" : "🌙  Dark Mode"}
               </button>
             </div>
-            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden text-slate-400">
-              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
           </div>
-          {mobileMenuOpen && (
-            <div className="md:hidden pb-4 space-y-3">
-              {NAV_ITEMS.map(item => (
-                <button key={item} onClick={() => scrollTo(item.toLowerCase())} className="block w-full text-left py-2 text-slate-300 hover:text-blue-400 transition-colors">{item}</button>
-              ))}
-            </div>
-          )}
-        </div>
+        )}
       </nav>
 
-      {/* HERO */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-36">
-        <FadeIn>
+      {/* ── HERO ── */}
+      <section className="relative overflow-hidden min-h-[94vh] flex items-center">
+        <div className="absolute inset-0 dot-grid opacity-50 pointer-events-none" />
+        <div className="absolute -top-20 -left-40 w-[500px] h-[500px] bg-blue-600/15 rounded-full blur-3xl pointer-events-none animate-float-slow" />
+        <div className="absolute -bottom-20 -right-40 w-[400px] h-[400px] bg-cyan-500/12 rounded-full blur-3xl pointer-events-none animate-float-medium" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-blue-500/4 rounded-full blur-3xl pointer-events-none" />
 
-          <h1 className="text-5xl sm:text-7xl font-black mb-6 leading-tight">
-            Security-First<br />
-            <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-400 bg-clip-text text-transparent">Builder.</span>
-          </h1>
-          <p className={`text-xl sm:text-2xl mb-4 max-w-2xl leading-relaxed ${dm ? "text-slate-400" : "text-slate-500"}`}>
-            UW Informatics student specializing in cybersecurity. I build systems that make organizations safer and more compliant — without sacrificing speed.
-          </p>
-          <p className={`mb-10 max-w-xl ${dm ? "text-slate-500" : "text-slate-400"}`}>
-            From AI-powered compliance automation to incident response and penetration testing, I bridge the gap between security theory and engineering practice.
-          </p>
-          <div className="flex flex-wrap gap-4">
-            <button onClick={() => scrollTo("projects")} className="px-8 py-3.5 bg-blue-500 hover:bg-blue-600 rounded-xl font-semibold transition-all hover:scale-105 shadow-lg shadow-blue-500/25">View Projects</button>
-            <a href="https://drive.google.com/file/d/17WwDWGOnPLG-52KIfBAJ8gVdmTbGNiwi/view?usp=sharing" target="_blank" rel="noreferrer"
-              className={`px-8 py-3.5 rounded-xl font-semibold transition-colors border flex items-center gap-2 ${dm ? "border-slate-600 hover:border-blue-400 text-slate-300" : "border-slate-300 hover:border-blue-400 text-slate-700"}`}>
-              <ExternalLink size={16} /> View Resume
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24 w-full">
+          <FadeIn>
+            {/* Availability badge */}
+            <div className={`inline-flex items-center gap-2.5 px-4 py-2 rounded-full text-xs font-semibold mb-10 border font-mono ${
+              dm
+                ? "bg-green-500/10 border-green-500/25 text-green-400"
+                : "bg-green-50 border-green-200 text-green-700"
+            }`}>
+              <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+              Open to opportunities · Summer / Fall 2026
+            </div>
+
+            <h1 className="text-6xl sm:text-7xl lg:text-8xl font-black tracking-tight mb-5 leading-[0.93]">
+              Nathan<br />
+              <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-300 bg-clip-text text-transparent">
+                Salman.
+              </span>
+            </h1>
+
+            <div className={`text-xl sm:text-2xl font-semibold mb-6 h-9 font-mono ${dm ? "text-slate-300" : "text-slate-600"}`}>
+              <TypingText words={[
+                "Cybersecurity Specialist",
+                "Security Engineer",
+                "Penetration Tester",
+                "Compliance Analyst",
+                "Incident Responder"
+              ]} />
+            </div>
+
+            <p className={`text-lg max-w-xl mb-10 leading-relaxed ${muted}`}>
+              UW Informatics student building tools that make organizations safer — from AI-powered compliance automation to incident response and penetration testing.
+            </p>
+
+            <div className="flex flex-wrap gap-3 mb-16">
+              <button
+                onClick={() => scrollTo("projects")}
+                className="px-7 py-3.5 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 rounded-xl font-semibold text-white text-sm transition-all hover:shadow-xl hover:shadow-blue-500/25 hover:scale-[1.03] active:scale-[0.98]"
+              >
+                View Projects
+              </button>
+              <a
+                href="https://drive.google.com/file/d/17WwDWGOnPLG-52KIfBAJ8gVdmTbGNiwi/view?usp=sharing"
+                target="_blank"
+                rel="noreferrer"
+                className={`px-7 py-3.5 rounded-xl font-semibold text-sm transition-all border flex items-center gap-2 hover:scale-[1.03] active:scale-[0.98] ${
+                  dm
+                    ? "border-slate-700 hover:border-slate-500 text-slate-300 hover:bg-slate-800/60"
+                    : "border-slate-300 hover:border-slate-400 text-slate-700 hover:bg-slate-100"
+                }`}
+              >
+                <ExternalLink size={15} /> Resume
+              </a>
+              <a
+                href="https://www.linkedin.com/in/nathan-e-salman"
+                target="_blank"
+                rel="noreferrer"
+                className={`px-7 py-3.5 rounded-xl font-semibold text-sm transition-all border flex items-center gap-2 hover:scale-[1.03] active:scale-[0.98] ${
+                  dm
+                    ? "border-slate-700 hover:border-slate-500 text-slate-300 hover:bg-slate-800/60"
+                    : "border-slate-300 hover:border-slate-400 text-slate-700 hover:bg-slate-100"
+                }`}
+              >
+                <Linkedin size={15} /> LinkedIn
+              </a>
+            </div>
+
+            {/* Stats */}
+            <div className={`flex flex-wrap gap-10 pt-8 border-t ${border}`}>
+              {[
+                { value: "5+", label: "Security Projects" },
+                { value: "3.8", label: "GPA" },
+                { value: "3+", label: "Roles Held" },
+                { value: "Jun '26", label: "Graduation" },
+              ].map(s => (
+                <div key={s.label}>
+                  <div className="text-2xl font-black bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent leading-none mb-1">
+                    {s.value}
+                  </div>
+                  <div className={`text-xs font-medium font-mono ${subtle}`}>{s.label}</div>
+                </div>
+              ))}
+            </div>
+          </FadeIn>
+        </div>
+
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-scroll-bounce">
+          <ChevronDown size={20} className={subtle} />
+        </div>
+      </section>
+
+      {/* ── ABOUT ── */}
+      <section id="about" className={`border-t ${border}`}>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+          <FadeIn>
+            <SectionLabel text="Background" dm={dm} />
+            <h2 className="text-4xl font-bold mb-12">About Me</h2>
+            <div className="grid lg:grid-cols-5 gap-12 lg:gap-16">
+              <div className={`lg:col-span-3 space-y-5 text-base leading-relaxed ${muted}`}>
+                <p>
+                  I'm a junior at the University of Washington studying Informatics with a cybersecurity specialization. My focus is on the intersection of security engineering and automation — building tools that help teams move fast without creating risk.
+                </p>
+                <p>
+                  My work spans compliance automation, incident response, penetration testing, and security tooling. I'm most energized by projects that require translating ambiguous requirements — whether a regulatory framework or an architectural diagram — into working, secure systems.
+                </p>
+                <p>
+                  Outside of security, I enjoy exploring AI agent architectures and finding creative ways to automate complex workflows. I believe the best security engineers are also great communicators.
+                </p>
+              </div>
+
+              <div className="lg:col-span-2 space-y-4">
+                <div className={`p-5 rounded-2xl border transition-all ${card}`}>
+                  <div className="text-xs font-bold text-blue-400 uppercase tracking-[0.18em] mb-4 font-mono">Education</div>
+                  <div className="font-semibold">B.S. Informatics — Cybersecurity</div>
+                  <div className={`text-sm mt-1 ${muted}`}>University of Washington</div>
+                  <div className="flex justify-between items-center mt-3">
+                    <span className="text-green-400 font-bold text-sm">GPA: 3.8</span>
+                    <span className={`text-xs font-mono ${subtle}`}>Expected Jun 2026</span>
+                  </div>
+                </div>
+
+                <div className={`p-5 rounded-2xl border transition-all ${card}`}>
+                  <div className="text-xs font-bold text-blue-400 uppercase tracking-[0.18em] mb-4 font-mono">Certifications</div>
+                  <div className="space-y-3.5">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-xl bg-green-500/12 border border-green-500/25 flex items-center justify-center flex-shrink-0">
+                        <CheckCircle size={14} className="text-green-400" />
+                      </div>
+                      <div>
+                        <div className={`text-sm font-medium ${dm ? "text-slate-300" : "text-slate-700"}`}>Cybersecurity Certificate</div>
+                        <div className={`text-xs font-mono ${subtle}`}>Purdue / Simplilearn</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-xl bg-yellow-500/12 border border-yellow-500/25 flex items-center justify-center flex-shrink-0">
+                        <Zap size={14} className="text-yellow-400" />
+                      </div>
+                      <div>
+                        <div className={`text-sm font-medium ${dm ? "text-slate-300" : "text-slate-700"}`}>CompTIA Security+</div>
+                        <div className={`text-xs font-mono ${subtle}`}>In Progress · Jan 2026</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* ── PROJECTS ── */}
+      <section id="projects" className={`border-t ${border}`}>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+          <FadeIn>
+            <SectionLabel text="Work" dm={dm} />
+            <div className="flex flex-wrap justify-between items-end gap-4 mb-12">
+              <div>
+                <h2 className="text-4xl font-bold mb-2">Projects</h2>
+                <p className={`${muted}`}>Click any completed project to see a full technical breakdown.</p>
+              </div>
+            </div>
+          </FadeIn>
+
+          {/* Featured projects */}
+          <div className="grid md:grid-cols-2 gap-5 mb-5">
+            {PROJECTS.filter(p => p.featured).map((p, i) => (
+              <FadeIn key={p.id} delay={i * 100}>
+                <div
+                  onClick={() => !p.noPage && setCurrentPage(p.id)}
+                  className={`group p-6 rounded-2xl border transition-all h-full ${
+                    !p.noPage ? "cursor-pointer hover:scale-[1.02] hover:shadow-2xl" : "cursor-default"
+                  } ${
+                    dm
+                      ? `bg-slate-900/60 border-slate-800 ${!p.noPage ? "hover:border-blue-500/40 hover:shadow-blue-500/5" : ""}`
+                      : `bg-white border-slate-200 shadow-sm ${!p.noPage ? "hover:border-blue-300 hover:shadow-blue-50" : ""}`
+                  }`}
+                >
+                  <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br ${p.color} text-white mb-5 shadow-md`}>
+                    {p.icon}
+                  </div>
+
+                  <div className="flex flex-wrap justify-between items-start gap-2 mb-4">
+                    <div className="flex flex-wrap gap-1.5">
+                      <span className={`text-xs font-bold px-2.5 py-1 rounded-full font-mono ${
+                        p.status === "In Progress"
+                          ? "bg-blue-500/12 text-blue-400 border border-blue-500/20"
+                          : "bg-amber-500/12 text-amber-400 border border-amber-500/20"
+                      }`}>
+                        {p.status === "In Progress" ? "● In Progress" : "★ Featured"}
+                      </span>
+                      {p.microsoft && (
+                        <span className="text-xs font-bold px-2.5 py-1 rounded-full font-mono bg-purple-500/12 text-purple-400 border border-purple-500/20">
+                          🏢 Microsoft
+                        </span>
+                      )}
+                    </div>
+                    <span className={`text-xs font-mono ${subtle}`}>{p.period}</span>
+                  </div>
+
+                  <h3 className={`text-lg font-bold mb-1.5 transition-colors ${!p.noPage ? "group-hover:text-blue-400" : ""}`}>
+                    {p.title}
+                  </h3>
+                  <p className={`text-sm font-medium mb-3 ${muted}`}>{p.role}</p>
+                  <p className={`text-sm leading-relaxed mb-5 ${muted}`}>{p.summary}</p>
+
+                  <div className="flex flex-wrap gap-1.5 mb-5">
+                    {p.tags.slice(0, 4).map(t => (
+                      <span key={t} className={`text-xs px-2.5 py-1 rounded-full font-mono ${
+                        dm ? "bg-slate-800 text-slate-400 border border-slate-700/50" : "bg-slate-100 text-slate-500"
+                      }`}>
+                        {t}
+                      </span>
+                    ))}
+                    {p.tags.length > 4 && <span className={`text-xs px-2 py-1 ${subtle}`}>+{p.tags.length - 4}</span>}
+                  </div>
+
+                  {!p.noPage
+                    ? <div className="flex items-center gap-1.5 text-sm font-semibold text-blue-400 group-hover:gap-2.5 transition-all">
+                        View case study <ExternalLink size={13} />
+                      </div>
+                    : <div className={`text-xs font-mono italic ${subtle}`}>Case study coming soon</div>
+                  }
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+
+          {/* Other projects */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {PROJECTS.filter(p => !p.featured).map((p, i) => (
+              <FadeIn key={p.id} delay={i * 80}>
+                <div
+                  onClick={() => setCurrentPage(p.id)}
+                  className={`group p-5 rounded-2xl border transition-all cursor-pointer hover:scale-[1.02] hover:shadow-xl h-full ${
+                    dm
+                      ? "bg-slate-900/40 border-slate-800 hover:border-blue-500/30 hover:shadow-blue-500/5"
+                      : "bg-white border-slate-200 shadow-sm hover:border-blue-300 hover:shadow-blue-50"
+                  }`}
+                >
+                  <div className={`inline-flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br ${p.color} text-white mb-4 shadow`}>
+                    {p.icon}
+                  </div>
+                  <h3 className="font-bold text-sm mb-1.5 group-hover:text-blue-400 transition-colors">{p.title}</h3>
+                  <p className={`text-xs leading-relaxed mb-4 ${muted}`}>{p.summary}</p>
+                  <div className="flex flex-wrap gap-1 mb-4">
+                    {p.tags.slice(0, 2).map(t => (
+                      <span key={t} className={`text-xs px-2 py-0.5 rounded-full font-mono ${
+                        dm ? "bg-slate-800 text-slate-400" : "bg-slate-100 text-slate-500"
+                      }`}>{t}</span>
+                    ))}
+                  </div>
+                  <div className="text-xs font-semibold text-blue-400 flex items-center gap-1 group-hover:gap-2 transition-all">
+                    View details <ExternalLink size={11} />
+                  </div>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── EXPERIENCE ── */}
+      <section id="experience" className={`border-t ${border}`}>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+          <FadeIn>
+            <SectionLabel text="Career" dm={dm} />
+            <h2 className="text-4xl font-bold mb-12">Experience</h2>
+
+            <div className="relative max-w-3xl">
+              <div className={`absolute left-0 top-3 bottom-0 w-px ${
+                dm
+                  ? "bg-gradient-to-b from-blue-500/50 via-blue-500/15 to-transparent"
+                  : "bg-gradient-to-b from-blue-400/40 via-blue-400/10 to-transparent"
+              }`} />
+
+              <div className="space-y-8">
+                {EXPERIENCE.map((job, i) => (
+                  <FadeIn key={i} delay={i * 100}>
+                    <div className="relative pl-10">
+                      <div className="absolute left-0 top-2 w-2 h-2 -translate-x-[3.5px] rounded-full bg-blue-500 ring-4 ring-blue-500/20" />
+                      <div className={`p-6 rounded-2xl border transition-all ${card}`}>
+                        <div className="flex flex-wrap justify-between items-start gap-3 mb-4">
+                          <div>
+                            <h3 className="font-bold text-base">{job.title}</h3>
+                            <p className="text-blue-400 font-semibold text-sm mt-0.5">
+                              {job.company}
+                              <span className={`font-normal text-sm ml-1 ${subtle}`}>· {job.location}</span>
+                            </p>
+                          </div>
+                          <div className="text-right flex-shrink-0">
+                            <div className={`text-xs font-mono mb-1.5 ${muted}`}>{job.period}</div>
+                            <span className={`text-xs px-2.5 py-1 rounded-full font-mono ${
+                              dm ? "bg-slate-800 text-slate-400 border border-slate-700" : "bg-slate-100 text-slate-500"
+                            }`}>{job.type}</span>
+                          </div>
+                        </div>
+                        <ul className="space-y-2.5">
+                          {job.bullets.map((b, j) => (
+                            <li key={j} className={`text-sm flex gap-3 leading-relaxed ${dm ? "text-slate-300" : "text-slate-600"}`}>
+                              <span className="text-blue-400 mt-2 flex-shrink-0 w-1 h-1 rounded-full bg-blue-400" />
+                              {b}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </FadeIn>
+                ))}
+              </div>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* ── SKILLS ── */}
+      <section id="skills" className={`border-t ${border}`}>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+          <FadeIn>
+            <SectionLabel text="Expertise" dm={dm} />
+            <h2 className="text-4xl font-bold mb-12">Skills & Tools</h2>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {SKILLS_DATA.map((group, i) => (
+                <FadeIn key={group.category} delay={i * 80}>
+                  <div className={`p-6 rounded-2xl border h-full transition-all ${card}`}>
+                    <div className={`flex items-center gap-2.5 mb-5 ${group.color}`}>
+                      {group.icon}
+                      <span className="font-bold text-xs uppercase tracking-[0.18em] font-mono">{group.category}</span>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {group.items.map(skill => (
+                        <span
+                          key={skill}
+                          className={`text-xs px-3 py-1.5 rounded-lg border font-mono cursor-default transition-colors ${
+                            dm
+                              ? "bg-slate-800/70 border-slate-700/60 text-slate-300 hover:border-slate-600 hover:bg-slate-800"
+                              : "bg-slate-50 border-slate-200 text-slate-600 hover:bg-white hover:border-slate-300"
+                          }`}
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </FadeIn>
+              ))}
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* ── CONTACT ── */}
+      <section id="contact" className={`border-t ${border}`}>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+          <FadeIn>
+            <SectionLabel text="Contact" dm={dm} />
+            <div className="grid lg:grid-cols-2 gap-16 lg:gap-20">
+              <div>
+                <h2 className="text-4xl font-bold mb-4">Let's Connect</h2>
+                <p className={`text-base leading-relaxed mb-10 max-w-md ${muted}`}>
+                  I'm actively looking for cybersecurity internship and full-time opportunities starting Summer/Fall 2026. Whether you have a role, a project, or just want to connect — my inbox is open.
+                </p>
+                <div className="space-y-3">
+                  {[
+                    { icon: <Mail size={18} />, label: "Email", value: "nathansalman10@gmail.com", href: "mailto:nathansalman10@gmail.com" },
+                    { icon: <Linkedin size={18} />, label: "LinkedIn", value: "/in/nathan-e-salman", href: "https://www.linkedin.com/in/nathan-e-salman" },
+                  ].map(c => (
+                    <a
+                      key={c.label}
+                      href={c.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={`flex items-center gap-4 p-4 rounded-xl border transition-all group hover:border-blue-400/50 ${card}`}
+                    >
+                      <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:bg-blue-500/15 transition-colors flex-shrink-0">
+                        {c.icon}
+                      </div>
+                      <div className="min-w-0">
+                        <div className={`text-xs font-bold uppercase tracking-[0.18em] font-mono mb-0.5 ${subtle}`}>{c.label}</div>
+                        <div className={`text-sm font-medium truncate ${dm ? "text-slate-200" : "text-slate-700"}`}>{c.value}</div>
+                      </div>
+                      <ExternalLink size={14} className={`ml-auto flex-shrink-0 ${subtle} group-hover:text-blue-400 transition-colors`} />
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              <div className={`p-8 rounded-2xl border ${dm ? "bg-slate-900/60 border-slate-800" : "bg-white border-slate-200 shadow-sm"}`}>
+                <h3 className="font-bold text-lg mb-6">Send a Message</h3>
+                <ContactForm dm={dm} />
+              </div>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* ── FOOTER ── */}
+      <footer className={`border-t ${border}`}>
+        <div className={`max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm ${muted}`}>
+          <span className="font-mono text-xs">© 2026 Nathan Salman. All rights reserved.</span>
+          <div className="flex items-center gap-5">
+            <a href="mailto:nathansalman10@gmail.com" className="hover:text-blue-400 transition-colors" aria-label="Email">
+              <Mail size={16} />
+            </a>
+            <a href="https://www.linkedin.com/in/nathan-e-salman" target="_blank" rel="noreferrer" className="hover:text-blue-400 transition-colors" aria-label="LinkedIn">
+              <Linkedin size={16} />
             </a>
           </div>
-        </FadeIn>
-      </section>
-
-      {/* ABOUT */}
-      <section id="about" className={`max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-t ${border}`}>
-        <FadeIn>
-          <h2 className="text-3xl font-bold mb-10">About Me</h2>
-          <div className="grid md:grid-cols-5 gap-12">
-            <div className={`md:col-span-3 space-y-4 ${dm ? "text-slate-300" : "text-slate-600"}`}>
-              <p className="leading-relaxed">I'm a junior at the University of Washington studying Informatics with a cybersecurity specialization. My focus is on the intersection of security engineering and automation — building tools that help teams move fast without creating risk.</p>
-              <p className="leading-relaxed">My work spans compliance automation, incident response, penetration testing, and security tooling. I'm most energized by projects that require translating ambiguous requirements — whether a regulatory framework or an architectural diagram — into working, secure systems.</p>
-              <p className="leading-relaxed">Outside of security, I enjoy exploring AI agent architectures and finding creative ways to automate complex workflows. I believe the best security engineers are also great communicators.</p>
-            </div>
-            <div className="md:col-span-2 space-y-4">
-              <div className={`p-5 rounded-xl border ${dm ? "bg-slate-800/50 border-slate-700/50" : "bg-white border-slate-200"}`}>
-                <div className="text-xs font-bold text-blue-400 uppercase tracking-wider mb-3">Education</div>
-                <div className="font-semibold">B.S. Informatics — Cybersecurity</div>
-                <div className={`text-sm mt-1 ${dm ? "text-slate-400" : "text-slate-500"}`}>University of Washington</div>
-                <div className="flex justify-between text-sm mt-2">
-                  <span className="text-green-400 font-semibold">GPA: 3.8</span>
-                  <span className={dm ? "text-slate-500" : "text-slate-400"}>Expected Jun 2026</span>
-                </div>
-              </div>
-              <div className={`p-5 rounded-xl border ${dm ? "bg-slate-800/50 border-slate-700/50" : "bg-white border-slate-200"}`}>
-                <div className="text-xs font-bold text-blue-400 uppercase tracking-wider mb-3">Certifications</div>
-                <div className="space-y-2 text-sm">
-                  <div className="flex items-center gap-2"><CheckCircle size={14} className="text-green-400" /><span className={dm ? "text-slate-300" : "text-slate-600"}>Cybersecurity Certificate — Purdue / Simplilearn</span></div>
-                  <div className="flex items-center gap-2"><Zap size={14} className="text-yellow-400" /><span className={dm ? "text-slate-300" : "text-slate-600"}>CompTIA Security+ — In Progress (Jan 2026)</span></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </FadeIn>
-      </section>
-
-      {/* PROJECTS */}
-      <section id="projects" className={`max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-t ${border}`}>
-        <FadeIn>
-          <h2 className="text-3xl font-bold mb-3">Projects</h2>
-          <p className={`mb-12 ${dm ? "text-slate-400" : "text-slate-500"}`}>Click any completed project to see a full technical breakdown.</p>
-        </FadeIn>
-
-        {/* Featured */}
-        <div className="grid md:grid-cols-2 gap-6 mb-6">
-          {PROJECTS.filter(p => p.featured).map((p, i) => (
-            <FadeIn key={p.id} delay={i * 100}>
-              <div
-                onClick={() => !p.noPage && setCurrentPage(p.id)}
-                className={`w-full text-left p-6 rounded-2xl border transition-all group ${!p.noPage ? "hover:scale-[1.02] hover:shadow-xl cursor-pointer" : "cursor-default"} ${dm ? `bg-slate-800/40 border-slate-700/50 ${!p.noPage ? "hover:border-blue-500/50 hover:shadow-blue-500/10" : ""}` : `bg-white border-slate-200 ${!p.noPage ? "hover:border-blue-400 hover:shadow-blue-100" : ""}`}`}>
-                <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br ${p.color} text-white mb-4 shadow-md`}>{p.icon}</div>
-                <div className="flex flex-wrap justify-between items-start gap-2 mb-2">
-                  <div className="flex flex-wrap gap-1.5">
-                    <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${p.status === "In Progress" ? "bg-blue-500/20 text-blue-300" : "bg-green-500/20 text-green-300"}`}>
-                      {p.status === "In Progress" ? "🔵 In Progress" : "⭐ Featured"}
-                    </span>
-                    {p.microsoft && <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">🏢 Microsoft Sponsored</span>}
-                  </div>
-                  <span className={`text-xs ${dm ? "text-slate-500" : "text-slate-400"}`}>{p.period}</span>
-                </div>
-                <h3 className={`text-lg font-bold mt-3 mb-1 transition-colors ${!p.noPage ? "group-hover:text-blue-400" : ""}`}>{p.title}</h3>
-                <p className={`text-sm mb-1 font-medium ${dm ? "text-slate-400" : "text-slate-500"}`}>{p.role}</p>
-                <p className={`text-sm mb-4 leading-relaxed ${dm ? "text-slate-400" : "text-slate-500"}`}>{p.summary}</p>
-                <div className="flex flex-wrap gap-1.5">
-                  {p.tags.slice(0, 3).map(t => <span key={t} className={`text-xs px-2 py-0.5 rounded-full ${dm ? "bg-slate-700 text-slate-400" : "bg-slate-100 text-slate-500"}`}>{t}</span>)}
-                  {p.tags.length > 3 && <span className={`text-xs px-2 py-0.5 ${dm ? "text-slate-500" : "text-slate-400"}`}>+{p.tags.length - 3} more</span>}
-                </div>
-                {!p.noPage
-                  ? <div className="mt-4 flex items-center gap-1 text-blue-400 text-sm font-medium">View case study <ExternalLink size={13} className="ml-1 group-hover:translate-x-1 transition-transform" /></div>
-                  : <div className="mt-4 text-xs text-slate-500 italic">Case study coming soon</div>
-                }
-              </div>
-            </FadeIn>
-          ))}
-        </div>
-
-        {/* Other projects */}
-        <div className="grid md:grid-cols-3 gap-4">
-          {PROJECTS.filter(p => !p.featured).map((p, i) => (
-            <FadeIn key={p.id} delay={i * 80}>
-              <div onClick={() => setCurrentPage(p.id)}
-                className={`w-full text-left p-5 rounded-xl border transition-all hover:scale-[1.02] cursor-pointer group ${dm ? "bg-slate-800/30 border-slate-700/50 hover:border-blue-500/40" : "bg-white border-slate-200 hover:border-blue-400"}`}>
-                <div className={`inline-flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br ${p.color} text-white mb-3 shadow`}>{p.icon}</div>
-                <h3 className="font-bold mb-1 group-hover:text-blue-400 transition-colors text-sm">{p.title}</h3>
-                <p className={`text-xs leading-relaxed mb-3 ${dm ? "text-slate-400" : "text-slate-500"}`}>{p.summary}</p>
-                <div className="flex flex-wrap gap-1">
-                  {p.tags.slice(0, 2).map(t => <span key={t} className={`text-xs px-1.5 py-0.5 rounded ${dm ? "bg-slate-700 text-slate-400" : "bg-slate-100 text-slate-500"}`}>{t}</span>)}
-                </div>
-                <div className="mt-3 text-xs text-blue-400 font-medium flex items-center gap-1">View details <ExternalLink size={11} /></div>
-              </div>
-            </FadeIn>
-          ))}
-        </div>
-      </section>
-
-      {/* EXPERIENCE */}
-      <section id="experience" className={`max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-t ${border}`}>
-        <FadeIn>
-          <h2 className="text-3xl font-bold mb-10">Work Experience</h2>
-          <div className="space-y-0">
-            {EXPERIENCE.map((job, i) => (
-              <div key={i} className="relative pl-8 border-l-2 border-blue-500/30 pb-10 last:pb-0">
-                <div className="absolute -left-2 top-0 w-4 h-4 rounded-full bg-blue-500 border-2 border-slate-900" />
-                <div className="flex flex-wrap justify-between items-start gap-2 mb-2">
-                  <div>
-                    <h3 className="text-lg font-bold">{job.title}</h3>
-                    <p className="text-blue-400 font-semibold">{job.company} <span className={`font-normal text-sm ${dm ? "text-slate-500" : "text-slate-400"}`}>· {job.location}</span></p>
-                  </div>
-                  <div className="text-right">
-                    <div className={`text-sm ${dm ? "text-slate-400" : "text-slate-500"}`}>{job.period}</div>
-                    <span className={`text-xs px-2 py-0.5 rounded-full ${dm ? "bg-slate-700 text-slate-400" : "bg-slate-100 text-slate-500"}`}>{job.type}</span>
-                  </div>
-                </div>
-                <ul className="space-y-1.5 mt-3">
-                  {job.bullets.map((b, j) => (
-                    <li key={j} className={`text-sm flex gap-2 ${dm ? "text-slate-300" : "text-slate-600"}`}>
-                      <span className="text-blue-400 mt-1 flex-shrink-0">•</span>{b}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </FadeIn>
-      </section>
-
-      {/* SKILLS */}
-      <section id="skills" className={`max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-t ${border}`}>
-        <FadeIn>
-          <h2 className="text-3xl font-bold mb-12">Skills</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {SKILLS_DATA.map(group => (
-              <div key={group.category}>
-                <div className={`flex items-center gap-2 mb-5 ${group.color}`}>
-                  {group.icon}
-                  <span className="font-bold text-sm uppercase tracking-wider">{group.category}</span>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {group.items.map(skill => (
-                    <span key={skill} className={`text-sm px-3 py-1.5 rounded-lg border ${dm ? "bg-slate-800/50 border-slate-700 text-slate-300" : "bg-white border-slate-200 text-slate-600"}`}>
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </FadeIn>
-      </section>
-
-      {/* CONTACT */}
-      <section id="contact" className={`max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-t ${border}`}>
-        <FadeIn>
-          <h2 className="text-3xl font-bold mb-4">Get In Touch</h2>
-          <p className={`mb-10 max-w-xl leading-relaxed ${dm ? "text-slate-400" : "text-slate-500"}`}>
-            I'm actively looking for cybersecurity internship and full-time opportunities starting Summer/Fall 2026. Whether you have a role, a project, or just want to connect — my inbox is open.
-          </p>
-          <div className="grid sm:grid-cols-2 gap-4 mb-10 max-w-xl">
-            {[
-              { icon: <Mail size={20} />, label: "Email", value: "nathansalman10@gmail.com", href: "mailto:nathansalman10@gmail.com" },
-              { icon: <Linkedin size={20} />, label: "LinkedIn", value: "nathan-e-salman", href: "https://www.linkedin.com/in/nathan-e-salman" },
-            ].map(c => (
-              <a key={c.label} href={c.href} target="_blank" rel="noreferrer"
-                className={`flex items-start gap-4 p-5 rounded-xl border transition-all hover:border-blue-400 group ${dm ? "bg-slate-800/30 border-slate-700/50" : "bg-white border-slate-200"}`}>
-                <div className="text-blue-400 group-hover:scale-110 transition-transform mt-0.5">{c.icon}</div>
-                <div>
-                  <div className={`text-xs font-bold uppercase tracking-wider mb-1 ${dm ? "text-slate-500" : "text-slate-400"}`}>{c.label}</div>
-                  <div className={`text-sm font-medium ${dm ? "text-slate-300" : "text-slate-700"}`}>{c.value}</div>
-                </div>
-              </a>
-            ))}
-          </div>
-
-        </FadeIn>
-      </section>
-
-      {/* FOOTER */}
-      <footer className={`border-t py-8 mt-8 ${border}`}>
-        <div className={`max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm ${dm ? "text-slate-500" : "text-slate-400"}`}>
-          <span>© 2026 Nathan Salman. All rights reserved.</span>
-          <div className="flex items-center gap-1">
-            <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-            <span>Open to opportunities</span>
+          <div className="flex items-center gap-2 font-mono text-xs">
+            <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+            Open to opportunities
           </div>
         </div>
       </footer>
