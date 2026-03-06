@@ -169,7 +169,7 @@ const EXPERIENCE = [
     company: "ThinkCyber UW",
     location: "Seattle, WA",
     period: "February 2026 – Present",
-    type: "Part-Time",
+    type: "Club Officer",
     bullets: [
       "Lead the Security+ Cohort, facilitating weekly study sessions on exam domains, practice questions, and test strategy to guide UW students toward passing CompTIA Security+.",
       "Oversee the club's technical infrastructure as an executive officer — building and maintaining the website and driving feature improvements to support a growing membership."
@@ -180,7 +180,7 @@ const EXPERIENCE = [
     company: "Husky Table Tennis Club",
     location: "Seattle, WA",
     period: "January 2024 – Present",
-    type: "Part-Time",
+    type: "Club Officer",
     bullets: [
       "Manage club communications and social media presence, keeping 100+ members informed on upcoming events, tournaments, and fundraisers.",
       "Coordinate and run league tournaments, fostering an inclusive and competitive environment for players of all skill levels."
