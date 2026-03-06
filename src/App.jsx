@@ -716,7 +716,7 @@ export default function Portfolio() {
           <FadeIn delay={200} className="hidden md:flex lg:col-span-2 justify-center items-center">
             <div className="relative">
               <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 blur-2xl opacity-20 scale-105" />
-              <div className="relative w-72 h-80 rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-2xl">
+              <div className="relative w-80 h-[420px] rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-2xl">
                 <img
                   src="/nathan.jpg"
                   alt="Nathan Salman"
