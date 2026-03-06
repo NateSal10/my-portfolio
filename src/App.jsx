@@ -638,7 +638,8 @@ export default function Portfolio() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-blue-500/4 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24 w-full">
-          <FadeIn>
+          <div className="grid lg:grid-cols-5 gap-12 lg:gap-16 items-center">
+          <FadeIn className="lg:col-span-3">
             <h1 className="text-6xl sm:text-7xl lg:text-8xl font-black tracking-tight mb-5 leading-[0.93]">
               Nathan<br />
               <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-300 bg-clip-text text-transparent">
@@ -710,7 +711,21 @@ export default function Portfolio() {
               ))}
             </div>
           </FadeIn>
-        </div>
+
+          {/* Photo */}
+          <FadeIn delay={200} className="hidden lg:flex lg:col-span-2 justify-center items-center">
+            <div className="relative">
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 blur-2xl opacity-20 scale-105" />
+              <div className="relative w-72 h-80 rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-2xl">
+                <img
+                  src="/nathan.jpg"
+                  alt="Nathan Salman"
+                  className="w-full h-full object-cover object-top"
+                />
+              </div>
+            </div>
+          </FadeIn>
+          </div>
 
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-scroll-bounce">
           <ChevronDown size={20} className={subtle} />
