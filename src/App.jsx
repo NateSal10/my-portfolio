@@ -152,6 +152,17 @@ const PROJECTS = [
 
 const EXPERIENCE = [
   {
+    title: "Technology Officer",
+    company: "ThinkCyber UW",
+    location: "Seattle, WA",
+    period: "February 2026 – Present",
+    type: "Part-Time",
+    bullets: [
+      "Lead the Security+ Cohort — facilitating weekly sessions covering exam domains, practice questions, and study strategy to guide UW students toward passing CompTIA Security+.",
+      "Building and maintaining the club website, implementing feature improvements and driving technical initiatives as an executive officer."
+    ]
+  },
+  {
     title: "Tennis Shop Associate",
     company: "Avanti Sports Seattle",
     location: "Seattle, WA",
