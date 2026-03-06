@@ -18,7 +18,14 @@ const PROJECTS = [
     status: "In Progress",
     tags: ["AI Agents", "Azure DevOps", "Compliance Automation", "Python", "Prompt Engineering"],
     summary: "An AI-driven compliance automation platform that converts complex regulatory requirements into structured, actionable Azure DevOps work items — complete with gap analysis, traceability, and remediation planning.",
-    icon: <Shield size={22} />,
+    icon: (
+      <svg viewBox="0 0 21 21" width="22" height="22" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="10" height="10" fill="#f25022"/>
+        <rect x="11" y="0" width="10" height="10" fill="#7fba00"/>
+        <rect x="0" y="11" width="10" height="10" fill="#00a4ef"/>
+        <rect x="11" y="11" width="10" height="10" fill="#ffb900"/>
+      </svg>
+    ),
     color: "from-blue-500 to-cyan-500",
     featured: true,
     microsoft: true,
