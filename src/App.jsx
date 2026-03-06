@@ -26,7 +26,7 @@ const PROJECTS = [
         <rect x="11" y="11" width="10" height="10" fill="#ffb900"/>
       </svg>
     ),
-    color: "from-blue-500 to-cyan-500",
+    color: "from-slate-700 to-slate-900",
     featured: true,
     microsoft: true,
     noPage: true,
