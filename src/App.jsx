@@ -164,8 +164,8 @@ const EXPERIENCE = [
     period: "February 2026 – Present",
     type: "Part-Time",
     bullets: [
-      "Lead the Security+ Cohort — facilitating weekly sessions covering exam domains, practice questions, and study strategy to guide UW students toward passing CompTIA Security+.",
-      "Building and maintaining the club website, implementing feature improvements and driving technical initiatives as an executive officer."
+      "Lead the Security+ Cohort, facilitating weekly study sessions on exam domains, practice questions, and test strategy to guide UW students toward passing CompTIA Security+.",
+      "Oversee the club's technical infrastructure as an executive officer — building and maintaining the website and driving feature improvements to support a growing membership."
     ]
   },
   {
@@ -175,8 +175,8 @@ const EXPERIENCE = [
     period: "January 2024 – Present",
     type: "Part-Time",
     bullets: [
-      "Create social media posts to update members with upcoming events and fundraisers.",
-      "Organize league tournaments and develop a welcoming community for all skill levels."
+      "Manage club communications and social media presence, keeping 100+ members informed on upcoming events, tournaments, and fundraisers.",
+      "Coordinate and run league tournaments, fostering an inclusive and competitive environment for players of all skill levels."
     ]
   },
   {
@@ -186,8 +186,8 @@ const EXPERIENCE = [
     period: "December 2023 – Present",
     type: "Part-Time",
     bullets: [
-      "Delivered tailored equipment recommendations to 1,000+ customers, contributing to a 15% increase in repeat purchases.",
-      "Streamlined the stringing workflow, completing 1,500+ rackets and reducing turnaround time by 30%."
+      "Provided personalized equipment recommendations to 1,000+ customers, leveraging deep product knowledge to drive a 15% increase in repeat business.",
+      "Optimized the racket stringing workflow, completing 1,500+ string jobs while cutting average turnaround time by 30%."
     ]
   },
   {
@@ -197,8 +197,8 @@ const EXPERIENCE = [
     period: "January 2019 – Present",
     type: "Part-Time",
     bullets: [
-      "Provide IT support for hardware, Wi-Fi, and network troubleshooting to ensure smooth daily operations.",
-      "Led full website redesign and launched an online reservation platform, improving member engagement by 35% and reducing scheduling errors by 50%."
+      "Deliver hands-on IT support for hardware, Wi-Fi infrastructure, and network troubleshooting, maintaining reliable daily operations for staff and members.",
+      "Led a full website redesign and built an online reservation system, increasing member engagement by 35% and cutting scheduling errors by 50%."
     ]
   }
 ];
@@ -632,16 +632,6 @@ export default function Portfolio() {
 
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24 w-full">
           <FadeIn>
-            {/* Availability badge */}
-            <div className={`inline-flex items-center gap-2.5 px-4 py-2 rounded-full text-xs font-semibold mb-10 border font-mono ${
-              dm
-                ? "bg-green-500/10 border-green-500/25 text-green-400"
-                : "bg-green-50 border-green-200 text-green-700"
-            }`}>
-              <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-              Open to opportunities · Summer / Fall 2026
-            </div>
-
             <h1 className="text-6xl sm:text-7xl lg:text-8xl font-black tracking-tight mb-5 leading-[0.93]">
               Nathan<br />
               <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-300 bg-clip-text text-transparent">
@@ -671,7 +661,7 @@ export default function Portfolio() {
                 View Projects
               </button>
               <a
-                href="https://drive.google.com/file/d/17WwDWGOnPLG-52KIfBAJ8gVdmTbGNiwi/view?usp=sharing"
+                href="https://drive.google.com/file/d/1rIPqzpn845uxsX9n7yVOPaukvnQkvRWx/view?usp=sharing"
                 target="_blank"
                 rel="noreferrer"
                 className={`px-7 py-3.5 rounded-xl font-semibold text-sm transition-all border flex items-center gap-2 hover:scale-[1.03] active:scale-[0.98] ${
@@ -702,7 +692,7 @@ export default function Portfolio() {
                 { value: "5+", label: "Security Projects" },
                 { value: "3.8", label: "GPA" },
                 { value: "3+", label: "Roles Held" },
-                { value: "Jun '26", label: "Graduation" },
+                { value: "Jun '27", label: "Graduation" },
               ].map(s => (
                 <div key={s.label}>
                   <div className="text-2xl font-black bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent leading-none mb-1">
@@ -746,7 +736,7 @@ export default function Portfolio() {
                   <div className={`text-sm mt-1 ${muted}`}>University of Washington</div>
                   <div className="flex justify-between items-center mt-3">
                     <span className="text-green-400 font-bold text-sm">GPA: 3.8</span>
-                    <span className={`text-xs font-mono ${subtle}`}>Expected Jun 2026</span>
+                    <span className={`text-xs font-mono ${subtle}`}>Expected Jun 2027</span>
                   </div>
                 </div>
 
@@ -768,7 +758,7 @@ export default function Portfolio() {
                       </div>
                       <div>
                         <div className={`text-sm font-medium ${dm ? "text-slate-300" : "text-slate-700"}`}>CompTIA Security+</div>
-                        <div className={`text-xs font-mono ${subtle}`}>In Progress · Jan 2026</div>
+                        <div className={`text-xs font-mono ${subtle}`}>In Progress · Apr 2026</div>
                       </div>
                     </div>
                   </div>
@@ -988,7 +978,7 @@ export default function Portfolio() {
               <div>
                 <h2 className="text-4xl font-bold mb-4">Let's Connect</h2>
                 <p className={`text-base leading-relaxed mb-10 max-w-md ${muted}`}>
-                  I'm actively looking for cybersecurity internship and full-time opportunities starting Summer/Fall 2026. Whether you have a role, a project, or just want to connect — my inbox is open.
+                  I'm actively looking for cybersecurity internship and full-time opportunities starting Summer/Fall 2027. Whether you have a role, a project, or just want to connect — my inbox is open.
                 </p>
                 <div className="space-y-3">
                   {[
@@ -1036,9 +1026,8 @@ export default function Portfolio() {
               <Linkedin size={16} />
             </a>
           </div>
-          <div className="flex items-center gap-2 font-mono text-xs">
-            <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-            Open to opportunities
+          <div className="font-mono text-xs">
+            Built with React & Tailwind
           </div>
         </div>
       </footer>
