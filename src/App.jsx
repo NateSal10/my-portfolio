@@ -163,6 +163,17 @@ const EXPERIENCE = [
     ]
   },
   {
+    title: "Public Relations Officer",
+    company: "Husky Table Tennis Club",
+    location: "Seattle, WA",
+    period: "January 2024 – Present",
+    type: "Part-Time",
+    bullets: [
+      "Create social media posts to update members with upcoming events and fundraisers.",
+      "Organize league tournaments and develop a welcoming community for all skill levels."
+    ]
+  },
+  {
     title: "Tennis Shop Associate",
     company: "Avanti Sports Seattle",
     location: "Seattle, WA",
