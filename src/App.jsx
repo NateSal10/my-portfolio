@@ -726,6 +726,7 @@ export default function Portfolio() {
             </div>
           </FadeIn>
           </div>
+        </div>
 
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-scroll-bounce">
           <ChevronDown size={20} className={subtle} />
