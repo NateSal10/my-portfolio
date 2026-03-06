@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run:*)",
+      "Bash(gh auth:*)",
+      "Read(//c/Users/natha/**)",
+      "Bash(git config:*)",
+      "Bash(git:*)"
+    ]
+  }
+}
