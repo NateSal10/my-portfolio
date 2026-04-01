@@ -164,79 +164,79 @@ const PROJECTS = [
   },
   {
     id: "trading-simulator",
-    title: "Trading Simulator & Prop Firm Trainer",
-    role: "Personal Project",
+    title: "TradeForge",
+    role: "Trading Simulator & Prop Firm Trainer",
     period: "March 2026 – Present",
     status: "In Progress",
-    tags: ["React", "Vite", "TradingView Lightweight Charts", "Backtesting", "JavaScript", "ICT Concepts", "Prop Firm"],
-    summary: "A custom-built trading platform that extends TradingView with features it doesn't offer natively — full market replay with real order simulation, a visual strategy backtester, ICT kill zone overlays, and a prop firm challenge mode that enforces funded account rules in real time.",
+    tags: ["React", "Vite", "TradingView Lightweight Charts", "Firebase Auth", "Google Sign-In", "Backtesting", "JavaScript", "ICT / SMC"],
+    summary: "TradeForge is a full-stack trading platform I built to go beyond what TradingView offers — bar-by-bar market replay with real order simulation, a visual strategy backtester, prop firm challenge mode, ICT/SMC overlays, and Google-authenticated accounts that save your trade history and P&L across sessions.",
     icon: <Zap size={22} />,
     color: "from-cyan-500 to-blue-600",
     featured: false,
     microsoft: false,
     noPage: false,
-    overview: "TradingView is a great charting tool, but it falls short for serious practice — there's no way to replay markets with real order execution, test your own strategies algorithmically, or simulate the exact conditions of a prop firm challenge. I built this platform from scratch to fill that gap. It combines a bar-by-bar market replay engine, a visual backtesting system with custom indicators and strategy rules, and a prop firm challenge simulator that enforces daily loss limits, max drawdown, and consistency rules — all in one place, for free.",
-    problem: "Preparing for a prop firm challenge (like FTMO or MyFundedFX) requires two things most tools don't provide together: the ability to practice discretionary trading under realistic risk rules, and a way to validate strategies algorithmically before putting real money on the line. TradingView's replay tool is read-only — it doesn't simulate orders, track P&L, or enforce account rules. Paid simulators exist but are expensive, inflexible, and don't support custom indicators or strategies.",
-    solution: "Built a fully custom React application on top of TradingView's Lightweight Charts library. The replay engine streams historical price data candle-by-candle, letting you place real limit and market orders that fill at accurate historical prices — just like live trading. The backtesting page lets you define strategies using a visual rule builder (no code required), run them across historical data, and review results in a detailed trade log. A dedicated prop firm mode overlays your challenge's risk rules in real time, flagging when you approach daily loss or max drawdown limits so you can build the discipline needed to pass.",
+    overview: "TradingView is a great charting tool, but it falls short for serious practice — you can't replay markets with real order execution, test strategies algorithmically, or simulate a prop firm challenge. I built TradeForge from scratch to fill that gap. It's a full trading environment with a bar-by-bar market replay engine, live order simulation, a visual backtesting system with custom SMC/ICT overlays, and a prop firm challenge mode that enforces daily loss limits and max drawdown in real time. Accounts are backed by Google Sign-In so your trade history, equity curve, and P&L persist across every session.",
+    problem: "Preparing for a prop firm challenge (like FTMO or MyFundedFX) requires two things most tools don't provide together: realistic discretionary practice under real risk rules, and a way to validate strategies algorithmically before putting money on the line. TradingView's replay is read-only — no order simulation, no P&L tracking, no account rules. Paid simulators are expensive, inflexible, and don't support custom strategies. And nothing on the market combines all of this with persistent account data tied to your identity.",
+    solution: "Built TradeForge as a full-stack React app on TradingView Lightweight Charts. The replay engine streams historical candles one at a time — you place market and limit orders that fill at real historical prices, just like live trading. The backtesting page uses a visual rule builder (no code needed) to define strategy conditions, then runs them across months of data in seconds. The dashboard tracks your equity curve, trade calendar, win rate, and streak — all saved to your account via Google Sign-In so nothing is lost between sessions.",
     stats: [
-      { label: "Prop Firm Mode", value: "Built-in", sub: "Daily loss, max drawdown & consistency rules" },
-      { label: "Perf Metrics", value: "6+", sub: "Sharpe, win rate, drawdown, P&L, R:R, profit factor" },
-      { label: "Strategy Conditions", value: "4+", sub: "Time zone, Break & Retest, crossover, manual" },
-      { label: "Chart Overlays", value: "Custom", sub: "Kill zones, TP/SL lines, B&R zone boxes" }
+      { label: "Pages Built", value: "5", sub: "Dashboard, Practice, Backtest, Learn, Glossary" },
+      { label: "Perf Metrics", value: "8+", sub: "P&L, win rate, streak, drawdown, Sharpe, profit factor" },
+      { label: "Auth", value: "Google", sub: "Sign-in with persistent account data & trade history" },
+      { label: "Chart Overlays", value: "Custom", sub: "Kill zones, FVG zones, TP/SL lines, B&R zones" }
     ],
     screenshots: [
-      { src: "/screenshots/replay.png", caption: "Market Replay — bar-by-bar with live order simulation" },
-      { src: "/screenshots/backtest.png", caption: "Backtesting Page — visual rule builder and trade log" },
-      { src: "/screenshots/prop-firm.png", caption: "Prop Firm Challenge Mode — real-time risk tracking" },
-      { src: "/screenshots/kill-zones.png", caption: "ICT Kill Zone Overlays — London, NY, and Asia sessions" }
+      { src: "/screenshots/dashboard.png", caption: "Dashboard — equity curve, prop/paper accounts, market clock & live P&L stats" },
+      { src: "/screenshots/calendar.png", caption: "Trade Calendar — daily P&L heatmap with economic event tags (CPI, FOMC, NFP)" },
+      { src: "/screenshots/practice.png", caption: "Practice Mode — live chart with Asia/London/NY kill zones, SMC overlays & order panel" },
+      { src: "/screenshots/backtest.png", caption: "Backtest Page — Break & Retest zones plotted on chart with visual entry rule builder" }
     ],
     featureCards: [
       {
         icon: <PlayCircle size={20} />,
         title: "Market Replay Mode",
-        desc: "Replay any historical market candle-by-candle at your own pace. Place limit and market orders, set TP/SL levels, and watch your P&L update in real time — exactly like trading live, but on past data."
+        desc: "Replay any historical market candle-by-candle at your own pace. Place market, limit, stop, and stop-limit orders that fill at accurate historical prices — with trailing stop support and a live P&L panel that updates in real time."
       },
       {
         icon: <Shield size={20} />,
         title: "Prop Firm Challenge Simulator",
-        desc: "Configure the exact rules of your funded challenge — daily loss limit, max drawdown, minimum trading days, consistency rules. The simulator tracks your account in real time and warns you before you breach a rule."
+        desc: "Configure your challenge rules — daily loss limit, max drawdown, minimum trading days. TradeForge tracks your balance in real time and shows how much room you have left each day, so you build the discipline to pass before going live."
+      },
+      {
+        icon: <Code size={20} />,
+        title: "Google Sign-In & Account Persistence",
+        desc: "Accounts are powered by Google Sign-In — your trade history, equity curve, win rate, and streak are saved to your profile and available from any device. Prop and paper accounts are tracked separately with a one-click reset option."
       },
       {
         icon: <Layers size={20} />,
         title: "Visual Strategy Builder",
-        desc: "Build trading strategies without writing code. Add condition blocks — entry time windows, price crossovers, Break & Retest zones — and the engine auto-calculates entries, stop losses, and take profits for every signal."
+        desc: "Define trading strategies without writing code. Add condition blocks — entry time windows, price crossovers, Break & Retest zones — and the engine auto-calculates entries, stop losses, and take profits for every signal generated."
       },
       {
         icon: <BarChart2 size={20} />,
-        title: "Backtesting Engine",
-        desc: "Run your strategy across months of historical data in seconds. Results include a full trade log with filterable entries, plus key metrics: win rate, Sharpe ratio, max drawdown, profit factor, and average R:R."
-      },
-      {
-        icon: <TrendingUp size={20} />,
-        title: "Break & Retest Detection",
-        desc: "Automatically identifies when price breaks out of a defined zone then comes back to retest it — a high-probability entry pattern. The engine enters on confirmation, with stop loss at the zone boundary and TP at your chosen R:R."
+        title: "Backtesting Engine & Trade Calendar",
+        desc: "Run strategies across months of data in seconds. Results include a filterable trade log with per-trade entry reasons, plus an equity curve and trade calendar showing daily P&L — with economic event markers (CPI, FOMC, NFP) for context."
       },
       {
         icon: <Eye size={20} />,
-        title: "ICT Kill Zone Overlays",
-        desc: "Highlights the London, New York, and Asia kill zone windows directly on the chart — the high-probability time windows used in ICT-based trading strategies. Each session can be toggled independently."
+        title: "ICT / SMC Chart Overlays",
+        desc: "Asia, London, and New York kill zone windows are rendered as colored overlays directly on the chart. FVG (Fair Value Gap) zones are detected automatically. Each overlay is independently toggleable from the chart toolbar."
       }
     ],
     techDetails: [
-      { label: "Charting", value: "TradingView Lightweight Charts with fully custom rendering primitives — TP/SL price lines styled to match TradingView's native appearance, BoxZonePrimitive for kill zone and B&R overlays, and candlestick series for replay" },
-      { label: "Replay Engine", value: "Streams historical OHLCV candles one at a time on a configurable timer to simulate live price movement. Orders are queued and filled when price crosses the limit level, using the actual historical candle data for fill accuracy" },
-      { label: "Rule Engine", value: "Evaluates strategy conditions bar-by-bar across the full historical dataset. Each condition type (zone_time, br_zone, crossover) uses a signal override pattern to inject custom entry/SL/TP values, keeping the evaluation loop unified regardless of condition complexity" },
-      { label: "B&R Zone Logic", value: "Uses a per-day state object to track three phases: zone establishment (pre-defined time window), breakout (close above/below zone boundary), and retest entry (price returns to zone). Prevents duplicate signals with a one-trade-per-zone-per-day flag" },
-      { label: "Prop Firm Mode", value: "Configurable challenge parameters (starting balance, daily loss %, max drawdown %, min trading days) stored in app state. A live dashboard tracks current drawdown and daily P&L, with color-coded warnings as limits approach" },
-      { label: "Backtesting Results", value: "Aggregates all simulated trades into metrics: total P&L, win rate, profit factor, Sharpe ratio (annualized), max drawdown, average R:R. Trade log is filterable by win/loss/breakeven with per-trade entry reason shown" }
+      { label: "Auth & Persistence", value: "Google Sign-In via Firebase Auth — user profiles, trade history, equity data, and account balances are persisted per user. Prop and paper accounts are tracked independently with full reset capability" },
+      { label: "Charting", value: "TradingView Lightweight Charts with custom rendering primitives: TP/SL price lines styled to match TradingView's native look, BoxZonePrimitive for ICT kill zone and B&R overlays, FVG zone detection, and SMC overlay toggles" },
+      { label: "Replay Engine", value: "Streams historical OHLCV candles one at a time on a configurable timer. Market, limit, stop, and stop-limit orders are queued and filled at accurate historical prices, with trailing stop logic applied on each bar" },
+      { label: "Rule Engine", value: "Evaluates strategy conditions bar-by-bar across the full dataset. Each condition type (zone_time, br_zone, crossover) uses a signal override pattern to inject entry/SL/TP values, keeping the evaluation loop unified regardless of condition complexity" },
+      { label: "B&R Zone Logic", value: "Per-day state machine tracks three phases: zone establishment (time window), breakout direction (close vs zone boundary), and retest entry (price returns to zone). One-trade-per-zone-per-day flag prevents duplicate signals" },
+      { label: "Dashboard & Analytics", value: "Equity curve chart, trade calendar with daily P&L heatmap and economic event markers (CPI, FOMC, NFP), win/loss streak tracker, profit factor, Sharpe ratio, and best-day metrics — all computed from saved trade history" }
     ],
     outcomes: [
-      "Replaced TradingView's limited replay with a full order-simulating engine",
-      "Prop firm challenge mode lets you practice under real funded account rules",
-      "Visual rule builder makes strategy testing accessible without coding",
-      "Backtesting surfaces concrete metrics to validate an edge before live trading",
-      "Break & Retest auto-detection removes subjectivity from a key ICT pattern",
-      "ICT kill zone overlays bring professional session-awareness to the chart"
+      "Built a full Google-authenticated platform with persistent trade history across sessions",
+      "Replaced TradingView's read-only replay with a real order-simulating engine",
+      "Prop firm challenge mode enforces funded account rules during practice",
+      "Visual rule builder makes strategy backtesting accessible without any coding",
+      "Trade calendar and equity curve give data-driven feedback on trading patterns",
+      "ICT/SMC overlays and Break & Retest detection bring professional tools to the browser"
     ],
     liveUrl: "https://es-trading-academy.vercel.app/",
     architecture: "Historical Data Feed → Replay Engine → Order Queue → Rule Engine → Signal Evaluation → P&L Tracker → Prop Firm Risk Monitor → Results & Trade Log"
@@ -422,6 +422,19 @@ function SectionLabel({ text, dm }) {
 
 // ─── PROJECT PAGE ─────────────────────────────────────────────────────────────
 
+function SectionDivider() {
+  return <div className="h-px bg-gradient-to-r from-transparent via-slate-700/60 to-transparent my-12" />;
+}
+
+function SectionHeading({ title, dm }) {
+  return (
+    <div className="mb-6">
+      <h2 className="text-xl font-bold mb-2">{title}</h2>
+      <div className={`h-0.5 w-12 rounded-full bg-gradient-to-r from-blue-500 to-cyan-400`} />
+    </div>
+  );
+}
+
 function ProjectPage({ project, onBack, dm }) {
   const progress = useScrollProgress();
   useEffect(() => { window.scrollTo(0, 0); }, []);
@@ -447,52 +460,76 @@ function ProjectPage({ project, onBack, dm }) {
         </div>
       </nav>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
-        {/* Header */}
-        <div className="mb-12">
-          <div className={`inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br ${project.color} text-white mb-6 shadow-lg`}>
-            {project.icon}
-          </div>
-          <div className="flex flex-wrap items-center gap-3 mb-5">
-            {project.status === "In Progress" ? (
-              <span className="text-xs font-bold px-3 py-1.5 rounded-full bg-blue-500/12 text-blue-400 border border-blue-500/25 font-mono">
-                ◉ In Progress
-              </span>
-            ) : (
-              <span className="text-xs font-bold px-3 py-1.5 rounded-full bg-green-500/12 text-green-400 border border-green-500/25 font-mono">
-                ✓ Completed
-              </span>
-            )}
-            <span className={`text-xs font-mono ${subtle}`}>{project.period}</span>
-          </div>
-          <h1 className="text-3xl sm:text-4xl font-bold mb-3 leading-tight">{project.title}</h1>
-          <p className={`text-base font-semibold bg-gradient-to-r ${project.color} bg-clip-text text-transparent mb-6`}>{project.role}</p>
-          <p className={`text-base leading-relaxed max-w-2xl ${muted}`}>{project.overview}</p>
-          {project.liveUrl && (
-            <div className="mt-6">
-              <a
-                href={project.liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-gradient-to-r ${project.color} text-white shadow-md hover:opacity-90 hover:scale-[1.02] active:scale-[0.98] transition-all`}
-              >
-                <ExternalLink size={14} /> View Live Site
-              </a>
+      {/* Header gradient banner */}
+      <div className={`relative overflow-hidden`}>
+        <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-[0.06] pointer-events-none`} />
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-16 sm:pt-20 pb-10">
+          {/* Header */}
+          <div className="mb-12">
+            {/* Icon with glow */}
+            <div className="relative inline-flex mb-6">
+              <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${project.color} opacity-30 blur-xl scale-150`} />
+              <div className={`relative inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br ${project.color} text-white shadow-xl`}>
+                <span className="w-7 h-7 flex items-center justify-center">{project.icon}</span>
+              </div>
             </div>
-          )}
+            <div className="flex flex-wrap items-center gap-3 mb-5">
+              {project.status === "In Progress" ? (
+                <span className="text-xs font-bold px-3 py-1.5 rounded-full bg-blue-500/12 text-blue-400 border border-blue-500/25 font-mono">
+                  ◉ In Progress
+                </span>
+              ) : (
+                <span className="text-xs font-bold px-3 py-1.5 rounded-full bg-green-500/12 text-green-400 border border-green-500/25 font-mono">
+                  ✓ Completed
+                </span>
+              )}
+              <span className={`text-xs font-mono ${subtle}`}>{project.period}</span>
+            </div>
+            <h1 className="text-3xl sm:text-4xl font-bold mb-3 leading-tight">{project.title}</h1>
+            <p className={`text-base font-semibold bg-gradient-to-r ${project.color} bg-clip-text text-transparent mb-6`}>{project.role}</p>
+            <p className={`text-base leading-relaxed max-w-2xl ${muted}`}>{project.overview}</p>
+            {project.liveUrl && (
+              <div className="mt-6">
+                <a
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-gradient-to-r ${project.color} text-white shadow-md hover:opacity-90 hover:scale-[1.02] active:scale-[0.98] transition-all`}
+                >
+                  <ExternalLink size={14} /> View Live Site
+                </a>
+              </div>
+            )}
+          </div>
         </div>
+      </div>
+
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 pb-16 sm:pb-20">
 
         {/* Stats Cards */}
         {project.stats && (
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-10">
-            {project.stats.map((s, i) => (
-              <div key={i} className={`rounded-2xl p-4 border text-center ${card}`}>
-                <div className={`text-2xl font-bold bg-gradient-to-r ${project.color} bg-clip-text text-transparent mb-1`}>{s.value}</div>
-                <div className="text-xs font-bold uppercase tracking-wider font-mono text-blue-400 mb-1">{s.label}</div>
-                <div className={`text-xs leading-snug ${subtle}`}>{s.sub}</div>
-              </div>
-            ))}
-          </div>
+          <>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-10">
+              {project.stats.map((s, i) => (
+                <div
+                  key={i}
+                  className={`relative rounded-2xl p-4 border text-center overflow-hidden transition-shadow hover:shadow-lg ${card}`}
+                  style={{ borderTopWidth: "2px", borderTopColor: "transparent", backgroundClip: "padding-box" }}
+                >
+                  {/* Top accent bar using a pseudo approach via a positioned element */}
+                  <div className={`absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r ${project.color}`} />
+                  {/* Subtle background glow */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-[0.04] pointer-events-none`} />
+                  <div className="relative">
+                    <div className={`text-3xl font-bold bg-gradient-to-r ${project.color} bg-clip-text text-transparent mb-1`}>{s.value}</div>
+                    <div className="text-xs font-bold uppercase tracking-wider font-mono text-blue-400 mb-1">{s.label}</div>
+                    <div className={`text-xs leading-snug ${subtle}`}>{s.sub}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <SectionDivider />
+          </>
         )}
 
         {/* Tags */}
@@ -505,7 +542,7 @@ function ProjectPage({ project, onBack, dm }) {
         </div>
 
         {/* Problem / Solution */}
-        <div className="grid md:grid-cols-2 gap-5 mb-12">
+        <div className="grid md:grid-cols-2 gap-5 mb-6">
           <div className={`rounded-2xl p-6 border ${dm ? "bg-red-500/5 border-red-500/20" : "bg-red-50 border-red-100"}`}>
             <div className="text-red-400 font-bold text-xs uppercase tracking-[0.18em] mb-3 font-mono">The Problem</div>
             <p className={`text-sm leading-relaxed ${dm ? "text-slate-300" : "text-slate-600"}`}>{project.problem}</p>
@@ -516,84 +553,152 @@ function ProjectPage({ project, onBack, dm }) {
           </div>
         </div>
 
+        <SectionDivider />
+
         {/* Architecture */}
-        <div className={`rounded-2xl p-6 mb-12 border ${card}`}>
+        <div className={`rounded-2xl p-6 mb-6 border ${card}`}>
           <div className={`font-bold text-xs uppercase tracking-[0.18em] mb-5 font-mono ${subtle}`}>Pipeline / Architecture</div>
           <div className="flex flex-wrap items-center gap-2">
             {project.architecture.split("→").map((step, i, arr) => (
               <div key={i} className="flex items-center gap-2">
-                <span className={`px-3 py-1.5 rounded-lg text-xs font-medium font-mono bg-gradient-to-r ${project.color} text-white shadow-sm`}>
-                  {step.trim()}
-                </span>
-                {i < arr.length - 1 && <span className={`text-sm ${subtle}`}>›</span>}
+                <div className="relative group">
+                  <div className={`absolute inset-0 rounded-lg bg-gradient-to-r ${project.color} opacity-30 blur-md group-hover:opacity-50 transition-opacity`} />
+                  <span className={`relative px-3 py-1.5 rounded-lg text-xs font-medium font-mono bg-gradient-to-r ${project.color} text-white shadow-sm`}>
+                    {step.trim()}
+                  </span>
+                </div>
+                {i < arr.length - 1 && (
+                  <span className={`text-base font-bold ${dm ? "text-slate-500" : "text-slate-400"}`}>
+                    ›
+                  </span>
+                )}
               </div>
             ))}
           </div>
         </div>
 
+        <SectionDivider />
+
         {/* Screenshots */}
         {project.screenshots && (
-          <div className="mb-12">
-            <h2 className="text-xl font-bold mb-5">Screenshots</h2>
-            <div className="grid sm:grid-cols-2 gap-4">
-              {project.screenshots.map((s, i) => (
-                <div key={i} className={`rounded-2xl overflow-hidden border ${card}`}>
-                  <img
-                    src={s.src}
-                    alt={s.caption}
-                    className="w-full object-cover aspect-video bg-slate-800"
-                    onError={e => { e.target.style.display = "none"; e.target.nextSibling.style.display = "flex"; }}
-                  />
-                  <div className="hidden items-center justify-center aspect-video bg-slate-800/50 text-slate-500 text-xs font-mono">
-                    {s.caption}
+          <>
+            <div className="mb-6">
+              <div className="mb-6">
+                <h2 className="text-xl font-bold mb-2">Screenshots</h2>
+                <div className={`h-0.5 w-12 rounded-full bg-gradient-to-r ${project.color}`} />
+              </div>
+              <div className="grid sm:grid-cols-2 gap-4">
+                {project.screenshots.map((s, i) => (
+                  <div key={i} className={`relative rounded-2xl overflow-hidden border ${card} group`}>
+                    {/* Colored top border */}
+                    <div className={`absolute top-0 left-0 right-0 h-0.5 z-10 bg-gradient-to-r ${project.color}`} />
+                    <div className="overflow-hidden">
+                      <img
+                        src={s.src}
+                        alt={s.caption}
+                        className="w-full object-cover aspect-video bg-slate-800 transition-transform duration-300 group-hover:scale-105"
+                        onError={e => { e.target.style.display = "none"; e.target.nextSibling.style.display = "flex"; }}
+                      />
+                      <div className="hidden items-center justify-center aspect-video bg-slate-800/50 text-slate-500 text-xs font-mono">
+                        {s.caption}
+                      </div>
+                    </div>
+                    {/* Caption bar with gradient */}
+                    <div className={`px-4 py-3 text-xs font-medium ${muted} border-t ${dm ? "border-slate-800 bg-gradient-to-r from-slate-900/80 to-slate-800/60" : "border-slate-100 bg-gradient-to-r from-white to-slate-50"}`}>
+                      {s.caption}
+                    </div>
                   </div>
-                  <div className={`px-4 py-2.5 text-xs font-medium ${muted} border-t ${dm ? "border-slate-800" : "border-slate-100"}`}>
-                    {s.caption}
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
+            <SectionDivider />
+          </>
         )}
 
         {/* Feature Cards */}
         {project.featureCards && (
-          <div className="mb-12">
-            <h2 className="text-xl font-bold mb-5">Key Features</h2>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {project.featureCards.map((f, i) => (
-                <div key={i} className={`rounded-2xl p-5 border ${card}`}>
-                  <div className={`inline-flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br ${project.color} text-white mb-4 shadow-sm`}>
-                    {f.icon}
+          <>
+            <div className="mb-6">
+              <div className="mb-6">
+                <h2 className="text-xl font-bold mb-2">Key Features</h2>
+                <div className={`h-0.5 w-12 rounded-full bg-gradient-to-r ${project.color}`} />
+              </div>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {project.featureCards.map((f, i) => (
+                  <div
+                    key={i}
+                    className={`relative rounded-2xl p-5 border overflow-hidden transition-all duration-200 hover:shadow-lg group ${card}`}
+                  >
+                    {/* Left accent bar */}
+                    <div className={`absolute left-0 top-4 bottom-4 w-0.5 rounded-r-full bg-gradient-to-b ${project.color} opacity-60 group-hover:opacity-100 transition-opacity`} />
+                    {/* Hover gradient bg */}
+                    <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-0 group-hover:opacity-[0.04] transition-opacity pointer-events-none`} />
+                    <div className="relative">
+                      {/* Icon with glow */}
+                      <div className="relative inline-flex mb-4">
+                        <div className={`absolute inset-0 rounded-xl bg-gradient-to-br ${project.color} opacity-40 blur-md scale-125`} />
+                        <div className={`relative inline-flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br ${project.color} text-white shadow-sm`}>
+                          {f.icon}
+                        </div>
+                      </div>
+                      <div className="text-sm font-bold mb-2">{f.title}</div>
+                      <div className={`text-xs leading-relaxed ${muted}`}>{f.desc}</div>
+                    </div>
                   </div>
-                  <div className="text-sm font-bold mb-2">{f.title}</div>
-                  <div className={`text-xs leading-relaxed ${muted}`}>{f.desc}</div>
+                ))}
+              </div>
+            </div>
+            <SectionDivider />
+          </>
+        )}
+
+        {/* Technical Deep Dive */}
+        <div className="mb-6">
+          <div className="mb-6">
+            <h2 className="text-xl font-bold mb-2">Technical Deep Dive</h2>
+            <div className={`h-0.5 w-12 rounded-full bg-gradient-to-r ${project.color}`} />
+          </div>
+          {/* Vertical accent line container */}
+          <div className="relative">
+            <div className={`absolute left-0 top-0 bottom-0 w-0.5 rounded-full bg-gradient-to-b ${project.color} opacity-30`} />
+            <div className="space-y-2 pl-4">
+              {project.techDetails.map((d, i) => (
+                <div
+                  key={i}
+                  className={`flex gap-5 rounded-xl p-4 border transition-colors ${card} ${i % 2 === 0 ? (dm ? "bg-slate-900/90" : "bg-white") : (dm ? "bg-slate-800/40" : "bg-slate-50/80")}`}
+                >
+                  {/* Gradient label text */}
+                  <div className={`text-xs font-bold uppercase tracking-wider font-mono min-w-[110px] pt-0.5 flex-shrink-0 bg-gradient-to-r ${project.color} bg-clip-text text-transparent`}>
+                    {d.label}
+                  </div>
+                  <div className={`text-sm leading-relaxed ${dm ? "text-slate-300" : "text-slate-600"}`}>{d.value}</div>
                 </div>
               ))}
             </div>
           </div>
-        )}
-
-        {/* Technical Deep Dive */}
-        <div className="mb-12">
-          <h2 className="text-xl font-bold mb-5">Technical Deep Dive</h2>
-          <div className="space-y-3">
-            {project.techDetails.map((d, i) => (
-              <div key={i} className={`flex gap-5 rounded-xl p-4 border ${card}`}>
-                <div className="text-xs font-bold text-blue-400 uppercase tracking-wider font-mono min-w-[110px] pt-0.5 flex-shrink-0">{d.label}</div>
-                <div className={`text-sm leading-relaxed ${dm ? "text-slate-300" : "text-slate-600"}`}>{d.value}</div>
-              </div>
-            ))}
-          </div>
         </div>
+
+        <SectionDivider />
 
         {/* Outcomes */}
         <div className={`rounded-2xl p-6 border ${card}`}>
-          <h2 className="text-xl font-bold mb-6">Key Outcomes</h2>
-          <div className="grid sm:grid-cols-2 gap-4">
+          {/* Section header with count badge */}
+          <div className="flex items-center gap-3 mb-6">
+            <h2 className="text-xl font-bold">Key Outcomes</h2>
+            <span className={`inline-flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold text-white bg-gradient-to-br ${project.color} shadow-sm`}>
+              {project.outcomes.length}
+            </span>
+          </div>
+          <div className="grid sm:grid-cols-2 gap-3">
             {project.outcomes.map((o, i) => (
-              <div key={i} className="flex items-start gap-3">
-                <CheckCircle size={15} className="text-green-400 mt-0.5 flex-shrink-0" />
+              <div
+                key={i}
+                className={`flex items-start gap-3 rounded-xl p-3 border transition-all duration-200 hover:shadow-md group ${dm ? "bg-slate-800/40 border-slate-700/50 hover:bg-slate-800/70" : "bg-slate-50 border-slate-100 hover:bg-white"}`}
+              >
+                {/* Numbered circle */}
+                <span className={`inline-flex items-center justify-center w-5 h-5 rounded-full text-[10px] font-bold text-white flex-shrink-0 mt-0.5 bg-gradient-to-br ${project.color} shadow-sm`}>
+                  {i + 1}
+                </span>
                 <span className={`text-sm leading-relaxed ${dm ? "text-slate-300" : "text-slate-600"}`}>{o}</span>
               </div>
             ))}
