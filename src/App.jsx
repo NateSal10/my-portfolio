@@ -2,7 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import {
   Menu, X, ExternalLink, Linkedin, Mail, ArrowLeft,
   CheckCircle, AlertTriangle, Terminal, Eye, Database,
-  Shield, Code, Server, Zap, ChevronDown, ChevronUp
+  Shield, Code, Server, Zap, ChevronDown, ChevronUp,
+  TrendingUp, BarChart2, Layers, PlayCircle
 } from "lucide-react";
 
 // ─── DATA ─────────────────────────────────────────────────────────────────────
@@ -163,34 +164,82 @@ const PROJECTS = [
   },
   {
     id: "trading-simulator",
-    title: "Algorithmic Trading Simulator",
+    title: "Trading Simulator & Prop Firm Trainer",
     role: "Personal Project",
     period: "March 2026 – Present",
     status: "In Progress",
-    tags: ["React", "Vite", "TradingView Lightweight Charts", "Backtesting", "JavaScript"],
-    summary: "A full-featured trading practice and backtesting platform with real-time chart replay, visual rule builder for strategy testing, ICT kill zone overlays, and TradingView-style TP/SL order management.",
+    tags: ["React", "Vite", "TradingView Lightweight Charts", "Backtesting", "JavaScript", "ICT Concepts", "Prop Firm"],
+    summary: "A custom-built trading platform that extends TradingView with features it doesn't offer natively — full market replay with real order simulation, a visual strategy backtester, ICT kill zone overlays, and a prop firm challenge mode that enforces funded account rules in real time.",
     icon: <Zap size={22} />,
     color: "from-cyan-500 to-blue-600",
     featured: false,
     microsoft: false,
     noPage: false,
-    overview: "A browser-based trading simulator built from scratch in React, designed to replicate the feel of a live trading environment for practice and strategy backtesting. The platform supports historical chart replay at any timeframe, manual order execution with precise TP/SL control, and an automated backtesting engine with a drag-and-drop visual rule builder.",
-    problem: "Most trading simulators are either too simplified to build real skill or locked behind expensive subscriptions. There was no lightweight, open tool that combined realistic chart replay, order simulation, and a flexible backtesting engine in one place.",
-    solution: "Built a modular React application around TradingView's Lightweight Charts library. The replay engine streams historical OHLCV data bar-by-bar to simulate live conditions. A custom rule engine evaluates entry/exit conditions against historical data, supporting complex patterns like Break & Retest zones with automatic SL/TP calculation based on zone geometry and configurable R:R ratios.",
+    overview: "TradingView is a great charting tool, but it falls short for serious practice — there's no way to replay markets with real order execution, test your own strategies algorithmically, or simulate the exact conditions of a prop firm challenge. I built this platform from scratch to fill that gap. It combines a bar-by-bar market replay engine, a visual backtesting system with custom indicators and strategy rules, and a prop firm challenge simulator that enforces daily loss limits, max drawdown, and consistency rules — all in one place, for free.",
+    problem: "Preparing for a prop firm challenge (like FTMO or MyFundedFX) requires two things most tools don't provide together: the ability to practice discretionary trading under realistic risk rules, and a way to validate strategies algorithmically before putting real money on the line. TradingView's replay tool is read-only — it doesn't simulate orders, track P&L, or enforce account rules. Paid simulators exist but are expensive, inflexible, and don't support custom indicators or strategies.",
+    solution: "Built a fully custom React application on top of TradingView's Lightweight Charts library. The replay engine streams historical price data candle-by-candle, letting you place real limit and market orders that fill at accurate historical prices — just like live trading. The backtesting page lets you define strategies using a visual rule builder (no code required), run them across historical data, and review results in a detailed trade log. A dedicated prop firm mode overlays your challenge's risk rules in real time, flagging when you approach daily loss or max drawdown limits so you can build the discipline needed to pass.",
+    stats: [
+      { label: "Prop Firm Mode", value: "Built-in", sub: "Daily loss, max drawdown & consistency rules" },
+      { label: "Perf Metrics", value: "6+", sub: "Sharpe, win rate, drawdown, P&L, R:R, profit factor" },
+      { label: "Strategy Conditions", value: "4+", sub: "Time zone, Break & Retest, crossover, manual" },
+      { label: "Chart Overlays", value: "Custom", sub: "Kill zones, TP/SL lines, B&R zone boxes" }
+    ],
+    screenshots: [
+      { src: "/screenshots/replay.png", caption: "Market Replay — bar-by-bar with live order simulation" },
+      { src: "/screenshots/backtest.png", caption: "Backtesting Page — visual rule builder and trade log" },
+      { src: "/screenshots/prop-firm.png", caption: "Prop Firm Challenge Mode — real-time risk tracking" },
+      { src: "/screenshots/kill-zones.png", caption: "ICT Kill Zone Overlays — London, NY, and Asia sessions" }
+    ],
+    featureCards: [
+      {
+        icon: <PlayCircle size={20} />,
+        title: "Market Replay Mode",
+        desc: "Replay any historical market candle-by-candle at your own pace. Place limit and market orders, set TP/SL levels, and watch your P&L update in real time — exactly like trading live, but on past data."
+      },
+      {
+        icon: <Shield size={20} />,
+        title: "Prop Firm Challenge Simulator",
+        desc: "Configure the exact rules of your funded challenge — daily loss limit, max drawdown, minimum trading days, consistency rules. The simulator tracks your account in real time and warns you before you breach a rule."
+      },
+      {
+        icon: <Layers size={20} />,
+        title: "Visual Strategy Builder",
+        desc: "Build trading strategies without writing code. Add condition blocks — entry time windows, price crossovers, Break & Retest zones — and the engine auto-calculates entries, stop losses, and take profits for every signal."
+      },
+      {
+        icon: <BarChart2 size={20} />,
+        title: "Backtesting Engine",
+        desc: "Run your strategy across months of historical data in seconds. Results include a full trade log with filterable entries, plus key metrics: win rate, Sharpe ratio, max drawdown, profit factor, and average R:R."
+      },
+      {
+        icon: <TrendingUp size={20} />,
+        title: "Break & Retest Detection",
+        desc: "Automatically identifies when price breaks out of a defined zone then comes back to retest it — a high-probability entry pattern. The engine enters on confirmation, with stop loss at the zone boundary and TP at your chosen R:R."
+      },
+      {
+        icon: <Eye size={20} />,
+        title: "ICT Kill Zone Overlays",
+        desc: "Highlights the London, New York, and Asia kill zone windows directly on the chart — the high-probability time windows used in ICT-based trading strategies. Each session can be toggled independently."
+      }
+    ],
     techDetails: [
-      { label: "Charting", value: "TradingView Lightweight Charts with custom primitives for TP/SL price lines, ICT kill zone overlays (BoxZonePrimitive), and candlestick rendering" },
-      { label: "Replay Engine", value: "Bar-by-bar OHLCV replay with configurable playback speed, timeframe switching, and accurate order fill simulation at historical prices" },
-      { label: "Rule Engine", value: "Visual condition builder supporting time-based zones, Break & Retest patterns, and crossover signals — each condition type computes entry, SL, and TP automatically" },
-      { label: "Backtesting", value: "Runs strategies across full historical datasets, producing trade logs with P&L, win rate, Sharpe ratio, max drawdown, and filterable results by outcome" },
-      { label: "ICT Concepts", value: "Kill zone session overlays (London, NY, Asia) with toggle controls; Break & Retest zone detection with multi-phase state tracking (breakout → retest → entry confirmation)" }
+      { label: "Charting", value: "TradingView Lightweight Charts with fully custom rendering primitives — TP/SL price lines styled to match TradingView's native appearance, BoxZonePrimitive for kill zone and B&R overlays, and candlestick series for replay" },
+      { label: "Replay Engine", value: "Streams historical OHLCV candles one at a time on a configurable timer to simulate live price movement. Orders are queued and filled when price crosses the limit level, using the actual historical candle data for fill accuracy" },
+      { label: "Rule Engine", value: "Evaluates strategy conditions bar-by-bar across the full historical dataset. Each condition type (zone_time, br_zone, crossover) uses a signal override pattern to inject custom entry/SL/TP values, keeping the evaluation loop unified regardless of condition complexity" },
+      { label: "B&R Zone Logic", value: "Uses a per-day state object to track three phases: zone establishment (pre-defined time window), breakout (close above/below zone boundary), and retest entry (price returns to zone). Prevents duplicate signals with a one-trade-per-zone-per-day flag" },
+      { label: "Prop Firm Mode", value: "Configurable challenge parameters (starting balance, daily loss %, max drawdown %, min trading days) stored in app state. A live dashboard tracks current drawdown and daily P&L, with color-coded warnings as limits approach" },
+      { label: "Backtesting Results", value: "Aggregates all simulated trades into metrics: total P&L, win rate, profit factor, Sharpe ratio (annualized), max drawdown, average R:R. Trade log is filterable by win/loss/breakeven with per-trade entry reason shown" }
     ],
     outcomes: [
-      "Built complete replay engine with accurate limit/market order fill simulation",
-      "Implemented visual rule builder replacing 5 broken hardcoded preset strategies",
-      "Added Break & Retest zone condition with automatic SL/TP from zone geometry",
-      "Backtesting metrics include Sharpe ratio, max drawdown, win rate, and profit factor"
+      "Replaced TradingView's limited replay with a full order-simulating engine",
+      "Prop firm challenge mode lets you practice under real funded account rules",
+      "Visual rule builder makes strategy testing accessible without coding",
+      "Backtesting surfaces concrete metrics to validate an edge before live trading",
+      "Break & Retest auto-detection removes subjectivity from a key ICT pattern",
+      "ICT kill zone overlays bring professional session-awareness to the chart"
     ],
-    architecture: "Chart Replay Engine → Bar Feed → Rule Engine → Signal Evaluation → Order Simulation → Results Aggregation → Trade Log"
+    liveUrl: "https://es-trading-academy.vercel.app/",
+    architecture: "Historical Data Feed → Replay Engine → Order Queue → Rule Engine → Signal Evaluation → P&L Tracker → Prop Firm Risk Monitor → Results & Trade Log"
   }
 ];
 
@@ -405,15 +454,46 @@ function ProjectPage({ project, onBack, dm }) {
             {project.icon}
           </div>
           <div className="flex flex-wrap items-center gap-3 mb-5">
-            <span className="text-xs font-bold px-3 py-1.5 rounded-full bg-green-500/12 text-green-400 border border-green-500/25 font-mono">
-              ✓ Completed
-            </span>
+            {project.status === "In Progress" ? (
+              <span className="text-xs font-bold px-3 py-1.5 rounded-full bg-blue-500/12 text-blue-400 border border-blue-500/25 font-mono">
+                ◉ In Progress
+              </span>
+            ) : (
+              <span className="text-xs font-bold px-3 py-1.5 rounded-full bg-green-500/12 text-green-400 border border-green-500/25 font-mono">
+                ✓ Completed
+              </span>
+            )}
             <span className={`text-xs font-mono ${subtle}`}>{project.period}</span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-bold mb-3 leading-tight">{project.title}</h1>
           <p className={`text-base font-semibold bg-gradient-to-r ${project.color} bg-clip-text text-transparent mb-6`}>{project.role}</p>
           <p className={`text-base leading-relaxed max-w-2xl ${muted}`}>{project.overview}</p>
+          {project.liveUrl && (
+            <div className="mt-6">
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-gradient-to-r ${project.color} text-white shadow-md hover:opacity-90 hover:scale-[1.02] active:scale-[0.98] transition-all`}
+              >
+                <ExternalLink size={14} /> View Live Site
+              </a>
+            </div>
+          )}
         </div>
+
+        {/* Stats Cards */}
+        {project.stats && (
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-10">
+            {project.stats.map((s, i) => (
+              <div key={i} className={`rounded-2xl p-4 border text-center ${card}`}>
+                <div className={`text-2xl font-bold bg-gradient-to-r ${project.color} bg-clip-text text-transparent mb-1`}>{s.value}</div>
+                <div className="text-xs font-bold uppercase tracking-wider font-mono text-blue-400 mb-1">{s.label}</div>
+                <div className={`text-xs leading-snug ${subtle}`}>{s.sub}</div>
+              </div>
+            ))}
+          </div>
+        )}
 
         {/* Tags */}
         <div className="flex flex-wrap gap-2 mb-14">
@@ -450,6 +530,49 @@ function ProjectPage({ project, onBack, dm }) {
             ))}
           </div>
         </div>
+
+        {/* Screenshots */}
+        {project.screenshots && (
+          <div className="mb-12">
+            <h2 className="text-xl font-bold mb-5">Screenshots</h2>
+            <div className="grid sm:grid-cols-2 gap-4">
+              {project.screenshots.map((s, i) => (
+                <div key={i} className={`rounded-2xl overflow-hidden border ${card}`}>
+                  <img
+                    src={s.src}
+                    alt={s.caption}
+                    className="w-full object-cover aspect-video bg-slate-800"
+                    onError={e => { e.target.style.display = "none"; e.target.nextSibling.style.display = "flex"; }}
+                  />
+                  <div className="hidden items-center justify-center aspect-video bg-slate-800/50 text-slate-500 text-xs font-mono">
+                    {s.caption}
+                  </div>
+                  <div className={`px-4 py-2.5 text-xs font-medium ${muted} border-t ${dm ? "border-slate-800" : "border-slate-100"}`}>
+                    {s.caption}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Feature Cards */}
+        {project.featureCards && (
+          <div className="mb-12">
+            <h2 className="text-xl font-bold mb-5">Key Features</h2>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {project.featureCards.map((f, i) => (
+                <div key={i} className={`rounded-2xl p-5 border ${card}`}>
+                  <div className={`inline-flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br ${project.color} text-white mb-4 shadow-sm`}>
+                    {f.icon}
+                  </div>
+                  <div className="text-sm font-bold mb-2">{f.title}</div>
+                  <div className={`text-xs leading-relaxed ${muted}`}>{f.desc}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Technical Deep Dive */}
         <div className="mb-12">
