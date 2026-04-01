@@ -160,6 +160,37 @@ const PROJECTS = [
       "Reduced data entry errors through robust server-side validation"
     ],
     architecture: "Browser → Flask Routes → Auth Middleware → Business Logic → SQLAlchemy ORM → MySQL"
+  },
+  {
+    id: "trading-simulator",
+    title: "Algorithmic Trading Simulator",
+    role: "Personal Project",
+    period: "March 2026 – Present",
+    status: "In Progress",
+    tags: ["React", "Vite", "TradingView Lightweight Charts", "Backtesting", "JavaScript"],
+    summary: "A full-featured trading practice and backtesting platform with real-time chart replay, visual rule builder for strategy testing, ICT kill zone overlays, and TradingView-style TP/SL order management.",
+    icon: <Zap size={22} />,
+    color: "from-cyan-500 to-blue-600",
+    featured: false,
+    microsoft: false,
+    noPage: false,
+    overview: "A browser-based trading simulator built from scratch in React, designed to replicate the feel of a live trading environment for practice and strategy backtesting. The platform supports historical chart replay at any timeframe, manual order execution with precise TP/SL control, and an automated backtesting engine with a drag-and-drop visual rule builder.",
+    problem: "Most trading simulators are either too simplified to build real skill or locked behind expensive subscriptions. There was no lightweight, open tool that combined realistic chart replay, order simulation, and a flexible backtesting engine in one place.",
+    solution: "Built a modular React application around TradingView's Lightweight Charts library. The replay engine streams historical OHLCV data bar-by-bar to simulate live conditions. A custom rule engine evaluates entry/exit conditions against historical data, supporting complex patterns like Break & Retest zones with automatic SL/TP calculation based on zone geometry and configurable R:R ratios.",
+    techDetails: [
+      { label: "Charting", value: "TradingView Lightweight Charts with custom primitives for TP/SL price lines, ICT kill zone overlays (BoxZonePrimitive), and candlestick rendering" },
+      { label: "Replay Engine", value: "Bar-by-bar OHLCV replay with configurable playback speed, timeframe switching, and accurate order fill simulation at historical prices" },
+      { label: "Rule Engine", value: "Visual condition builder supporting time-based zones, Break & Retest patterns, and crossover signals — each condition type computes entry, SL, and TP automatically" },
+      { label: "Backtesting", value: "Runs strategies across full historical datasets, producing trade logs with P&L, win rate, Sharpe ratio, max drawdown, and filterable results by outcome" },
+      { label: "ICT Concepts", value: "Kill zone session overlays (London, NY, Asia) with toggle controls; Break & Retest zone detection with multi-phase state tracking (breakout → retest → entry confirmation)" }
+    ],
+    outcomes: [
+      "Built complete replay engine with accurate limit/market order fill simulation",
+      "Implemented visual rule builder replacing 5 broken hardcoded preset strategies",
+      "Added Break & Retest zone condition with automatic SL/TP from zone geometry",
+      "Backtesting metrics include Sharpe ratio, max drawdown, win rate, and profit factor"
+    ],
+    architecture: "Chart Replay Engine → Bar Feed → Rule Engine → Signal Evaluation → Order Simulation → Results Aggregation → Trade Log"
   }
 ];
 
