@@ -614,7 +614,7 @@ export default function Portfolio() {
                 View Projects
               </button>
               <a
-                href="https://drive.google.com/file/d/1rIPqzpn845uxsX9n7yVOPaukvnQkvRWx/view?usp=sharing"
+                href="https://drive.google.com/file/d/1ddjB4fltQp0Zs28W6BWM5NOpqg6uZd1M/view?usp=sharing"
                 target="_blank"
                 rel="noreferrer"
                 className={`px-7 py-3.5 rounded-xl font-semibold text-sm transition-all border flex items-center gap-2 hover:scale-[1.03] active:scale-[0.98] ${
@@ -750,10 +750,10 @@ export default function Portfolio() {
             </div>
           </FadeIn>
 
-          {/* Featured projects */}
-          <div className="grid md:grid-cols-2 gap-5 mb-5">
-            {PROJECTS.filter(p => p.featured).map((p, i) => (
-              <FadeIn key={p.id} delay={i * 100}>
+          {/* All projects — uniform grid */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {PROJECTS.map((p, i) => (
+              <FadeIn key={p.id} delay={i * 80}>
                 <div
                   onClick={() => !p.noPage && setCurrentPage(p.id)}
                   className={`group p-6 rounded-2xl border transition-all h-full ${
@@ -764,18 +764,18 @@ export default function Portfolio() {
                       : `bg-white border-slate-200 shadow-sm ${!p.noPage ? "hover:border-blue-300 hover:shadow-blue-50" : ""}`
                   }`}
                 >
-                  <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br ${p.color} text-white mb-5 shadow-md`}>
+                  <div className={`inline-flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br ${p.color} text-white mb-5 shadow-md`}>
                     {p.icon}
                   </div>
 
-                  <div className="flex flex-wrap justify-between items-start gap-2 mb-4">
+                  <div className="flex flex-wrap justify-between items-start gap-2 mb-3">
                     <div className="flex flex-wrap gap-1.5">
                       <span className={`text-xs font-bold px-2.5 py-1 rounded-full font-mono ${
                         p.status === "In Progress"
                           ? "bg-blue-500/12 text-blue-400 border border-blue-500/20"
-                          : "bg-amber-500/12 text-amber-400 border border-amber-500/20"
+                          : "bg-emerald-500/12 text-emerald-400 border border-emerald-500/20"
                       }`}>
-                        {p.status === "In Progress" ? "● In Progress" : "★ Featured"}
+                        {p.status === "In Progress" ? "● In Progress" : "✓ Completed"}
                       </span>
                       {p.microsoft && (
                         <span className="text-xs font-bold px-2.5 py-1 rounded-full font-mono bg-purple-500/12 text-purple-400 border border-purple-500/20">
@@ -786,61 +786,29 @@ export default function Portfolio() {
                     <span className={`text-xs font-mono ${subtle}`}>{p.period}</span>
                   </div>
 
-                  <h3 className={`text-lg font-bold mb-1.5 transition-colors ${!p.noPage ? "group-hover:text-blue-400" : ""}`}>
+                  <h3 className={`text-base font-bold mb-1 transition-colors ${!p.noPage ? "group-hover:text-blue-400" : ""}`}>
                     {p.title}
                   </h3>
-                  <p className={`text-sm font-medium mb-3 ${muted}`}>{p.role}</p>
-                  <p className={`text-sm leading-relaxed mb-5 ${muted}`}>{p.summary}</p>
+                  <p className={`text-xs font-medium mb-2.5 ${muted}`}>{p.role}</p>
+                  <p className={`text-xs leading-relaxed mb-4 ${muted}`}>{p.summary}</p>
 
-                  <div className="flex flex-wrap gap-1.5 mb-5">
-                    {p.tags.slice(0, 4).map(t => (
-                      <span key={t} className={`text-xs px-2.5 py-1 rounded-full font-mono ${
+                  <div className="flex flex-wrap gap-1.5 mb-4">
+                    {p.tags.slice(0, 3).map(t => (
+                      <span key={t} className={`text-xs px-2 py-0.5 rounded-full font-mono ${
                         dm ? "bg-slate-800 text-slate-400 border border-slate-700/50" : "bg-slate-100 text-slate-500"
                       }`}>
                         {t}
                       </span>
                     ))}
-                    {p.tags.length > 4 && <span className={`text-xs px-2 py-1 ${subtle}`}>+{p.tags.length - 4}</span>}
+                    {p.tags.length > 3 && <span className={`text-xs px-2 py-0.5 ${subtle}`}>+{p.tags.length - 3}</span>}
                   </div>
 
                   {!p.noPage
-                    ? <div className="flex items-center gap-1.5 text-sm font-semibold text-blue-400 group-hover:gap-2.5 transition-all">
-                        View case study <ExternalLink size={13} />
+                    ? <div className="flex items-center gap-1.5 text-xs font-semibold text-blue-400 group-hover:gap-2.5 transition-all">
+                        View case study <ExternalLink size={12} />
                       </div>
                     : <div className={`text-xs font-mono italic ${subtle}`}>Case study coming soon</div>
                   }
-                </div>
-              </FadeIn>
-            ))}
-          </div>
-
-          {/* Other projects */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {PROJECTS.filter(p => !p.featured).map((p, i) => (
-              <FadeIn key={p.id} delay={i * 80}>
-                <div
-                  onClick={() => setCurrentPage(p.id)}
-                  className={`group p-5 rounded-2xl border transition-all cursor-pointer hover:scale-[1.02] hover:shadow-xl h-full ${
-                    dm
-                      ? "bg-slate-900/40 border-slate-800 hover:border-blue-500/30 hover:shadow-blue-500/5"
-                      : "bg-white border-slate-200 shadow-sm hover:border-blue-300 hover:shadow-blue-50"
-                  }`}
-                >
-                  <div className={`inline-flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br ${p.color} text-white mb-4 shadow`}>
-                    {p.icon}
-                  </div>
-                  <h3 className="font-bold text-sm mb-1.5 group-hover:text-blue-400 transition-colors">{p.title}</h3>
-                  <p className={`text-xs leading-relaxed mb-4 ${muted}`}>{p.summary}</p>
-                  <div className="flex flex-wrap gap-1 mb-4">
-                    {p.tags.slice(0, 2).map(t => (
-                      <span key={t} className={`text-xs px-2 py-0.5 rounded-full font-mono ${
-                        dm ? "bg-slate-800 text-slate-400" : "bg-slate-100 text-slate-500"
-                      }`}>{t}</span>
-                    ))}
-                  </div>
-                  <div className="text-xs font-semibold text-blue-400 flex items-center gap-1 group-hover:gap-2 transition-all">
-                    View details <ExternalLink size={11} />
-                  </div>
                 </div>
               </FadeIn>
             ))}
