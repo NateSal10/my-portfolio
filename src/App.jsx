@@ -3,7 +3,7 @@ import {
   Menu, X, ExternalLink, Linkedin, Mail, ArrowLeft,
   CheckCircle, AlertTriangle, Terminal, Eye, Database,
   Shield, Code, Server, Zap, ChevronDown, ChevronUp,
-  TrendingUp, BarChart2, Layers, PlayCircle
+  TrendingUp, BarChart2, Layers, PlayCircle, Github
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -399,7 +399,7 @@ function ProjectPage({ project, onBack, dm }) {
 
 function ContactForm({ dm }) {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState("idle"); // idle | sending | sent | error
 
   const inputCls = `w-full px-4 py-3 rounded-xl text-sm outline-none transition-all border font-sans ${
     dm
@@ -407,7 +407,23 @@ function ContactForm({ dm }) {
       : "bg-slate-50 border-slate-200 text-slate-900 placeholder-slate-400 focus:border-blue-400 focus:bg-white"
   }`;
 
-  if (sent) return (
+  const handleSubmit = async () => {
+    if (!form.name || !form.email || !form.message) return;
+    setStatus("sending");
+    try {
+      // Replace "YOUR_FORMSPREE_ID" with your form ID from formspree.io (e.g. "xrgvwpqz")
+      const res = await fetch("https://formspree.io/f/xpwzggqb", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({ name: form.name, email: form.email, message: form.message }),
+      });
+      setStatus(res.ok ? "sent" : "error");
+    } catch {
+      setStatus("error");
+    }
+  };
+
+  if (status === "sent") return (
     <div className="text-center py-10">
       <div className="w-14 h-14 rounded-2xl bg-green-500/12 border border-green-500/25 flex items-center justify-center mx-auto mb-4">
         <CheckCircle size={24} className="text-green-400" />
@@ -441,11 +457,15 @@ function ContactForm({ dm }) {
         onChange={e => setForm({ ...form, message: e.target.value })}
         className={inputCls + " resize-none"}
       />
+      {status === "error" && (
+        <p className="text-red-400 text-xs font-mono">Something went wrong — please email me directly at nathansalman10@gmail.com</p>
+      )}
       <button
-        onClick={() => { if (form.name && form.email && form.message) setSent(true); }}
-        className="w-full py-3.5 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 rounded-xl font-semibold text-white transition-all hover:shadow-lg hover:shadow-blue-500/20 hover:scale-[1.01] active:scale-[0.99]"
+        onClick={handleSubmit}
+        disabled={status === "sending"}
+        className="w-full py-3.5 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 rounded-xl font-semibold text-white transition-all hover:shadow-lg hover:shadow-blue-500/20 hover:scale-[1.01] active:scale-[0.99] disabled:opacity-60 disabled:cursor-not-allowed disabled:scale-100"
       >
-        Send Message
+        {status === "sending" ? "Sending…" : "Send Message"}
       </button>
     </div>
   );
@@ -457,7 +477,15 @@ export default function Portfolio() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("about");
   const [currentPage, setCurrentPage] = useState(null);
-  const [darkMode, setDarkMode] = useState(true);
+  const [darkMode, setDarkMode] = useState(() => {
+    const stored = localStorage.getItem("dm");
+    return stored !== null ? stored === "true" : true;
+  });
+
+  const toggleDark = () => setDarkMode(d => {
+    localStorage.setItem("dm", String(!d));
+    return !d;
+  });
 
   const progress = useScrollProgress();
   const dm = darkMode;
@@ -531,8 +559,17 @@ export default function Portfolio() {
                 </button>
               ))}
               <div className={`w-px h-4 mx-2 ${dm ? "bg-slate-700" : "bg-slate-200"}`} />
+              <a
+                href="https://github.com/NateSal10"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="GitHub"
+                className={`px-3 py-2 rounded-lg text-sm transition-colors ${dm ? "text-slate-400 hover:text-slate-200 hover:bg-slate-800/60" : "text-slate-500 hover:text-slate-900 hover:bg-slate-100"}`}
+              >
+                <Github size={16} />
+              </a>
               <button
-                onClick={() => setDarkMode(!dm)}
+                onClick={() => toggleDark()}
                 className={`px-3 py-2 rounded-lg text-sm transition-colors ${dm ? "text-slate-400 hover:text-slate-200 hover:bg-slate-800/60" : "text-slate-500 hover:text-slate-900 hover:bg-slate-100"}`}
               >
                 {dm ? "☀️" : "🌙"}
@@ -564,8 +601,16 @@ export default function Portfolio() {
                   {item}
                 </button>
               ))}
+              <a
+                href="https://github.com/NateSal10"
+                target="_blank"
+                rel="noreferrer"
+                className={`flex items-center gap-2 w-full px-4 py-2.5 rounded-lg text-sm transition-colors ${dm ? "text-slate-300 hover:bg-slate-800/60" : "text-slate-600 hover:bg-slate-100"}`}
+              >
+                <Github size={15} /> GitHub
+              </a>
               <button
-                onClick={() => setDarkMode(!dm)}
+                onClick={() => toggleDark()}
                 className={`block w-full text-left px-4 py-2.5 rounded-lg text-sm transition-colors ${muted}`}
               >
                 {dm ? "☀️  Light Mode" : "🌙  Dark Mode"}
@@ -585,6 +630,10 @@ export default function Portfolio() {
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24 w-full">
           <div className="grid lg:grid-cols-5 gap-12 lg:gap-16 items-center">
           <FadeIn className="lg:col-span-3">
+            <div className="inline-flex items-center gap-2 text-xs font-mono px-3 py-1.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              Open to internships & full-time roles
+            </div>
             <h1 className="text-6xl sm:text-7xl lg:text-8xl font-black tracking-tight mb-5 leading-[0.93]">
               Nathan<br />
               <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-300 bg-clip-text text-transparent">
@@ -637,12 +686,24 @@ export default function Portfolio() {
               >
                 <Linkedin size={15} /> LinkedIn
               </a>
+              <a
+                href="https://github.com/NateSal10"
+                target="_blank"
+                rel="noreferrer"
+                className={`px-7 py-3.5 rounded-xl font-semibold text-sm transition-all border flex items-center gap-2 hover:scale-[1.03] active:scale-[0.98] ${
+                  dm
+                    ? "border-slate-700 hover:border-slate-500 text-slate-300 hover:bg-slate-800/60"
+                    : "border-slate-300 hover:border-slate-400 text-slate-700 hover:bg-slate-100"
+                }`}
+              >
+                <Github size={15} /> GitHub
+              </a>
             </div>
 
             {/* Stats */}
             <div className={`flex flex-wrap gap-10 pt-8 border-t ${border}`}>
               {[
-                { value: "5+", label: "Security Projects" },
+                { value: "7", label: "Projects Built" },
                 { value: "3.8", label: "GPA" },
                 { value: "3+", label: "Roles Held" },
                 { value: "Jun '27", label: "Graduation" },
@@ -663,8 +724,8 @@ export default function Portfolio() {
               <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 blur-2xl opacity-20 scale-105" />
               <div className="relative w-80 h-[420px] rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-2xl">
                 <img
-                  src="/nathan.jpg"
-                  alt="Nathan Salman"
+                  src="/nathan.webp"
+                  alt="Nathan Salman, Cybersecurity student at UW"
                   className="w-full h-full object-cover object-top"
                 />
               </div>
@@ -726,7 +787,7 @@ export default function Portfolio() {
                       </div>
                       <div>
                         <div className={`text-sm font-medium ${dm ? "text-slate-300" : "text-slate-700"}`}>CompTIA Security+</div>
-                        <div className={`text-xs font-mono ${subtle}`}>In Progress · Apr 2026</div>
+                        <div className={`text-xs font-mono ${subtle}`}>In Progress · Expected 2026</div>
                       </div>
                     </div>
                   </div>
@@ -803,12 +864,28 @@ export default function Portfolio() {
                     {p.tags.length > 3 && <span className={`text-xs px-2 py-0.5 ${subtle}`}>+{p.tags.length - 3}</span>}
                   </div>
 
-                  {!p.noPage
-                    ? <div className="flex items-center gap-1.5 text-xs font-semibold text-blue-400 group-hover:gap-2.5 transition-all">
-                        View case study <ExternalLink size={12} />
-                      </div>
-                    : <div className={`text-xs font-mono italic ${subtle}`}>Case study coming soon</div>
-                  }
+                  <div className="flex items-center justify-between mt-auto">
+                    {!p.noPage
+                      ? <div className="flex items-center gap-1.5 text-xs font-semibold text-blue-400 group-hover:gap-2.5 transition-all">
+                          View case study <ExternalLink size={12} />
+                        </div>
+                      : <div className="flex items-center gap-1.5 text-xs font-mono text-blue-400/60 italic">
+                          <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse flex-shrink-0" />
+                          In development
+                        </div>
+                    }
+                    {p.liveUrl && (
+                      <a
+                        href={p.liveUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        onClick={e => e.stopPropagation()}
+                        className={`flex items-center gap-1 text-xs font-mono px-2 py-1 rounded-lg transition-colors ${dm ? "text-slate-400 hover:text-slate-200 hover:bg-slate-800" : "text-slate-500 hover:text-slate-700 hover:bg-slate-100"}`}
+                      >
+                        <ExternalLink size={11} /> Live
+                      </a>
+                    )}
+                  </div>
                 </div>
               </FadeIn>
             ))}
@@ -920,6 +997,7 @@ export default function Portfolio() {
                   {[
                     { icon: <Mail size={18} />, label: "Email", value: "nathansalman10@gmail.com", href: "mailto:nathansalman10@gmail.com" },
                     { icon: <Linkedin size={18} />, label: "LinkedIn", value: "/in/nathan-e-salman", href: "https://www.linkedin.com/in/nathan-e-salman" },
+                    { icon: <Github size={18} />, label: "GitHub", value: "github.com/NateSal10", href: "https://github.com/NateSal10" },
                   ].map(c => (
                     <a
                       key={c.label}
@@ -960,6 +1038,9 @@ export default function Portfolio() {
             </a>
             <a href="https://www.linkedin.com/in/nathan-e-salman" target="_blank" rel="noreferrer" className="hover:text-blue-400 transition-colors" aria-label="LinkedIn">
               <Linkedin size={16} />
+            </a>
+            <a href="https://github.com/NateSal10" target="_blank" rel="noreferrer" className="hover:text-blue-400 transition-colors" aria-label="GitHub">
+              <Github size={16} />
             </a>
           </div>
           <div className="font-mono text-xs">
