@@ -20,7 +20,7 @@ export const PROJECTS = [
         <rect x="11" y="11" width="10" height="10" fill="#ffb900"/>
       </svg>
     ),
-    color: "from-slate-700 to-slate-900",
+    color: "from-blue-600 to-indigo-600",
     featured: false,
     microsoft: true,
     noPage: false,
