@@ -5,7 +5,27 @@
       "Bash(gh auth:*)",
       "Read(//c/Users/natha/**)",
       "Bash(git config:*)",
-      "Bash(git:*)"
+      "Bash(git:*)",
+      "WebFetch(domain:homesphere-92352.web.app)",
+      "Read(//c/Users/NateS/Downloads/**)",
+      "Bash(python -c ':*)",
+      "mcp__claude_ai_Vercel__deploy_to_vercel",
+      "Bash(vercel deploy:*)",
+      "Bash(npx vercel:*)",
+      "Bash(grep -E \"\\\\.\\(jsx|js|css|json\\)$\")",
+      "WebFetch(domain:www.awwwards.com)",
+      "WebFetch(domain:brittanychiang.com)",
+      "WebFetch(domain:jacekjeznach.com)",
+      "WebSearch",
+      "WebFetch(domain:colorlib.com)",
+      "WebFetch(domain:dev.to)",
+      "WebFetch(domain:pesto.tech)",
+      "WebFetch(domain:www.a11y-collective.com)",
+      "WebFetch(domain:arc.dev)",
+      "Bash(node -e ':*)",
+      "Bash(npx sharp-cli:*)",
+      "Bash(node -e \" const sharp = require\\('sharp'\\); \")",
+      "Bash(npm install:*)"
     ]
   }
 }

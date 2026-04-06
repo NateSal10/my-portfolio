@@ -366,6 +366,72 @@ function ProjectPage({ project, onBack, dm }) {
 
         <SectionDivider />
 
+        {/* Process & Contributions */}
+        {(project.teamProcess || project.individualContributions) && (
+          <>
+            <div className="grid md:grid-cols-2 gap-5 mb-6">
+              {project.teamProcess && (
+                <div className={`rounded-2xl p-6 border ${dm ? "bg-blue-500/5 border-blue-500/20" : "bg-blue-50 border-blue-100"}`}>
+                  <div className="flex items-center gap-2 mb-3">
+                    <Layers size={16} className="text-blue-500" />
+                    <div className="text-blue-500 font-bold text-xs uppercase tracking-[0.18em] font-mono">Team Process</div>
+                  </div>
+                  <p className={`text-sm leading-relaxed ${dm ? "text-slate-300" : "text-slate-600"}`}>{project.teamProcess}</p>
+                </div>
+              )}
+              {project.individualContributions && (
+                <div className={`rounded-2xl p-6 border ${dm ? "bg-purple-500/5 border-purple-500/20" : "bg-purple-50 border-purple-100"}`}>
+                  <div className="flex items-center gap-2 mb-3">
+                    <Terminal size={16} className="text-purple-500" />
+                    <div className="text-purple-500 font-bold text-xs uppercase tracking-[0.18em] font-mono">Individual Contributions</div>
+                  </div>
+                  <p className={`text-sm leading-relaxed ${dm ? "text-slate-300" : "text-slate-600"}`}>{project.individualContributions}</p>
+                </div>
+              )}
+            </div>
+            <SectionDivider />
+          </>
+        )}
+
+        {/* Takeaways & Next Steps */}
+        {(project.takeaways || project.nextSteps) && (
+          <>
+            <div className="grid md:grid-cols-2 gap-5 mb-6">
+              {project.takeaways && (
+                <div className={`rounded-2xl p-6 border ${card}`}>
+                  <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
+                    <CheckCircle size={18} className="text-green-500" /> Key Takeaways
+                  </h3>
+                  <ul className="space-y-3">
+                    {project.takeaways.map((t, i) => (
+                      <li key={i} className={`text-sm leading-relaxed flex items-start gap-2 ${dm ? "text-slate-300" : "text-slate-600"}`}>
+                        <span className="text-green-500 mt-1">•</span>
+                        <span>{t}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {project.nextSteps && (
+                <div className={`rounded-2xl p-6 border ${card}`}>
+                  <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
+                    <TrendingUp size={18} className="text-orange-500" /> Next Steps
+                  </h3>
+                  <ul className="space-y-3">
+                    {project.nextSteps.map((t, i) => (
+                      <li key={i} className={`text-sm leading-relaxed flex items-start gap-2 ${dm ? "text-slate-300" : "text-slate-600"}`}>
+                        <span className="text-orange-500 mt-1">→</span>
+                        <span>{t}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+            <SectionDivider />
+          </>
+        )}
+
         {/* Outcomes */}
         <div className={`rounded-2xl p-6 border ${card}`}>
           {/* Section header with count badge */}

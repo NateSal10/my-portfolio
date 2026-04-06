@@ -23,13 +23,34 @@ export const PROJECTS = [
     color: "from-slate-700 to-slate-900",
     featured: false,
     microsoft: true,
-    noPage: true,
-    overview: "",
-    problem: "",
-    solution: "",
-    techDetails: [],
-    outcomes: [],
-    architecture: ""
+    noPage: false,
+    overview: "The 'AI-Powered Compliance Copilot' is a capstone project sponsored by Microsoft. The mission is to help customers operate securely and confidently in regulated environments by providing tools that simplify compliance and reduce risk. Our team (Team B) was tasked with integrating upstream regulatory outputs with Azure DevOps to provide actionable compliance tasks.",
+    problem: "Security and compliance teams have a highly manual process for turning broad security requirements into actionable Azure DevOps work items. The challenge is automating this mapping process to create clear gap assessments and remediation plans, so teams can accurately track progress and drive measurable compliance improvements.",
+    solution: "We are developing an AI-assisted agent that ingests regulatory outputs, automatically creates corresponding Azure DevOps work items with no missed or duplicated items, and includes clear Microsoft Security Standards (MSS) gap assessments alongside actionable remediation plans. We're also building a centralized dashboard to track compliance work.",
+    techDetails: [
+      { label: "ADO Integration", value: "Automated creation of Azure DevOps boards and work items using the ADO REST API, linking work items across boards for traceability." },
+      { label: "Data Pipeline", value: "Ingesting and parsing regulatory requirements from 'Team A', mapping outputs to appropriate JSON schema for ADO consumption." },
+      { label: "Dashboard", value: "Displaying key metrics such as compliance gaps, overdue tasks, and actionable insights per sprint." },
+      { label: "AI Prototyping", value: "Using Azure OpenAI to prototype reasoning approaches for the agent to draft documentation, gap assessments, and code patterns." }
+    ],
+    teamProcess: "Our team operates on a weekly check-in schedule with our Microsoft sponsor. We divided the project into defined milestones: initial onboarding and ADO setup, prototyping the agent interactions, and iterating on the output schemas. As a team we prioritized clear communication around handoffs, mapping our schema jointly to ensure the parsed regulatory content accurately transitioned into the DevOps environment.",
+    individualContributions: "As a core developer on the team, my technical focus has been building the integration pipeline. I architected the bridging logic to interpret the upstream regulatory analysis and map it precisely to Microsoft Security Standards. From there, I implemented the code to programmatically interact with the Azure DevOps REST API, auto-generating the populated work items and standardized gap assessments.",
+    takeaways: [
+      "Translating complex regulatory language into structured software requirements demands clear schemas and constrained AI prompts.",
+      "Building for an enterprise environment requires strict adherence to security and integration guidelines, especially with Azure DevOps.",
+      "Iterative testing with stakeholders is vital to ensure our dashboard remains simple, intentional, and not bloated."
+    ],
+    nextSteps: [
+      "Once completed, I will add an interactive prototype or video demo of the working dashboard.",
+      "Upload high-fidelity architecture and data-flow diagrams to this page.",
+      "Detail the final outcome of the handoff to the Microsoft sponsorship team.",
+      "Include a direct link to the finalized codebase if allowed by the sponsor's visibility constraints."
+    ],
+    outcomes: [
+      "Prototyping the agent schema and ADO board creation logic.",
+      "Established integration workflows for the Azure DevOps ecosystem."
+    ],
+    architecture: "Team A Outputs (JSON) → Agent Parser → Gap Assessment & Remediation Logic → Azure DevOps API → Work Item Creation → Dashboard Metrics"
   },
   {
     id: "homesphere-erm",
