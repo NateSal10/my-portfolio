@@ -5,7 +5,6 @@ import {
   Shield, Code, Server, Zap, ChevronDown, ChevronUp,
   TrendingUp, BarChart2, Layers, PlayCircle, Github
 } from "lucide-react";
-import { motion } from "framer-motion";
 
 import { NAV_ITEMS, PROJECTS, EXPERIENCE, SKILLS_DATA } from "./data/portfolioData";
 
@@ -64,8 +63,10 @@ function TypingText({ words }) {
       if (display.length > 0) {
         t = setTimeout(() => setDisplay(display.slice(0, -1)), 40);
       } else {
-        setWordIdx((wordIdx + 1) % words.length);
-        setPhase("typing");
+        t = setTimeout(() => {
+          setWordIdx((wordIdx + 1) % words.length);
+          setPhase("typing");
+        }, 0);
       }
     }
     return () => clearTimeout(t);
@@ -112,14 +113,6 @@ function SectionDivider() {
   return <div className="h-px bg-gradient-to-r from-transparent via-slate-700/60 to-transparent my-12" />;
 }
 
-function SectionHeading({ title, dm }) {
-  return (
-    <div className="mb-6">
-      <h2 className="text-xl font-bold mb-2">{title}</h2>
-      <div className={`h-0.5 w-12 rounded-full bg-gradient-to-r from-blue-500 to-cyan-400`} />
-    </div>
-  );
-}
 
 function ProjectPage({ project, onBack, dm }) {
   const progress = useScrollProgress();
