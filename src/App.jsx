@@ -718,7 +718,7 @@ export default function Portfolio() {
             </div>
 
             <p className={`text-lg max-w-xl mb-10 leading-relaxed ${muted}`}>
-              UW Informatics student building tools that make organizations safer — from AI-powered compliance automation to incident response and penetration testing.
+              I'm a UW Informatics student building tools that make organizations safer. My work covers everything from AI-powered compliance automation to incident response and penetration testing.
             </p>
 
             <div className="flex flex-wrap gap-3 mb-16">
@@ -771,7 +771,6 @@ export default function Portfolio() {
               {[
                 { value: "7", label: "Projects Built" },
                 { value: "3.8", label: "GPA" },
-                { value: "3+", label: "Roles Held" },
                 { value: "Jun '27", label: "Graduation" },
               ].map(s => (
                 <div key={s.label}>
@@ -814,10 +813,10 @@ export default function Portfolio() {
             <div className="grid lg:grid-cols-5 gap-12 lg:gap-16">
               <div className={`lg:col-span-3 space-y-5 text-base leading-relaxed ${muted}`}>
                 <p>
-                  I'm a junior at the University of Washington studying Informatics with a cybersecurity specialization. My focus is on the intersection of security engineering and automation — building tools that help teams move fast without creating risk.
+                  I'm a junior at the University of Washington studying Informatics with a focus on cybersecurity. I'm really interested in where security engineering meets automation, so I love building tools that help teams move fast without compromising on security.
                 </p>
                 <p>
-                  My work spans compliance automation, incident response, penetration testing, and security tooling. I'm most energized by projects that require translating ambiguous requirements — whether a regulatory framework or an architectural diagram — into working, secure systems.
+                  My work covers everything from compliance automation and incident response to penetration testing and security tooling. I'm most energized by projects that require translating complex requirements, like a regulatory framework or an architectural diagram, into working systems that are actually secure.
                 </p>
                 <p>
                   Outside of security, I enjoy exploring AI agent architectures and finding creative ways to automate complex workflows. I believe the best security engineers are also great communicators.
@@ -1057,7 +1056,7 @@ export default function Portfolio() {
               <div>
                 <h2 className="text-4xl font-bold mb-4">Let's Connect</h2>
                 <p className={`text-base leading-relaxed mb-10 max-w-md ${muted}`}>
-                  I'm actively looking for cybersecurity internship and full-time opportunities starting Summer/Fall 2027. Whether you have a role, a project, or just want to connect — my inbox is open.
+                  I'm actively looking for cybersecurity internship and full-time opportunities starting Summer/Fall 2027. Whether you have a role, a project, or just want to connect, my inbox is always open.
                 </p>
                 <div className="space-y-3">
                   {[
