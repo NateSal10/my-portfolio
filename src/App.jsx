@@ -812,7 +812,7 @@ export default function Portfolio() {
                   My work covers everything from compliance automation and incident response to penetration testing and security tooling. I'm most energized by projects that require translating complex requirements, like a regulatory framework or an architectural diagram, into working systems that are actually secure.
                 </p>
                 <p>
-                  Outside of security, I enjoy exploring AI agent architectures and finding creative ways to automate complex workflows. I believe the best security engineers are also great communicators.
+                  Outside of security, you'll usually find me on the tennis court. I love playing with friends and competing in my local USTA league. When I'm not playing sports, I enjoy getting creative in the kitchen and learning new recipes.
                 </p>
               </div>
 
