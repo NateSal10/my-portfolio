@@ -17,10 +17,10 @@ function ExperienceRow({ job }) {
 
       {/* Role */}
       <div className="sm:col-span-9">
-        <h3 className="font-display text-xl font-semibold tracking-tight">{job.title}</h3>
-        <p className="text-sm mt-1 mb-5">
-          <span className="text-accent-600 dark:text-accent-400 font-medium">{job.company}</span>
-          <span className="text-zinc-400 dark:text-zinc-600"> · {job.location}</span>
+        <h3 className="font-display text-xl sm:text-2xl font-extrabold tracking-tight">{job.title}</h3>
+        <p className="mt-1.5 mb-5">
+          <span className="font-serif italic text-lg text-accent-600 dark:text-accent-400">{job.company}</span>
+          <span className="text-sm text-zinc-400 dark:text-zinc-600"> · {job.location}</span>
         </p>
         <ul className="space-y-2.5 max-w-2xl">
           {job.bullets.map((b, j) => (
@@ -39,7 +39,7 @@ export default function Experience() {
   return (
     <section id="experience" className="border-t rule">
       <div className="max-w-6xl mx-auto px-5 sm:px-8 py-24 sm:py-28">
-        <SectionHeading index="03" label="Career" title="Experience" />
+        <SectionHeading index="03" label="Career" title="Work" accent="experience." />
         <Stagger gap={0.08}>
           {EXPERIENCE.map((job, i) => (
             <ExperienceRow key={i} job={job} />

@@ -37,7 +37,7 @@ function ProjectRow({ project, index, onOpen }) {
     >
       <div className="grid sm:grid-cols-12 gap-x-6 gap-y-4 items-start">
         {/* Index */}
-        <div className="hidden sm:block sm:col-span-1 font-mono text-xs text-zinc-400 dark:text-zinc-600 pt-2.5">
+        <div className="hidden sm:block sm:col-span-1 font-serif italic text-2xl leading-none text-zinc-300 dark:text-zinc-700 group-hover:text-accent-500 transition-colors pt-1.5">
           {String(index + 1).padStart(2, "0")}
         </div>
 
@@ -45,7 +45,7 @@ function ProjectRow({ project, index, onOpen }) {
         <div className="sm:col-span-6">
           <div className="flex items-center gap-3 flex-wrap mb-2">
             <h3
-              className={`font-display text-2xl sm:text-[1.7rem] font-semibold tracking-tight transition-colors duration-300 ${
+              className={`font-display text-2xl sm:text-3xl font-extrabold tracking-tight transition-colors duration-300 ${
                 clickable ? "group-hover:text-accent-600 dark:group-hover:text-accent-400" : ""
               }`}
             >
@@ -111,8 +111,8 @@ export default function Projects({ onOpen }) {
   return (
     <section id="projects" className="border-t rule">
       <div className="max-w-6xl mx-auto px-5 sm:px-8 py-24 sm:py-28">
-        <SectionHeading index="02" label="Selected Work" title="Projects">
-          <p className="mt-4 text-zinc-500 dark:text-zinc-400">
+        <SectionHeading index="02" label="Selected Work" title="Selected" accent="projects.">
+          <p className="mt-5 text-zinc-500 dark:text-zinc-400">
             Click any project to see a full technical breakdown.
           </p>
         </SectionHeading>

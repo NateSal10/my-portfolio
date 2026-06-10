@@ -26,6 +26,13 @@ body {
   .rule {
     @apply border-zinc-200 dark:border-zinc-800;
   }
+
+  /* Hollow display type — stroke in the current text color, transparent fill */
+  .text-outline {
+    -webkit-text-stroke: 0.022em currentColor;
+    -webkit-text-fill-color: transparent;
+    paint-order: stroke;
+  }
 }
 
 /* Subtle film grain over everything */

@@ -87,15 +87,21 @@ export default function Contact() {
   return (
     <section id="contact" className="border-t rule">
       <div className="max-w-6xl mx-auto px-5 sm:px-8 py-24 sm:py-28">
-        <SectionHeading index="05" label="Contact" title="Let's Connect" />
+        <SectionHeading index="05" label="Contact" title="Let's" accent="connect." />
 
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
           <Reveal>
-            <p className="text-base leading-relaxed mb-12 max-w-md text-zinc-500 dark:text-zinc-400">
+            <p className="text-base leading-relaxed mb-10 max-w-md text-zinc-500 dark:text-zinc-400">
               I'm actively looking for cybersecurity internship and full-time opportunities
               starting Summer/Fall 2027. Whether you have a role, a project, or just want to
               connect — my inbox is open.
             </p>
+            <a
+              href="mailto:nathansalman10@gmail.com"
+              className="inline-block font-display font-bold tracking-tight leading-tight text-[clamp(1.4rem,3.2vw,2.3rem)] mb-12 break-all underline decoration-2 underline-offset-8 decoration-zinc-300 dark:decoration-zinc-700 hover:decoration-accent-500 hover:text-accent-600 dark:hover:text-accent-400 transition-colors"
+            >
+              nathansalman10@gmail.com
+            </a>
             <div>
               {CONTACTS.map(c => (
                 <a

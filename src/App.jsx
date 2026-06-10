@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion as Motion, useScroll, AnimatePresence } from "framer-motion";
 
 import { NAV_ITEMS, PROJECTS } from "./data/portfolioData";
+import { ROLES } from "./data/roles";
 import Nav from "./components/Nav";
 import Hero from "./components/Hero";
 import About from "./components/About";
@@ -12,6 +13,7 @@ import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import ProjectPage from "./components/ProjectPage";
 import BackToTop from "./components/ui/BackToTop";
+import Marquee from "./components/ui/Marquee";
 
 function Home({ scrollTo, activeSection, darkMode, toggleDark, mobileMenuOpen, setMobileMenuOpen, openProject }) {
   const { scrollYProgress } = useScroll();
@@ -32,6 +34,7 @@ function Home({ scrollTo, activeSection, darkMode, toggleDark, mobileMenuOpen, s
         setMobileMenuOpen={setMobileMenuOpen}
       />
       <Hero scrollTo={scrollTo} />
+      <Marquee items={ROLES} />
       <About />
       <Projects onOpen={openProject} />
       <Experience />

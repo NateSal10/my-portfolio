@@ -3,14 +3,7 @@ import { motion as Motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, ChevronDown, Linkedin, Github } from "lucide-react";
 import { LineReveal, Reveal } from "./ui/motion";
 import { EASE } from "./ui/motionTokens";
-
-const ROLES = [
-  "Cybersecurity Specialist",
-  "Security Engineer",
-  "Penetration Tester",
-  "Compliance Analyst",
-  "Incident Responder",
-];
+import { ROLES } from "../data/roles";
 
 const HERO_STATS = [
   { value: "7", label: "Projects Built" },
@@ -63,19 +56,22 @@ export default function Hero({ scrollTo }) {
               </div>
             </Reveal>
 
-            <h1 className="font-display font-bold tracking-tight leading-[0.95] text-[clamp(3.6rem,9vw,6.8rem)] mb-7">
+            <h1 className="font-display font-black uppercase tracking-tight leading-[0.9] text-[clamp(3.6rem,9.5vw,7.5rem)] mb-8">
               <LineReveal delay={0.05}>Nathan</LineReveal>
               <LineReveal delay={0.15}>
                 <span>
-                  Salman<span className="text-accent-500">.</span>
+                  <span className="text-outline">Salman</span>
+                  <span className="text-accent-500">.</span>
                 </span>
               </LineReveal>
             </h1>
 
             <Reveal delay={0.3} y={16}>
-              <div className="flex items-center gap-3 font-mono text-base sm:text-lg text-zinc-600 dark:text-zinc-300 mb-7">
-                <span className="text-accent-500 select-none">{">"}</span>
-                <RotatingRole words={ROLES} />
+              <div className="flex items-baseline gap-3 mb-7">
+                <span className="font-mono text-base sm:text-lg text-accent-500 select-none">{">"}</span>
+                <span className="font-serif italic text-2xl sm:text-3xl text-zinc-700 dark:text-zinc-200">
+                  <RotatingRole words={ROLES} />
+                </span>
               </div>
 
               <p className="text-base sm:text-lg max-w-xl mb-12 leading-relaxed text-zinc-500 dark:text-zinc-400">

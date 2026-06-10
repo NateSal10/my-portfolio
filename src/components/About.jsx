@@ -4,13 +4,13 @@ import { Reveal } from "./ui/motion";
 
 export default function About() {
   return (
-    <section id="about" className="border-t rule">
+    <section id="about">
       <div className="max-w-6xl mx-auto px-5 sm:px-8 py-24 sm:py-28">
-        <SectionHeading index="01" label="Background" title="About Me" />
+        <SectionHeading index="01" label="Background" title="About" accent="me." />
 
         <div className="grid lg:grid-cols-5 gap-12 lg:gap-20">
           <Reveal className="lg:col-span-3 space-y-5 text-base leading-relaxed text-zinc-600 dark:text-zinc-400">
-            <p>
+            <p className="first-letter:float-left first-letter:font-serif first-letter:italic first-letter:text-[3.3em] first-letter:leading-[0.78] first-letter:mr-3 first-letter:mt-1 first-letter:text-accent-600 dark:first-letter:text-accent-400">
               I'm a junior at the University of Washington studying Informatics with a
               cybersecurity specialization. My focus is on the intersection of security
               engineering and automation — building tools that help teams move fast without

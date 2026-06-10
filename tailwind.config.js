@@ -14,13 +14,15 @@ export default {
       },
       fontFamily: {
         sans: ["Inter", "system-ui", "sans-serif"],
-        display: ['"Space Grotesk"', "Inter", "system-ui", "sans-serif"],
+        display: ["Archivo", "Inter", "system-ui", "sans-serif"],
+        serif: ['"Instrument Serif"', "Georgia", "serif"],
         mono: ['"JetBrains Mono"', "monospace"],
       },
       animation: {
         "scroll-bounce": "scroll-bounce 2.2s ease-in-out infinite",
         flow: "flow 1.8s linear infinite",
         blink: "blink 1.1s step-end infinite",
+        marquee: "marquee 32s linear infinite",
       },
       keyframes: {
         "scroll-bounce": {
@@ -36,6 +38,10 @@ export default {
         blink: {
           "0%, 100%": { opacity: "1" },
           "50%": { opacity: "0" },
+        },
+        marquee: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
         },
       },
     },

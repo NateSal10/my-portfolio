@@ -7,9 +7,14 @@ import { SKILLS_DATA } from "../data/portfolioData";
 function SkillRow({ group }) {
   return (
     <Motion.div variants={staggerItem} className="grid sm:grid-cols-12 gap-x-6 gap-y-3 border-t rule last:border-b py-8">
-      <div className="sm:col-span-4 flex items-center gap-3 text-zinc-700 dark:text-zinc-300">
-        <span className="text-accent-600 dark:text-accent-400">{group.icon}</span>
-        <span className="font-display font-semibold tracking-tight">{group.category}</span>
+      <div className="sm:col-span-4 flex items-start gap-3 text-zinc-800 dark:text-zinc-200">
+        <span className="text-accent-600 dark:text-accent-400 mt-1">{group.icon}</span>
+        <span className="font-display font-extrabold uppercase tracking-tight text-lg leading-snug">
+          {group.category}
+          <sup className="font-serif italic font-normal normal-case text-sm text-accent-600 dark:text-accent-400 ml-1.5">
+            {group.items.length}
+          </sup>
+        </span>
       </div>
       <div className="sm:col-span-8 flex flex-wrap gap-2">
         {group.items.map(skill => (
@@ -29,7 +34,7 @@ export default function Skills() {
   return (
     <section id="skills" className="border-t rule">
       <div className="max-w-6xl mx-auto px-5 sm:px-8 py-24 sm:py-28">
-        <SectionHeading index="04" label="Expertise" title="Skills & Tools" />
+        <SectionHeading index="04" label="Expertise" title="Skills" accent="& tools." />
         <Stagger gap={0.07}>
           {SKILLS_DATA.map(group => (
             <SkillRow key={group.category} group={group} />
