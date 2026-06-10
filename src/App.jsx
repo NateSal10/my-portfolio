@@ -91,6 +91,7 @@ export default function App() {
           <Motion.div key={project.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
             <ProjectPage
               project={project}
+              onOpen={setCurrentPage}
               onBack={() => {
                 setCurrentPage(null);
                 setTimeout(() => scrollTo("projects"), 100);
