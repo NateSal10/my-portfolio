@@ -1,28 +1,32 @@
 export default {
+  darkMode: "class",
   content: ["./index.html", "./src/**/*.{js,jsx}"],
   theme: {
     extend: {
+      colors: {
+        accent: {
+          300: "#a3b8ff",
+          400: "#7c9aff",
+          500: "#4d7dfe",
+          600: "#2f55e0",
+          700: "#2342b8",
+        },
+      },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        mono: ['"JetBrains Mono"', 'monospace'],
+        sans: ["Inter", "system-ui", "sans-serif"],
+        display: ['"Space Grotesk"', "Inter", "system-ui", "sans-serif"],
+        mono: ['"JetBrains Mono"', "monospace"],
       },
       animation: {
-        'float-slow': 'float 8s ease-in-out infinite',
-        'float-medium': 'float 6s ease-in-out infinite',
-        'scroll-bounce': 'scroll-bounce 2s infinite',
+        "scroll-bounce": "scroll-bounce 2.2s ease-in-out infinite",
       },
       keyframes: {
-        float: {
-          '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-20px)' },
+        "scroll-bounce": {
+          "0%, 100%": { transform: "translateY(0)", opacity: "0.4" },
+          "50%": { transform: "translateY(7px)", opacity: "1" },
         },
-        'scroll-bounce': {
-          '0%, 20%, 50%, 80%, 100%': { transform: 'translateY(0)' },
-          '40%': { transform: 'translateY(-10px)' },
-          '60%': { transform: 'translateY(-5px)' },
-        },
-      }
-    }
+      },
+    },
   },
   plugins: [],
 }

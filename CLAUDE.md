@@ -1,9 +1,10 @@
 # My Portfolio Architecture Guide
 
 ## Project Overview
-A modern, bento-grid style portfolio web application utilizing React, Tailwind CSS v4, and Framer Motion. 
+A modern, editorial-style portfolio web application utilizing React, Tailwind CSS v3, and Framer Motion.
 
 ## Recent Architectural Shifts (Agent Handoff)
 - **Data Centralization**: All massive constant data arrays (`PROJECTS`, `EXPERIENCE`, `SKILLS`) have been extracted from `App.jsx` and centralized into `src/data/portfolioData.jsx`. Do not hardcode new project items into the main UI file, simply append them to the exported arrays in the data file.
-- **Motion & Layout**: The previously custom `IntersectionObserver` fading elements (`FadeIn`/`TypingText`) have been thoroughly refactored out in favor of declarative `framer-motion` components (`<motion.div>`). 
-- **Aesthetics**: Heavy emphasis placed on 21st.dev style glassmorphism designs, deep background blur, gradient borders, and sleek, dynamic layout hover effects. Maintain this visual fidelity for future component additions!
+- **Component Structure**: `App.jsx` is a thin orchestrator. All sections live in `src/components/` (Nav, Hero, About, Projects, Experience, Skills, Contact, Footer, ProjectPage) with shared motion primitives in `src/components/ui/` (`motion.jsx` for Reveal/LineReveal/Stagger, `motionTokens.js` for EASE/staggerItem).
+- **Motion & Layout**: All scroll/entrance animation is declarative `framer-motion` (import as `motion as Motion` — this ESLint setup flags member-expression JSX as unused otherwise). Shared easing curve is `EASE = [0.16, 1, 0.3, 1]`.
+- **Aesthetics — editorial-technical system (do NOT reintroduce glassmorphism/gradients)**: Space Grotesk display headings + Inter body + JetBrains Mono labels; numbered sections (`01 / Background`); hairline rules via the `rule` utility class (index.css); a single accent color (`accent-*` in tailwind.config.js) with zero gradient fills; subtle film-grain overlay (`.grain`); dark mode via Tailwind `darkMode: "class"` with `dark:` variants (toggled on `document.documentElement`, persisted under localStorage key `dm`). Projects render as editorial index rows, not card grids. The `color` gradient field in portfolioData is intentionally unused. Maintain this restrained visual language for future additions.

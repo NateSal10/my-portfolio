@@ -25,7 +25,8 @@
       "Bash(node -e ':*)",
       "Bash(npx sharp-cli:*)",
       "Bash(node -e \" const sharp = require\\('sharp'\\); \")",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "mcp__Claude_Preview__preview_start"
     ]
   }
 }

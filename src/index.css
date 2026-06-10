@@ -2,27 +2,47 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer utilities {
-  .dot-grid {
-    background-image: radial-gradient(rgba(100, 116, 139, 0.2) 1px, transparent 1px);
-    background-size: 24px 24px;
-  }
-}
-
-.scroll-progress {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 3px;
-  background: linear-gradient(to right, #3b82f6, #22d3ee);
-  z-index: 100;
-  transition: width 0.1s ease-out;
-}
-
 html {
   scroll-behavior: smooth;
 }
 
-::selection {
-  background-color: rgba(59, 130, 246, 0.3);
+body {
+  @apply bg-[#fafafa] text-zinc-900 antialiased;
 }
+
+.dark body {
+  @apply bg-[#09090b] text-zinc-100;
+}
+
+#root {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+/* Hairline rule color shorthand used everywhere */
+@layer utilities {
+  .rule {
+    @apply border-zinc-200 dark:border-zinc-800;
+  }
+}
+
+/* Subtle film grain over everything */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.035'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(113, 113, 122, 0.25); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(113, 113, 122, 0.45); }
+
+/* Text selection */
+::selection { background: rgba(77, 125, 254, 0.25); }
