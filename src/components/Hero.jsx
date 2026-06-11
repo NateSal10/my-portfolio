@@ -8,7 +8,6 @@ import { ROLES } from "../data/roles";
 const HERO_STATS = [
   { value: "7", label: "Projects Built" },
   { value: "3.8", label: "GPA" },
-  { value: "3+", label: "Roles Held" },
   { value: "Jun '27", label: "Graduation" },
 ];
 
@@ -75,8 +74,9 @@ export default function Hero({ scrollTo }) {
               </div>
 
               <p className="text-base sm:text-lg max-w-xl mb-12 leading-relaxed text-zinc-500 dark:text-zinc-400">
-                UW Informatics student building tools that make organizations safer — from
-                AI-powered compliance automation to incident response and penetration testing.
+                I'm a UW Informatics student building tools that make organizations safer. My
+                work covers everything from AI-powered compliance automation to incident
+                response and penetration testing.
               </p>
 
               <div className="flex flex-wrap gap-3 mb-16">
@@ -118,7 +118,7 @@ export default function Hero({ scrollTo }) {
             </Reveal>
 
             <Reveal delay={0.45} y={16}>
-              <div className="grid grid-cols-2 sm:grid-cols-4 border-t rule">
+              <div className="grid grid-cols-3 border-t rule">
                 {HERO_STATS.map(s => (
                   <div key={s.label} className="py-5 pr-6">
                     <div className="font-display text-2xl sm:text-3xl font-semibold tracking-tight">

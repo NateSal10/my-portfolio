@@ -11,7 +11,7 @@ export const PROJECTS = [
     period: "January 2026 – Present",
     status: "In Progress",
     tags: ["AI Agents", "Azure DevOps", "Compliance Automation", "Python", "Prompt Engineering"],
-    summary: "An AI-driven compliance automation platform that converts complex regulatory requirements into structured, actionable Azure DevOps work items — complete with gap analysis, traceability, and remediation planning.",
+    summary: "I'm building an AI platform that takes complicated regulatory rules and turns them into clear, actionable tasks in Azure DevOps. It handles gap analysis and remediation planning so teams know exactly what to fix.",
     icon: (
       <svg viewBox="0 0 21 21" width="22" height="22" xmlns="http://www.w3.org/2000/svg">
         <rect x="0" y="0" width="10" height="10" fill="#f25022"/>
@@ -24,7 +24,7 @@ export const PROJECTS = [
     featured: false,
     microsoft: true,
     noPage: false,
-    overview: "The 'AI-Powered Compliance Copilot' is a capstone project sponsored by Microsoft. The mission is to help customers operate securely and confidently in regulated environments by providing tools that simplify compliance and reduce risk. Our team (Team B) was tasked with integrating upstream regulatory outputs with Azure DevOps to provide actionable compliance tasks.",
+    overview: "This is a capstone project sponsored by Microsoft. My team was tasked with helping customers operate safely in regulated environments by building tools that simplify compliance. We're integrating regulatory requirements with Azure DevOps so teams have a clear set of tasks to follow.",
     problem: "Security and compliance teams have a highly manual process for turning broad security requirements into actionable Azure DevOps work items. The challenge is automating this mapping process to create clear gap assessments and remediation plans, so teams can accurately track progress and drive measurable compliance improvements.",
     solution: "We are developing an AI-assisted agent that ingests regulatory outputs, automatically creates corresponding Azure DevOps work items with no missed or duplicated items, and includes clear Microsoft Security Standards (MSS) gap assessments alongside actionable remediation plans. We're also building a centralized dashboard to track compliance work.",
     techDetails: [
@@ -59,15 +59,15 @@ export const PROJECTS = [
     period: "January – March 2026",
     status: "Completed",
     tags: ["JavaScript", "Firebase", "Risk Management", "ERM", "RACI", "HIPAA", "Risk Heatmap"],
-    summary: "A full-featured Enterprise Risk Management web application built for HomeSphere Robotics — a fictional consumer robotics company. Features an interactive 5×5 risk heatmap, weighted impact scoring, RACI matrix, and Firebase-backed real-time persistence.",
+    summary: "This is a risk management tool I built for HomeSphere Robotics, a fictional consumer robotics company. It includes an interactive 5×5 risk heatmap, weighted impact scoring, and a RACI matrix that saves your data in real-time.",
     icon: <CheckCircle size={22} />,
     color: "from-indigo-500 to-violet-600",
     featured: false,
     microsoft: false,
     noPage: false,
     liveUrl: "https://homesphere-92352.web.app/",
-    overview: "Built as a semester-long group project for an Enterprise Risk Management course, this tool implements a production-grade ERM framework for HomeSphere Robotics — a consumer robotics company that operates humanoid robots inside people's homes, processes sensitive in-home sensor data, and serves vulnerable elder-care populations. The application translates a full governance framework into a working web product: interactive risk heatmap visualization, weighted multi-category impact scoring, a configurable risk appetite threshold, and a RACI matrix for organizational accountability.",
-    problem: "HomeSphere faces simultaneous risk exposure across six domains — physical safety, cybersecurity, HIPAA/CCPA/GDPR compliance, reputational, operational, and third-party dependencies. A robot misread inside someone's home doesn't just cause property damage — it can injure a person. An elder-care monitoring failure during a medical emergency can be life-threatening. The company's compliance maturity was uneven, with safety engineering developed but cybersecurity and privacy governance still lagging behind product growth. The challenge was building a governance system that could surface these interdependent risks in a way that executives, engineers, and auditors could all act on.",
+    overview: "I built this tool as a semester-long project for an Enterprise Risk Management course. It implements a production-grade framework for a robotics company that operates inside people's homes. The app handles everything from risk heatmaps to weighted impact scoring and accountability matrices.",
+    problem: "HomeSphere has to manage risks across safety, cybersecurity, and compliance all at once. If a robot malfunctions in someone's home, it's more than just a bug; it's a safety issue. The challenge was building a system that could show these connected risks in a way that engineers and executives could actually use.",
     solution: "Designed and deployed a web application that embeds HomeSphere's ERM framework into an interactive tool. Risks are plotted on a live 5×5 heatmap weighted by a four-category impact calculator (Trust/Reputational, Operational, Legal/Compliance, Enterprise Value). A configurable risk appetite boundary visually separates acceptable from unacceptable risk. A RACI matrix maps 11 organizational roles to five prioritized enterprise risks. All data persists to Firebase Realtime Database with cross-tab sync and localStorage fallback.",
     techDetails: [
       { label: "Risk Heatmap", value: "Interactive 5×5 grid plotting risks by likelihood (1–5) and impact (1–5). Color-coded severity levels: Critical (red), High (orange), Medium (yellow), Low (green). Configurable risk appetite boundary rendered with dashed border and diagonal striping" },
@@ -94,14 +94,14 @@ export const PROJECTS = [
     period: "March 2026 – Present",
     status: "In Progress",
     tags: ["React", "Vite", "TradingView Lightweight Charts", "Firebase Auth", "Google Sign-In", "Backtesting", "JavaScript", "ICT / SMC"],
-    summary: "TradeForge is a full-stack trading platform I built to go beyond what TradingView offers — bar-by-bar market replay with real order simulation, a visual strategy backtester, prop firm challenge mode, ICT/SMC overlays, and Google-authenticated accounts that save your trade history and P&L across sessions.",
+    summary: "I built TradeForge to go beyond what TradingView offers. It's a full-stack platform for bar-by-bar market replay with real order simulation, a visual backtester, prop firm challenge mode, and accounts that save your trade history automatically.",
     icon: <Zap size={22} />,
     color: "from-cyan-500 to-blue-600",
     featured: false,
     microsoft: false,
     noPage: false,
-    overview: "TradingView is a great charting tool, but it falls short for serious practice — you can't replay markets with real order execution, test strategies algorithmically, or simulate a prop firm challenge. I built TradeForge from scratch to fill that gap. It's a full trading environment with a bar-by-bar market replay engine, live order simulation, a visual backtesting system with custom SMC/ICT overlays, and a prop firm challenge mode that enforces daily loss limits and max drawdown in real time. Accounts are backed by Google Sign-In so your trade history, equity curve, and P&L persist across every session.",
-    problem: "Preparing for a prop firm challenge (like FTMO or MyFundedFX) requires two things most tools don't provide together: realistic discretionary practice under real risk rules, and a way to validate strategies algorithmically before putting money on the line. TradingView's replay is read-only — no order simulation, no P&L tracking, no account rules. Paid simulators are expensive, inflexible, and don't support custom strategies. And nothing on the market combines all of this with persistent account data tied to your identity.",
+    overview: "TradingView is great, but it's hard to get serious practice because you can't replay markets with real order execution. I built TradeForge to fill that gap. It's a complete trading environment with a replay engine, live order simulation, and a prop firm challenge mode that enforces real risk rules.",
+    problem: "Passing a prop firm challenge requires realistic practice under strict risk rules, but most tools don't track your P&L or enforce daily loss limits. TradingView's replay is read-only, and other simulators are either too expensive or too clunky. I wanted something that combined real simulation with persistent account history.",
     solution: "Built TradeForge as a full-stack React app on TradingView Lightweight Charts. The replay engine streams historical candles one at a time — you place market and limit orders that fill at real historical prices, just like live trading. The backtesting page uses a visual rule builder (no code needed) to define strategy conditions, then runs them across months of data in seconds. The dashboard tracks your equity curve, trade calendar, win rate, and streak — all saved to your account via Google Sign-In so nothing is lost between sessions.",
     stats: [
       { label: "Pages Built", value: "5", sub: "Dashboard, Practice, Backtest, Learn, Glossary" },
@@ -119,27 +119,27 @@ export const PROJECTS = [
       {
         icon: <PlayCircle size={20} />,
         title: "Market Replay Mode",
-        desc: "Replay any historical market candle-by-candle at your own pace. Place market, limit, stop, and stop-limit orders that fill at accurate historical prices — with trailing stop support and a live P&L panel that updates in real time."
+        desc: "Replay any historical market candle-by-candle at your own pace. Place market, limit, stop, and stop-limit orders that fill at accurate historical prices, with trailing stop support and a live P&L panel that updates in real time."
       },
       {
         icon: <Shield size={20} />,
         title: "Prop Firm Challenge Simulator",
-        desc: "Configure your challenge rules — daily loss limit, max drawdown, minimum trading days. TradeForge tracks your balance in real time and shows how much room you have left each day, so you build the discipline to pass before going live."
+        desc: "Configure your challenge rules, like daily loss limits and max drawdown. TradeForge tracks your balance in real time and shows how much room you have left each day, so you build the discipline to pass before going live."
       },
       {
         icon: <Code size={20} />,
         title: "Google Sign-In & Account Persistence",
-        desc: "Accounts are powered by Google Sign-In — your trade history, equity curve, win rate, and streak are saved to your profile and available from any device. Prop and paper accounts are tracked separately with a one-click reset option."
+        desc: "Accounts are powered by Google Sign-In, so your trade history, equity curve, and win rate are saved to your profile and available from any device. Prop and paper accounts are tracked separately with a one-click reset option."
       },
       {
         icon: <Layers size={20} />,
         title: "Visual Strategy Builder",
-        desc: "Define trading strategies without writing code. Add condition blocks — entry time windows, price crossovers, Break & Retest zones — and the engine auto-calculates entries, stop losses, and take profits for every signal generated."
+        desc: "Define trading strategies without writing code. Add condition blocks like entry time windows and breakout zones. The engine auto-calculates entries, stop losses, and take profits for every signal."
       },
       {
         icon: <BarChart2 size={20} />,
         title: "Backtesting Engine & Trade Calendar",
-        desc: "Run strategies across months of data in seconds. Results include a filterable trade log with per-trade entry reasons, plus an equity curve and trade calendar showing daily P&L — with economic event markers (CPI, FOMC, NFP) for context."
+        desc: "Run strategies across months of data in seconds. Results include a trade log and an equity curve showing your daily P&L, along with markers for economic events like CPI or FOMC."
       },
       {
         icon: <Eye size={20} />,
@@ -173,7 +173,7 @@ export const PROJECTS = [
     period: "November 2025",
     status: "Completed",
     tags: ["Incident Response", "IOC Analysis", "PCI DSS", "MITRE ATT&CK", "Threat Intelligence"],
-    summary: "Investigated a simulated zero-day exploit targeting SecureShare, identifying IOCs including malicious .aspx webshells, SQL injection chains, and DLL hijacking — delivering a full IR plan with SEC disclosure guidance.",
+    summary: "I investigated a zero-day exploit simulation against 'SecureShare' to track down malicious webshells and SQL injection chains. I delivered a full response plan that included SEC disclosure guidance.",
     icon: <AlertTriangle size={22} />,
     color: "from-red-500 to-orange-500",
     featured: false,
@@ -204,7 +204,7 @@ export const PROJECTS = [
     period: "July 2025",
     status: "Completed",
     tags: ["Penetration Testing", "Burp Suite", "Nmap", "OWASP Top 10", "Vulnerability Assessment"],
-    summary: "Conducted a comprehensive black-box penetration test on a sandbox web application, identifying critical vulnerabilities including SQLi, XSS, and broken authentication — with full remediation guidance.",
+    summary: "I ran a full black-box penetration test on a sandbox web app. I found critical vulnerabilities like SQL injection and broken authentication, then documented exactly how to fix them.",
     icon: <Terminal size={22} />,
     color: "from-purple-500 to-pink-500",
     featured: false,
@@ -235,7 +235,7 @@ export const PROJECTS = [
     period: "June 2025",
     status: "Completed",
     tags: ["PowerShell", "SIEM", "NIST CSF", "Windows Events", "Splunk"],
-    summary: "Built an automated Windows event log monitoring system in PowerShell that detects unauthorized access in real time, generates alerts, and produces HTML SOC dashboards — simulating enterprise SIEM workflows.",
+    summary: "I built a PowerShell tool to monitor Windows event logs and catch unauthorized access in real time. It generates alerts and builds a SOC dashboard to mimic an enterprise security workflow.",
     icon: <Eye size={22} />,
     color: "from-green-500 to-teal-500",
     featured: false,
@@ -266,7 +266,7 @@ export const PROJECTS = [
     period: "September – December 2024",
     status: "Completed",
     tags: ["Flask", "Python", "SQL", "Authentication", "Security Best Practices"],
-    summary: "A Flask web app with secure authentication and full CRUD workflows for 200+ users, featuring parameterized queries, input validation, and admin dashboards — achieving a ~40% improvement in data retrieval efficiency.",
+    summary: "I built a Flask web app to handle records for over 200 users. It features secure authentication and admin dashboards, and it managed to speed up data retrieval by about 40%.",
     icon: <Database size={22} />,
     color: "from-yellow-500 to-orange-400",
     featured: false,
@@ -301,7 +301,7 @@ export const EXPERIENCE = [
     type: "Club Officer",
     bullets: [
       "Lead the Security+ Cohort, facilitating weekly study sessions on exam domains, practice questions, and test strategy to guide UW students toward passing CompTIA Security+.",
-      "Oversee the club's technical infrastructure as an executive officer — building and maintaining the website and driving feature improvements to support a growing membership."
+      "Oversee the club's technical infrastructure as an executive officer, building and maintaining the website and driving feature improvements to support a growing membership."
     ]
   },
   {

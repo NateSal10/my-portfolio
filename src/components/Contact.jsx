@@ -94,7 +94,7 @@ export default function Contact() {
             <p className="text-base leading-relaxed mb-10 max-w-md text-zinc-500 dark:text-zinc-400">
               I'm actively looking for cybersecurity internship and full-time opportunities
               starting Summer/Fall 2027. Whether you have a role, a project, or just want to
-              connect — my inbox is open.
+              connect, my inbox is always open.
             </p>
             <a
               href="mailto:nathansalman10@gmail.com"

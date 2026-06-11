@@ -11,21 +11,21 @@ export default function About() {
         <div className="grid lg:grid-cols-5 gap-12 lg:gap-20">
           <Reveal className="lg:col-span-3 space-y-5 text-base leading-relaxed text-zinc-600 dark:text-zinc-400">
             <p className="first-letter:float-left first-letter:font-serif first-letter:italic first-letter:text-[3.3em] first-letter:leading-[0.78] first-letter:mr-3 first-letter:mt-1 first-letter:text-accent-600 dark:first-letter:text-accent-400">
-              I'm a junior at the University of Washington studying Informatics with a
-              cybersecurity specialization. My focus is on the intersection of security
-              engineering and automation — building tools that help teams move fast without
-              creating risk.
+              I'm a junior at the University of Washington studying Informatics with a focus on
+              cybersecurity. I'm really interested in where security engineering meets
+              automation, so I love building tools that help teams move fast without
+              compromising on security.
             </p>
             <p>
-              My work spans compliance automation, incident response, penetration testing, and
-              security tooling. I'm most energized by projects that require translating ambiguous
-              requirements — whether a regulatory framework or an architectural diagram — into
-              working, secure systems.
+              My work covers everything from compliance automation and incident response to
+              penetration testing and security tooling. I'm most energized by projects that
+              require translating complex requirements, like a regulatory framework or an
+              architectural diagram, into working systems that are actually secure.
             </p>
             <p>
-              Outside of security, I enjoy exploring AI agent architectures and finding creative
-              ways to automate complex workflows. I believe the best security engineers are also
-              great communicators.
+              Outside of security, you'll usually find me on the tennis court. I love playing
+              with friends and competing in my local USTA league. When I'm not playing sports, I
+              enjoy getting creative in the kitchen and learning new recipes.
             </p>
           </Reveal>
 
