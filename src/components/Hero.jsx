@@ -88,7 +88,7 @@ export default function Hero({ scrollTo }) {
                   <ArrowUpRight size={15} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </button>
                 <a
-                  href="https://drive.google.com/file/d/1ddjB4fltQp0Zs28W6BWM5NOpqg6uZd1M/view?usp=sharing"
+                  href="https://docs.google.com/document/d/1LFe6sggRLnCAbl3e2dSJlHl8iAXLxyhv/edit?usp=sharing&ouid=113386255273364857446&rtpof=true&sd=true"
                   target="_blank"
                   rel="noreferrer"
                   className={ctaSecondary}

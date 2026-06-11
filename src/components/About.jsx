@@ -1,4 +1,4 @@
-import { CheckCircle, Zap } from "lucide-react";
+import { CheckCircle, ExternalLink } from "lucide-react";
 import SectionHeading from "./SectionHeading";
 import { Reveal } from "./ui/motion";
 
@@ -51,21 +51,29 @@ export default function About() {
                 Certifications
               </div>
               <div className="space-y-5">
+                <a
+                  href="https://www.credly.com/badges/7562db1d-caea-4601-9203-1261ca31f980/public_url"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group flex items-start gap-3.5"
+                >
+                  <CheckCircle size={16} className="text-emerald-500 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <div className="text-sm font-medium inline-flex items-center gap-1.5 group-hover:text-accent-600 dark:group-hover:text-accent-400 transition-colors">
+                      CompTIA Security+
+                      <ExternalLink size={12} className="text-zinc-400 dark:text-zinc-600 group-hover:text-accent-500 transition-colors" />
+                    </div>
+                    <div className="font-mono text-xs text-zinc-500 dark:text-zinc-500 mt-0.5">
+                      Certified · Verify on Credly
+                    </div>
+                  </div>
+                </a>
                 <div className="flex items-start gap-3.5">
                   <CheckCircle size={16} className="text-emerald-500 mt-0.5 flex-shrink-0" />
                   <div>
                     <div className="text-sm font-medium">Cybersecurity Certificate</div>
                     <div className="font-mono text-xs text-zinc-500 dark:text-zinc-500 mt-0.5">
                       Purdue / Simplilearn
-                    </div>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3.5">
-                  <Zap size={16} className="text-amber-500 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <div className="text-sm font-medium">CompTIA Security+</div>
-                    <div className="font-mono text-xs text-zinc-500 dark:text-zinc-500 mt-0.5">
-                      In Progress · Expected 2026
                     </div>
                   </div>
                 </div>
