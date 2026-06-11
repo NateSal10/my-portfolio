@@ -1,5 +1,6 @@
 import { ArrowUpRight, ExternalLink } from "lucide-react";
 import SectionHeading from "./SectionHeading";
+import MicrosoftLogo from "./ui/MicrosoftLogo";
 import { Stagger } from "./ui/motion";
 import { staggerItem } from "./ui/motionTokens";
 import { motion as Motion } from "framer-motion";
@@ -52,8 +53,11 @@ function ProjectRow({ project, index, onOpen }) {
               {project.title}
             </h3>
             {project.microsoft && (
-              <span className="font-mono text-[10px] uppercase tracking-[0.15em] px-2 py-1 border rule rounded text-zinc-500 dark:text-zinc-400">
-                Microsoft Sponsored
+              <span className="inline-flex items-center gap-2 pl-2 pr-2.5 py-1 border rule rounded">
+                <MicrosoftLogo size={13} />
+                <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-zinc-500 dark:text-zinc-400 border-l rule pl-2">
+                  Sponsored
+                </span>
               </span>
             )}
           </div>

@@ -6,6 +6,7 @@ import {
 import { Reveal, Stagger } from "./ui/motion";
 import { staggerItem } from "./ui/motionTokens";
 import BackToTop from "./ui/BackToTop";
+import MicrosoftLogo from "./ui/MicrosoftLogo";
 import TerminalCard from "./case-study/TerminalCard";
 import BrowserFrame from "./case-study/BrowserFrame";
 import ArchitectureFlow from "./case-study/ArchitectureFlow";
@@ -135,12 +136,15 @@ export default function ProjectPage({ project, onBack, onOpen }) {
                   </span>
                   <StatusTag status={project.status} />
                   <span className="font-mono text-[11px] text-zinc-500 dark:text-zinc-500">{project.period}</span>
-                  {project.microsoft && (
-                    <span className="font-mono text-[10px] uppercase tracking-[0.15em] px-2 py-1 border rule rounded text-zinc-500 dark:text-zinc-400">
-                      Microsoft Sponsored
-                    </span>
-                  )}
                 </div>
+                {project.microsoft && (
+                  <div className="inline-flex items-center gap-3 mb-7 pl-3 pr-4 py-2.5 border rule rounded-lg">
+                    <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400 border-r rule pr-3">
+                      Sponsored by
+                    </span>
+                    <MicrosoftLogo size={20} />
+                  </div>
+                )}
                 <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-zinc-400 dark:text-zinc-600 mb-4">
                   {project.role}
                 </p>
