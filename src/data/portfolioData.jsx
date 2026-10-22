@@ -8,10 +8,10 @@ export const PROJECTS = [
     id: "compliance-copilot",
     title: "AI-Powered Compliance Copilot",
     role: "Informatics Capstone",
-    period: "January 2026 – Present",
-    status: "In Progress",
+    period: "January – June 2026",
+    status: "Completed",
     tags: ["AI Agents", "Azure DevOps", "Compliance Automation", "Python", "Prompt Engineering"],
-    summary: "I'm building an AI platform that takes complicated regulatory rules and turns them into clear, actionable tasks in Azure DevOps. It handles gap analysis and remediation planning so teams know exactly what to fix.",
+    summary: "I built an AI-driven compliance system that turns regulatory requirements into traceable Azure DevOps work items. It achieved 80% accuracy in gap detection and cut manual review time by weeks per regulation.",
     icon: (
       <svg viewBox="0 0 21 21" width="22" height="22" xmlns="http://www.w3.org/2000/svg">
         <rect x="0" y="0" width="10" height="10" fill="#f25022"/>
@@ -24,31 +24,27 @@ export const PROJECTS = [
     featured: false,
     microsoft: true,
     noPage: false,
-    overview: "This is a capstone project sponsored by Microsoft. My team was tasked with helping customers operate safely in regulated environments by building tools that simplify compliance. We're integrating regulatory requirements with Azure DevOps so teams have a clear set of tasks to follow.",
+    overview: "For this Microsoft-sponsored capstone, my team built an AI-driven system that converts regulatory requirements into Azure DevOps work items with built-in traceability and remediation planning. I presented project milestones to Microsoft stakeholders and coordinated with UX and PM teammates on data ingestion pipelines and Copilot agent workflows.",
     problem: "Security and compliance teams have a highly manual process for turning broad security requirements into actionable Azure DevOps work items. The challenge is automating this mapping process to create clear gap assessments and remediation plans, so teams can accurately track progress and drive measurable compliance improvements.",
-    solution: "We are developing an AI-assisted agent that ingests regulatory outputs, automatically creates corresponding Azure DevOps work items with no missed or duplicated items, and includes clear Microsoft Security Standards (MSS) gap assessments alongside actionable remediation plans. We're also building a centralized dashboard to track compliance work.",
+    solution: "We built an AI-driven system that converts regulatory requirements into traceable Azure DevOps work items. The gap assessment logic flags unmet security controls and generates actionable deliverables and remediation plans for GRC teams, achieving 80% accuracy in automated compliance gap detection.",
     techDetails: [
       { label: "ADO Integration", value: "Automated creation of Azure DevOps boards and work items using the ADO REST API, linking work items across boards for traceability." },
       { label: "Data Pipeline", value: "Ingesting and parsing regulatory requirements from 'Team A', mapping outputs to appropriate JSON schema for ADO consumption." },
       { label: "Dashboard", value: "Displaying key metrics such as compliance gaps, overdue tasks, and actionable insights per sprint." },
       { label: "AI Prototyping", value: "Using Azure OpenAI to prototype reasoning approaches for the agent to draft documentation, gap assessments, and code patterns." }
     ],
-    teamProcess: "Our team operates on a weekly check-in schedule with our Microsoft sponsor. We divided the project into defined milestones: initial onboarding and ADO setup, prototyping the agent interactions, and iterating on the output schemas. As a team we prioritized clear communication around handoffs, mapping our schema jointly to ensure the parsed regulatory content accurately transitioned into the DevOps environment.",
-    individualContributions: "As a core developer on the team, my technical focus has been building the integration pipeline. I architected the bridging logic to interpret the upstream regulatory analysis and map it precisely to Microsoft Security Standards. From there, I implemented the code to programmatically interact with the Azure DevOps REST API, auto-generating the populated work items and standardized gap assessments.",
+    teamProcess: "Our team held weekly check-ins with our Microsoft sponsor. We divided the project into defined milestones: initial onboarding and ADO setup, prototyping the agent interactions, and iterating on the output schemas. I presented milestones directly to Microsoft stakeholders and coordinated with UX and PM teammates on data ingestion pipelines and Copilot agent workflows.",
+    individualContributions: "As a core developer on the team, my technical focus was building the integration pipeline. I architected the bridging logic to interpret the upstream regulatory analysis and map it precisely to Microsoft Security Standards. From there, I implemented the code to programmatically interact with the Azure DevOps REST API, auto-generating the populated work items and standardized gap assessments.",
     takeaways: [
       "Translating complex regulatory language into structured software requirements demands clear schemas and constrained AI prompts.",
       "Building for an enterprise environment requires strict adherence to security and integration guidelines, especially with Azure DevOps.",
       "Iterative testing with stakeholders is vital to ensure our dashboard remains simple, intentional, and not bloated."
     ],
-    nextSteps: [
-      "Once completed, I will add an interactive prototype or video demo of the working dashboard.",
-      "Upload high-fidelity architecture and data-flow diagrams to this page.",
-      "Detail the final outcome of the handoff to the Microsoft sponsorship team.",
-      "Include a direct link to the finalized codebase if allowed by the sponsor's visibility constraints."
-    ],
     outcomes: [
-      "Prototyping the agent schema and ADO board creation logic.",
-      "Established integration workflows for the Azure DevOps ecosystem."
+      "Achieved 80% accuracy in automated compliance gap detection.",
+      "Cut manual compliance review time by weeks per regulation.",
+      "Generated traceable Azure DevOps work items and actionable remediation plans for GRC teams.",
+      "Presented project milestones directly to Microsoft stakeholders."
     ],
     architecture: "Team A Outputs (JSON) → Agent Parser → Gap Assessment & Remediation Logic → Azure DevOps API → Work Item Creation → Dashboard Metrics"
   },
@@ -79,7 +75,7 @@ export const PROJECTS = [
     ],
     outcomes: [
       "Deployed live to Firebase Hosting with real-time multi-user data sync",
-      "Modeled 5 enterprise risks with structured cause → event → impact statements",
+      "Identified 15 risks across six domains, with five prioritized risks modeled in the interactive tool",
       "Mapped HIPAA, CCPA, and GDPR exposure across HomeSphere's product and data surface",
       "Designed RACI matrix assigning accountability across 11 organizational roles",
       "Built configurable weighted scoring with live heatmap recalculation",
@@ -173,7 +169,7 @@ export const PROJECTS = [
     period: "November 2025",
     status: "Completed",
     tags: ["Incident Response", "IOC Analysis", "PCI DSS", "MITRE ATT&CK", "Threat Intelligence"],
-    summary: "I investigated a zero-day exploit simulation against 'SecureShare' to track down malicious webshells and SQL injection chains. I delivered a full response plan that included SEC disclosure guidance.",
+    summary: "As part of a five-person response team, I identified five IOCs in a simulated zero-day exploit, including malicious .aspx files, SQL injection payloads, and DLL hijacking attempts. We presented a full incident response plan to a panel of judges.",
     icon: <AlertTriangle size={22} />,
     color: "from-red-500 to-orange-500",
     featured: false,
@@ -190,6 +186,8 @@ export const PROJECTS = [
       { label: "Remediation", value: "Phased containment plan: immediate isolation → forensic preservation → eradication → recovery with rollback procedures" }
     ],
     outcomes: [
+      "Identified five IOCs as part of a five-person response team",
+      "Presented detection rules, containment steps, and PCI DSS / SEC disclosure alignment to a panel of judges",
       "Identified 3 distinct attack vectors across the kill chain",
       "Produced a 25-page incident response report accepted as exercise deliverable",
       "Wrote 8 Splunk detection rules covering identified TTPs",
@@ -294,13 +292,25 @@ export const PROJECTS = [
 
 export const EXPERIENCE = [
   {
-    title: "Technology Officer",
+    title: "Information Security Intern",
+    company: "Velera",
+    location: "Remote",
+    period: "June – August 2026",
+    type: "Internship",
+    bullets: [
+      "Built 15+ new detection rules in Rapid7 InsightIDR (SIEM) to strengthen threat detection coverage for the security operations team.",
+      "Triaged daily security alerts from Fidelis EDR, Rapid7 InsightIDR, and Proofpoint, investigating events across the organization to support timely threat detection and response.",
+      "Researched adversary attack techniques and mapped detections to the MITRE ATT&CK framework to improve security visibility."
+    ]
+  },
+  {
+    title: "VP of Technology Officer",
     company: "ThinkCyber UW",
     location: "Seattle, WA",
     period: "February 2026 – Present",
     type: "Club Officer",
     bullets: [
-      "Lead the Security+ Cohort, facilitating weekly study sessions on exam domains, practice questions, and test strategy to guide UW students toward passing CompTIA Security+.",
+      "Lead weekly Security+ exam prep sessions for a cohort of 20 UW students, covering exam domains, practice questions, and study strategy to guide them toward passing CompTIA Security+.",
       "Oversee the club's technical infrastructure as an executive officer, building and maintaining the website and driving feature improvements to support a growing membership."
     ]
   },
@@ -319,7 +329,7 @@ export const EXPERIENCE = [
     title: "Tennis Shop Associate",
     company: "Avanti Sports Seattle",
     location: "Seattle, WA",
-    period: "December 2023 – Present",
+    period: "December 2023 – June 2026",
     type: "Part-Time",
     bullets: [
       "Provided personalized equipment recommendations to 1,000+ customers, leveraging deep product knowledge to drive a 15% increase in repeat business.",
@@ -330,10 +340,10 @@ export const EXPERIENCE = [
     title: "IT Support & Front Desk Associate",
     company: "Mill Creek Tennis Club",
     location: "Mill Creek, WA",
-    period: "January 2019 – Present",
+    period: "January 2019 – June 2026",
     type: "Part-Time",
     bullets: [
-      "Deliver hands-on IT support for hardware, Wi-Fi infrastructure, and network troubleshooting, maintaining reliable daily operations for staff and members.",
+      "Delivered hands-on IT support for hardware, Wi-Fi infrastructure, and network troubleshooting, maintaining reliable daily operations for staff and members.",
       "Led a full website redesign and built an online reservation system, increasing member engagement by 35% and cutting scheduling errors by 50%."
     ]
   }
@@ -344,13 +354,13 @@ export const SKILLS_DATA = [
     category: "Cybersecurity",
     icon: <Shield size={16} />,
     color: "text-blue-400",
-    items: ["Incident Response", "Vulnerability Assessment", "Risk Assessment", "Governance & Compliance", "Gap Assessment", "Compliance Reporting", "MITRE ATT&CK", "NIST CSF", "Networking", "Firewalls", "TCP Wrappers"]
+    items: ["Incident Response", "Vulnerability Assessment", "Risk Assessment", "Governance & Compliance", "Gap Assessment", "Compliance Reporting", "MITRE ATT&CK", "NIST CSF", "PCI DSS", "Cloud Security", "Log Analysis", "Networking", "Firewalls", "TCP Wrappers"]
   },
   {
     category: "Security Tools",
     icon: <Terminal size={16} />,
     color: "text-red-400",
-    items: ["Splunk (SIEM)", "Burp Suite", "Wireshark", "Nmap", "Metasploit", "Fail2Ban", "Dirb"]
+    items: ["Rapid7 InsightIDR (SIEM)", "Fidelis EDR", "Proofpoint", "Splunk (SIEM)", "Windows Event Viewer", "Burp Suite", "Wireshark", "Nmap", "Metasploit", "Fail2Ban", "Dirb"]
   },
   {
     category: "Programming & Scripting",

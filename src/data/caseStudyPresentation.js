@@ -1,0 +1,71 @@
+// Visual summaries use the existing project and resume content.
+// Covers without product screenshots are explicitly labeled as illustrations.
+export const CASE_STUDY_PRESENTATION = {
+  'compliance-copilot': {
+    category: 'Microsoft-sponsored capstone',
+    headline: 'Turning regulation into a plan of action.',
+    intro: 'An AI-assisted workflow that finds compliance gaps and turns them into traceable Azure DevOps work items.',
+    cover: 'compliance',
+    caption: 'Workflow illustration · regulatory requirement → control gap → remediation',
+    highlight: { value: '80%', label: 'accuracy in automated compliance gap detection', note: 'Microsoft-sponsored capstone · January–June 2026' },
+    phases: [
+      { title: 'Regulatory input', text: 'Parse regulatory requirements into a structured format for the agent.' },
+      { title: 'Gap assessment', text: 'Identify unmet security controls and map requirements to Microsoft Security Standards.' },
+      { title: 'Actionable work', text: 'Create traceable Azure DevOps work items with remediation plans for GRC teams.' },
+    ],
+  },
+  'trading-simulator': {
+    category: 'Independent software project',
+    headline: 'A trading workspace built for practice.',
+    intro: 'Historical market replay, simulated orders, and a visual strategy builder—all in one place.',
+    cover: 'screenshot',
+    caption: 'TradeForge · the practice workspace with chart overlays and order simulation',
+    highlight: { value: '5', label: 'connected pages, from practice to performance review', note: 'Dashboard / Practice / Backtest / Learn / Glossary' },
+  },
+  'homesphere-erm': {
+    category: 'Enterprise risk management',
+    headline: 'Making connected risks easier to see.',
+    intro: 'An interactive risk framework for a fictional robotics company, connecting impact, accountability, and governance.',
+    cover: 'risk',
+    caption: 'Interactive illustration · choose a cell to explore likelihood × impact',
+    highlight: { value: '15', label: 'risks identified across six domains', note: 'HomeSphere Robotics · simulated company / course project' },
+  },
+  'zero-day-response': {
+    category: 'ThinkCyber UW · incident response',
+    headline: 'Following the evidence. Planning the response.',
+    intro: 'A five-person response team investigated a simulated zero-day exploit and presented its response plan to judges.',
+    cover: 'evidence',
+    caption: 'Investigation illustration · selected attack techniques from the tabletop exercise',
+    highlight: { value: '5', label: 'indicators of compromise identified', note: 'Simulated zero-day incident · five-person response team' },
+    evidence: [
+      { code: 'T1190', title: 'SQL injection', detail: 'Exploit public-facing application' },
+      { code: 'T1505.003', title: '.aspx webshell', detail: 'Server software component' },
+      { code: 'T1574.001', title: 'DLL hijacking', detail: 'Hijack execution flow' },
+    ],
+  },
+  pentest: {
+    category: 'Web application security assessment',
+    headline: 'Finding the weak points before they’re used.',
+    intro: 'A black-box assessment of a deliberately vulnerable application, from reconnaissance to verified remediation.',
+    cover: 'findings',
+    caption: 'Findings illustration · vulnerability classes documented in the sandbox assessment',
+    highlight: { value: '4', label: 'vulnerability classes identified', note: 'Deliberately vulnerable application · controlled test environment' },
+    findings: ['SQL injection', 'Stored XSS', 'Broken authentication', 'Security misconfiguration'],
+  },
+  'windows-monitoring': {
+    category: 'Security monitoring · PowerShell',
+    headline: 'From a failed login to a useful signal.',
+    intro: 'A PowerShell monitoring engine that turns Windows event logs into alerts and an HTML dashboard.',
+    cover: 'monitoring',
+    caption: 'Detection illustration · five failed logons within 60 seconds trigger a brute-force alert',
+    highlight: { value: '12s', label: 'to detect the simulated brute-force attack after the threshold was breached', note: 'Course lab simulation · Windows Security Monitoring System' },
+  },
+  'student-data-system': {
+    category: 'Full-stack application · Flask & MySQL',
+    headline: 'A more reliable home for student records.',
+    intro: 'Role-based access, validated data, and faster queries for an application serving academic staff.',
+    cover: 'records',
+    caption: 'System illustration · authenticated access to validated, structured records',
+    highlight: { value: '200+', label: 'users served by the application', note: 'Student Data Management System · September–December 2024' },
+  },
+};

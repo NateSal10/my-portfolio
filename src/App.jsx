@@ -2,11 +2,12 @@ import { useState, useEffect, useRef } from "react";
 import {
   Menu, X, ExternalLink, Linkedin, Mail, ArrowLeft,
   CheckCircle, AlertTriangle, Terminal, Eye, Database,
-  Shield, Code, Server, Zap, ChevronDown, ChevronUp,
+  Shield, Code, Server, ChevronDown, ChevronUp,
   TrendingUp, BarChart2, Layers, PlayCircle, Github
 } from "lucide-react";
 
 import { NAV_ITEMS, PROJECTS, EXPERIENCE, SKILLS_DATA } from "./data/portfolioData";
+import ProjectCaseStudy from "./components/ProjectCaseStudy";
 
 // ─── HOOKS & UTILITIES ────────────────────────────────────────────────────────
 
@@ -108,351 +109,6 @@ function SectionLabel({ text, dm }) {
 }
 
 // ─── PROJECT PAGE ─────────────────────────────────────────────────────────────
-
-function SectionDivider() {
-  return <div className="h-px bg-gradient-to-r from-transparent via-slate-700/60 to-transparent my-12" />;
-}
-
-
-function ProjectPage({ project, onBack, dm }) {
-  const progress = useScrollProgress();
-  useEffect(() => { window.scrollTo(0, 0); }, []);
-
-  const muted = dm ? "text-slate-400" : "text-slate-500";
-  const subtle = dm ? "text-slate-500" : "text-slate-400";
-  const card = dm ? "bg-slate-900/70 border-slate-800" : "bg-white border-slate-200 shadow-sm";
-
-  return (
-    <div className={`min-h-screen font-sans ${dm ? "bg-[#030712] text-slate-100" : "bg-slate-50 text-slate-900"}`}>
-      <div className="scroll-progress" style={{ width: `${progress}%` }} />
-
-      <nav className={`sticky top-0 z-50 backdrop-blur-xl border-b ${dm ? "bg-[#030712]/85 border-slate-800/60" : "bg-white/85 border-slate-200"}`}>
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4 flex items-center gap-4">
-          <button
-            onClick={onBack}
-            className={`flex items-center gap-2 text-sm font-medium transition-colors hover:text-blue-400 ${muted}`}
-          >
-            <ArrowLeft size={15} /> Back to Portfolio
-          </button>
-          <span className={subtle}>·</span>
-          <span className={`text-sm font-medium truncate ${dm ? "text-slate-300" : "text-slate-700"}`}>{project.title}</span>
-        </div>
-      </nav>
-
-      {/* Header gradient banner */}
-      <div className={`relative overflow-hidden`}>
-        <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-[0.06] pointer-events-none`} />
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-16 sm:pt-20 pb-10">
-          {/* Header */}
-          <div className="mb-12">
-            {/* Icon with glow */}
-            <div className="relative inline-flex mb-6">
-              <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${project.color} opacity-30 blur-xl scale-150`} />
-              <div className={`relative inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br ${project.color} text-white shadow-xl`}>
-                <span className="w-7 h-7 flex items-center justify-center">{project.icon}</span>
-              </div>
-            </div>
-            <div className="flex flex-wrap items-center gap-3 mb-5">
-              {project.status === "In Progress" ? (
-                <span className="text-xs font-bold px-3 py-1.5 rounded-full bg-blue-500/12 text-blue-400 border border-blue-500/25 font-mono">
-                  ◉ In Progress
-                </span>
-              ) : (
-                <span className="text-xs font-bold px-3 py-1.5 rounded-full bg-green-500/12 text-green-400 border border-green-500/25 font-mono">
-                  ✓ Completed
-                </span>
-              )}
-              <span className={`text-xs font-mono ${subtle}`}>{project.period}</span>
-            </div>
-            <h1 className="text-3xl sm:text-4xl font-bold mb-3 leading-tight">{project.title}</h1>
-            <p className={`text-base font-semibold bg-gradient-to-r ${project.color} bg-clip-text text-transparent mb-6`}>{project.role}</p>
-            <p className={`text-base leading-relaxed max-w-2xl ${muted}`}>{project.overview}</p>
-            {project.liveUrl && (
-              <div className="mt-6">
-                <a
-                  href={project.liveUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-gradient-to-r ${project.color} text-white shadow-md hover:opacity-90 hover:scale-[1.02] active:scale-[0.98] transition-all`}
-                >
-                  <ExternalLink size={14} /> View Live Site
-                </a>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 pb-16 sm:pb-20">
-
-        {/* Stats Cards */}
-        {project.stats && (
-          <>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-10">
-              {project.stats.map((s, i) => (
-                <div
-                  key={i}
-                  className={`relative rounded-2xl p-4 border text-center overflow-hidden transition-shadow hover:shadow-lg ${card}`}
-                  style={{ borderTopWidth: "2px", borderTopColor: "transparent", backgroundClip: "padding-box" }}
-                >
-                  {/* Top accent bar using a pseudo approach via a positioned element */}
-                  <div className={`absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r ${project.color}`} />
-                  {/* Subtle background glow */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-[0.04] pointer-events-none`} />
-                  <div className="relative">
-                    <div className={`text-3xl font-bold bg-gradient-to-r ${project.color} bg-clip-text text-transparent mb-1`}>{s.value}</div>
-                    <div className="text-xs font-bold uppercase tracking-wider font-mono text-blue-400 mb-1">{s.label}</div>
-                    <div className={`text-xs leading-snug ${subtle}`}>{s.sub}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <SectionDivider />
-          </>
-        )}
-
-        {/* Tags */}
-        <div className="flex flex-wrap gap-2 mb-14">
-          {project.tags.map(t => (
-            <span key={t} className={`px-3 py-1.5 rounded-full text-xs font-medium font-mono border ${dm ? "bg-slate-800/70 border-slate-700/60 text-slate-300" : "bg-white border-slate-200 text-slate-600"}`}>
-              {t}
-            </span>
-          ))}
-        </div>
-
-        {/* Problem / Solution */}
-        <div className="grid md:grid-cols-2 gap-5 mb-6">
-          <div className={`rounded-2xl p-6 border ${dm ? "bg-red-500/5 border-red-500/20" : "bg-red-50 border-red-100"}`}>
-            <div className="text-red-400 font-bold text-xs uppercase tracking-[0.18em] mb-3 font-mono">The Problem</div>
-            <p className={`text-sm leading-relaxed ${dm ? "text-slate-300" : "text-slate-600"}`}>{project.problem}</p>
-          </div>
-          <div className={`rounded-2xl p-6 border ${dm ? "bg-green-500/5 border-green-500/20" : "bg-green-50 border-green-100"}`}>
-            <div className="text-green-400 font-bold text-xs uppercase tracking-[0.18em] mb-3 font-mono">My Solution</div>
-            <p className={`text-sm leading-relaxed ${dm ? "text-slate-300" : "text-slate-600"}`}>{project.solution}</p>
-          </div>
-        </div>
-
-        <SectionDivider />
-
-        {/* Architecture */}
-        <div className={`rounded-2xl p-6 mb-6 border ${card}`}>
-          <div className={`font-bold text-xs uppercase tracking-[0.18em] mb-5 font-mono ${subtle}`}>Pipeline / Architecture</div>
-          <div className="flex flex-wrap items-center gap-2">
-            {project.architecture.split("→").map((step, i, arr) => (
-              <div key={i} className="flex items-center gap-2">
-                <div className="relative group">
-                  <div className={`absolute inset-0 rounded-lg bg-gradient-to-r ${project.color} opacity-30 blur-md group-hover:opacity-50 transition-opacity`} />
-                  <span className={`relative px-3 py-1.5 rounded-lg text-xs font-medium font-mono bg-gradient-to-r ${project.color} text-white shadow-sm`}>
-                    {step.trim()}
-                  </span>
-                </div>
-                {i < arr.length - 1 && (
-                  <span className={`text-base font-bold ${dm ? "text-slate-500" : "text-slate-400"}`}>
-                    ›
-                  </span>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <SectionDivider />
-
-        {/* Screenshots */}
-        {project.screenshots && (
-          <>
-            <div className="mb-6">
-              <div className="mb-6">
-                <h2 className="text-xl font-bold mb-2">Screenshots</h2>
-                <div className={`h-0.5 w-12 rounded-full bg-gradient-to-r ${project.color}`} />
-              </div>
-              <div className="grid sm:grid-cols-2 gap-4">
-                {project.screenshots.map((s, i) => (
-                  <div key={i} className={`relative rounded-2xl overflow-hidden border ${card} group`}>
-                    {/* Colored top border */}
-                    <div className={`absolute top-0 left-0 right-0 h-0.5 z-10 bg-gradient-to-r ${project.color}`} />
-                    <div className="overflow-hidden">
-                      <img
-                        src={s.src}
-                        alt={s.caption}
-                        className="w-full object-cover aspect-video bg-slate-800 transition-transform duration-300 group-hover:scale-105"
-                        onError={e => { e.target.style.display = "none"; e.target.nextSibling.style.display = "flex"; }}
-                      />
-                      <div className="hidden items-center justify-center aspect-video bg-slate-800/50 text-slate-500 text-xs font-mono">
-                        {s.caption}
-                      </div>
-                    </div>
-                    {/* Caption bar with gradient */}
-                    <div className={`px-4 py-3 text-xs font-medium ${muted} border-t ${dm ? "border-slate-800 bg-gradient-to-r from-slate-900/80 to-slate-800/60" : "border-slate-100 bg-gradient-to-r from-white to-slate-50"}`}>
-                      {s.caption}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <SectionDivider />
-          </>
-        )}
-
-        {/* Feature Cards */}
-        {project.featureCards && (
-          <>
-            <div className="mb-6">
-              <div className="mb-6">
-                <h2 className="text-xl font-bold mb-2">Key Features</h2>
-                <div className={`h-0.5 w-12 rounded-full bg-gradient-to-r ${project.color}`} />
-              </div>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {project.featureCards.map((f, i) => (
-                  <div
-                    key={i}
-                    className={`relative rounded-2xl p-5 border overflow-hidden transition-all duration-200 hover:shadow-lg group ${card}`}
-                  >
-                    {/* Left accent bar */}
-                    <div className={`absolute left-0 top-4 bottom-4 w-0.5 rounded-r-full bg-gradient-to-b ${project.color} opacity-60 group-hover:opacity-100 transition-opacity`} />
-                    {/* Hover gradient bg */}
-                    <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-0 group-hover:opacity-[0.04] transition-opacity pointer-events-none`} />
-                    <div className="relative">
-                      {/* Icon with glow */}
-                      <div className="relative inline-flex mb-4">
-                        <div className={`absolute inset-0 rounded-xl bg-gradient-to-br ${project.color} opacity-40 blur-md scale-125`} />
-                        <div className={`relative inline-flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br ${project.color} text-white shadow-sm`}>
-                          {f.icon}
-                        </div>
-                      </div>
-                      <div className="text-sm font-bold mb-2">{f.title}</div>
-                      <div className={`text-xs leading-relaxed ${muted}`}>{f.desc}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <SectionDivider />
-          </>
-        )}
-
-        {/* Technical Deep Dive */}
-        <div className="mb-6">
-          <div className="mb-6">
-            <h2 className="text-xl font-bold mb-2">Technical Deep Dive</h2>
-            <div className={`h-0.5 w-12 rounded-full bg-gradient-to-r ${project.color}`} />
-          </div>
-          {/* Vertical accent line container */}
-          <div className="relative">
-            <div className={`absolute left-0 top-0 bottom-0 w-0.5 rounded-full bg-gradient-to-b ${project.color} opacity-30`} />
-            <div className="space-y-2 pl-4">
-              {project.techDetails.map((d, i) => (
-                <div
-                  key={i}
-                  className={`flex gap-5 rounded-xl p-4 border transition-colors ${card} ${i % 2 === 0 ? (dm ? "bg-slate-900/90" : "bg-white") : (dm ? "bg-slate-800/40" : "bg-slate-50/80")}`}
-                >
-                  {/* Gradient label text */}
-                  <div className={`text-xs font-bold uppercase tracking-wider font-mono min-w-[110px] pt-0.5 flex-shrink-0 bg-gradient-to-r ${project.color} bg-clip-text text-transparent`}>
-                    {d.label}
-                  </div>
-                  <div className={`text-sm leading-relaxed ${dm ? "text-slate-300" : "text-slate-600"}`}>{d.value}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <SectionDivider />
-
-        {/* Process & Contributions */}
-        {(project.teamProcess || project.individualContributions) && (
-          <>
-            <div className="grid md:grid-cols-2 gap-5 mb-6">
-              {project.teamProcess && (
-                <div className={`rounded-2xl p-6 border ${dm ? "bg-blue-500/5 border-blue-500/20" : "bg-blue-50 border-blue-100"}`}>
-                  <div className="flex items-center gap-2 mb-3">
-                    <Layers size={16} className="text-blue-500" />
-                    <div className="text-blue-500 font-bold text-xs uppercase tracking-[0.18em] font-mono">Team Process</div>
-                  </div>
-                  <p className={`text-sm leading-relaxed ${dm ? "text-slate-300" : "text-slate-600"}`}>{project.teamProcess}</p>
-                </div>
-              )}
-              {project.individualContributions && (
-                <div className={`rounded-2xl p-6 border ${dm ? "bg-purple-500/5 border-purple-500/20" : "bg-purple-50 border-purple-100"}`}>
-                  <div className="flex items-center gap-2 mb-3">
-                    <Terminal size={16} className="text-purple-500" />
-                    <div className="text-purple-500 font-bold text-xs uppercase tracking-[0.18em] font-mono">Individual Contributions</div>
-                  </div>
-                  <p className={`text-sm leading-relaxed ${dm ? "text-slate-300" : "text-slate-600"}`}>{project.individualContributions}</p>
-                </div>
-              )}
-            </div>
-            <SectionDivider />
-          </>
-        )}
-
-        {/* Takeaways & Next Steps */}
-        {(project.takeaways || project.nextSteps) && (
-          <>
-            <div className="grid md:grid-cols-2 gap-5 mb-6">
-              {project.takeaways && (
-                <div className={`rounded-2xl p-6 border ${card}`}>
-                  <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
-                    <CheckCircle size={18} className="text-green-500" /> Key Takeaways
-                  </h3>
-                  <ul className="space-y-3">
-                    {project.takeaways.map((t, i) => (
-                      <li key={i} className={`text-sm leading-relaxed flex items-start gap-2 ${dm ? "text-slate-300" : "text-slate-600"}`}>
-                        <span className="text-green-500 mt-1">•</span>
-                        <span>{t}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              {project.nextSteps && (
-                <div className={`rounded-2xl p-6 border ${card}`}>
-                  <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
-                    <TrendingUp size={18} className="text-orange-500" /> Next Steps
-                  </h3>
-                  <ul className="space-y-3">
-                    {project.nextSteps.map((t, i) => (
-                      <li key={i} className={`text-sm leading-relaxed flex items-start gap-2 ${dm ? "text-slate-300" : "text-slate-600"}`}>
-                        <span className="text-orange-500 mt-1">→</span>
-                        <span>{t}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-            <SectionDivider />
-          </>
-        )}
-
-        {/* Outcomes */}
-        <div className={`rounded-2xl p-6 border ${card}`}>
-          {/* Section header with count badge */}
-          <div className="flex items-center gap-3 mb-6">
-            <h2 className="text-xl font-bold">Key Outcomes</h2>
-            <span className={`inline-flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold text-white bg-gradient-to-br ${project.color} shadow-sm`}>
-              {project.outcomes.length}
-            </span>
-          </div>
-          <div className="grid sm:grid-cols-2 gap-3">
-            {project.outcomes.map((o, i) => (
-              <div
-                key={i}
-                className={`flex items-start gap-3 rounded-xl p-3 border transition-all duration-200 hover:shadow-md group ${dm ? "bg-slate-800/40 border-slate-700/50 hover:bg-slate-800/70" : "bg-slate-50 border-slate-100 hover:bg-white"}`}
-              >
-                {/* Numbered circle */}
-                <span className={`inline-flex items-center justify-center w-5 h-5 rounded-full text-[10px] font-bold text-white flex-shrink-0 mt-0.5 bg-gradient-to-br ${project.color} shadow-sm`}>
-                  {i + 1}
-                </span>
-                <span className={`text-sm leading-relaxed ${dm ? "text-slate-300" : "text-slate-600"}`}>{o}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 // ─── CONTACT FORM ─────────────────────────────────────────────────────────────
 
@@ -569,9 +225,18 @@ export default function Portfolio() {
   if (currentPage) {
     const p = PROJECTS.find(p => p.id === currentPage);
     return (
-      <ProjectPage
+      <ProjectCaseStudy
+        key={p.id}
+        nextProject={PROJECTS[(PROJECTS.findIndex(item => item.id === p.id) + 1) % PROJECTS.length]}
+        onNext={() => setCurrentPage(PROJECTS[(PROJECTS.findIndex(item => item.id === p.id) + 1) % PROJECTS.length].id)}
         project={p}
-        onBack={() => { setCurrentPage(null); setTimeout(() => scrollTo("projects"), 100); }}
+        onBack={() => {
+          setCurrentPage(null);
+          setTimeout(() => {
+            scrollTo("projects");
+            document.getElementById(`project-${p.id}`)?.focus({ preventScroll: true });
+          }, 100);
+        }}
         dm={dm}
       />
     );
@@ -593,9 +258,9 @@ export default function Portfolio() {
       <nav className={`sticky top-0 z-50 backdrop-blur-xl border-b ${dm ? "bg-[#030712]/85 border-slate-800/60" : "bg-white/85 border-slate-200"}`}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="font-bold text-lg tracking-tight select-none">
-              <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">Nathan</span>
-              <span className={dm ? " text-slate-200" : " text-slate-800"}> Salman</span>
+            <div className={`font-bold text-lg tracking-tight select-none shrink-0 ${dm ? "text-slate-100" : "text-slate-900"}`}>
+              <span className={dm ? "text-cyan-300" : "text-blue-700"}>Nathan</span>
+              <span> Salman</span>
             </div>
 
             <div className="hidden md:flex items-center gap-1">
@@ -689,13 +354,9 @@ export default function Portfolio() {
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24 w-full">
           <div className="grid lg:grid-cols-5 gap-12 lg:gap-16 items-center">
           <FadeIn className="lg:col-span-3">
-            <div className="inline-flex items-center gap-2 text-xs font-mono px-3 py-1.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 mb-6">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              Open to internships & full-time roles
-            </div>
             <h1 className="text-6xl sm:text-7xl lg:text-8xl font-black tracking-tight mb-5 leading-[0.93]">
               Nathan<br />
-              <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-300 bg-clip-text text-transparent">
+              <span className={dm ? "text-cyan-300" : "text-blue-600"}>
                 Salman.
               </span>
             </h1>
@@ -711,10 +372,10 @@ export default function Portfolio() {
             </div>
 
             <p className={`text-lg max-w-xl mb-10 leading-relaxed ${muted}`}>
-              I'm a UW Informatics student building tools that make organizations safer. My work covers everything from AI-powered compliance automation to incident response and penetration testing.
+              I'm a UW Informatics student building tools that make organizations safer. My experience includes security operations at Velera, AI-powered compliance automation, and incident response.
             </p>
 
-            <div className="flex flex-wrap gap-3 mb-16">
+            <div className="flex flex-wrap gap-3 mb-10">
               <button
                 onClick={() => scrollTo("projects")}
                 className="px-7 py-3.5 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 rounded-xl font-semibold text-white text-sm transition-all hover:shadow-xl hover:shadow-blue-500/25 hover:scale-[1.03] active:scale-[0.98]"
@@ -722,7 +383,7 @@ export default function Portfolio() {
                 View Projects
               </button>
               <a
-                href="https://drive.google.com/file/d/1ddjB4fltQp0Zs28W6BWM5NOpqg6uZd1M/view?usp=sharing"
+                href="https://docs.google.com/document/d/1BW5IYufl3V8Y4Fyp1LWWboyN8RkXFlUX6g6bCv54iQw/preview"
                 target="_blank"
                 rel="noreferrer"
                 className={`px-7 py-3.5 rounded-xl font-semibold text-sm transition-all border flex items-center gap-2 hover:scale-[1.03] active:scale-[0.98] ${
@@ -760,14 +421,14 @@ export default function Portfolio() {
             </div>
 
             {/* Stats */}
-            <div className={`flex flex-wrap gap-10 pt-8 border-t ${border}`}>
+            <div className={`flex flex-wrap gap-8 sm:gap-10 pt-6 border-t ${border}`}>
               {[
                 { value: "7", label: "Projects Built" },
-                { value: "3.8", label: "GPA" },
+                { value: "3.86", label: "GPA" },
                 { value: "Jun '27", label: "Graduation" },
               ].map(s => (
                 <div key={s.label}>
-                  <div className="text-2xl font-black bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent leading-none mb-1">
+                  <div className={`text-2xl font-black leading-none mb-1 ${dm ? "text-cyan-300" : "text-blue-600"}`}>
                     {s.value}
                   </div>
                   <div className={`text-xs font-medium font-mono ${subtle}`}>{s.label}</div>
@@ -806,10 +467,10 @@ export default function Portfolio() {
             <div className="grid lg:grid-cols-5 gap-12 lg:gap-16">
               <div className={`lg:col-span-3 space-y-5 text-base leading-relaxed ${muted}`}>
                 <p>
-                  I'm a junior at the University of Washington studying Informatics with a focus on cybersecurity. I'm really interested in where security engineering meets automation, so I love building tools that help teams move fast without compromising on security.
+                  I'm studying Informatics at the University of Washington with a specialization in cybersecurity, graduating in June 2027. I'm really interested in where security engineering meets automation, so I love building tools that help teams move fast without compromising on security.
                 </p>
                 <p>
-                  My work covers everything from compliance automation and incident response to penetration testing and security tooling. I'm most energized by projects that require translating complex requirements, like a regulatory framework or an architectural diagram, into working systems that are actually secure.
+                  During my information security internship at Velera, I built 15+ detection rules in Rapid7 InsightIDR, triaged alerts across SIEM, EDR, and email security tools, and mapped detections to MITRE ATT&CK. I also completed a Microsoft-sponsored compliance capstone that achieved 80% accuracy in automated gap detection and cut manual review time by weeks per regulation.
                 </p>
                 <p>
                   Outside of security, you'll usually find me on the tennis court. I love playing with friends and competing in my local USTA league. When I'm not playing sports, I enjoy getting creative in the kitchen and learning new recipes.
@@ -822,7 +483,7 @@ export default function Portfolio() {
                   <div className="font-semibold">B.S. Informatics — Cybersecurity</div>
                   <div className={`text-sm mt-1 ${muted}`}>University of Washington</div>
                   <div className="flex justify-between items-center mt-3">
-                    <span className="text-green-400 font-bold text-sm">GPA: 3.8</span>
+                    <span className="text-green-400 font-bold text-sm">GPA: 3.86</span>
                     <span className={`text-xs font-mono ${subtle}`}>Expected Jun 2027</span>
                   </div>
                 </div>
@@ -830,22 +491,22 @@ export default function Portfolio() {
                 <div className={`p-5 rounded-2xl border transition-all ${card}`}>
                   <div className="text-xs font-bold text-blue-400 uppercase tracking-[0.18em] mb-4 font-mono">Certifications</div>
                   <div className="space-y-3.5">
+                    <div className={`flex items-center gap-3 p-3 rounded-xl border ${dm ? "bg-blue-500/10 border-blue-400/30" : "bg-blue-50 border-blue-200"}`}>
+                      <div className="w-12 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center flex-shrink-0 overflow-hidden">
+                        <img src="/comptia-logo.svg" alt="CompTIA logo" className="w-10 h-auto" />
+                      </div>
+                      <div>
+                        <div className={`text-sm font-semibold ${dm ? "text-slate-100" : "text-slate-900"}`}>CompTIA Security+</div>
+                        <div className={`text-xs font-mono ${dm ? "text-blue-200" : "text-blue-700"}`}>Issued May 2026</div>
+                      </div>
+                    </div>
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 rounded-xl bg-green-500/12 border border-green-500/25 flex items-center justify-center flex-shrink-0">
                         <CheckCircle size={14} className="text-green-400" />
                       </div>
                       <div>
                         <div className={`text-sm font-medium ${dm ? "text-slate-300" : "text-slate-700"}`}>Cybersecurity Certificate</div>
-                        <div className={`text-xs font-mono ${subtle}`}>Purdue / Simplilearn</div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-xl bg-yellow-500/12 border border-yellow-500/25 flex items-center justify-center flex-shrink-0">
-                        <Zap size={14} className="text-yellow-400" />
-                      </div>
-                      <div>
-                        <div className={`text-sm font-medium ${dm ? "text-slate-300" : "text-slate-700"}`}>CompTIA Security+</div>
-                        <div className={`text-xs font-mono ${subtle}`}>In Progress · Expected 2026</div>
+                        <div className={`text-xs font-mono ${subtle}`}>Purdue / Simplilearn · August 2025</div>
                       </div>
                     </div>
                   </div>
@@ -924,9 +585,14 @@ export default function Portfolio() {
 
                   <div className="flex items-center justify-between mt-auto">
                     {!p.noPage
-                      ? <div className="flex items-center gap-1.5 text-xs font-semibold text-blue-400 group-hover:gap-2.5 transition-all">
+                      ? <button
+                          id={`project-${p.id}`}
+                          aria-label={`View case study: ${p.title}`}
+                          onClick={event => { event.stopPropagation(); setCurrentPage(p.id); }}
+                          className="flex items-center gap-1.5 text-xs font-semibold text-blue-400 group-hover:gap-2.5 transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-400"
+                        >
                           View case study <ExternalLink size={12} />
-                        </div>
+                        </button>
                       : <div className="flex items-center gap-1.5 text-xs font-mono text-blue-400/60 italic">
                           <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse flex-shrink-0" />
                           In development

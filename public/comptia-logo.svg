@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 198 43" role="img" aria-labelledby="title">
+  <title id="title">CompTIA logo</title>
+  <rect width="198" height="43" rx="6" fill="#fff"/>
+  <path d="M22.2 25.9c-4.8 0-8.2-3.3-8.2-8.1 0-4.7 3.5-8.1 8.2-8.1 2.8 0 5.2 1.2 6.6 3.2l-3.2 2.3c-.8-1.1-1.9-1.7-3.3-1.7-2.3 0-3.9 1.8-3.9 4.3s1.6 4.3 3.9 4.3c1.4 0 2.5-.6 3.3-1.7l3.2 2.3c-1.4 2-3.8 3.2-6.6 3.2Z" fill="#c8102e"/>
+  <text x="34" y="26.5" fill="#c8102e" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" letter-spacing=".2">CompTIA</text>
+  <path d="M149 11.5h19.5c6.4 0 11.5 5.1 11.5 11.5v0" fill="none" stroke="#c8102e" stroke-width="5" stroke-linecap="round"/>
+</svg>
