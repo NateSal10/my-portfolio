@@ -150,45 +150,57 @@
 }
 
 /* ── Projects ────────────────────────────────────────────────── */
-.projects { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
-.project { position: relative; border-bottom: 1px solid var(--rule); }
-.project-btn {
-  display: grid; gap: 10px;
-  width: 100%; padding: 28px 0;
-  border: 0; background: none; color: inherit; text-align: left; font: inherit; cursor: pointer;
+/* Each project leads with its own cover from the case study, so the list
+   reads like a body of work rather than a stack of identical cards. */
+.work { list-style: none; margin: 0; padding: 0; display: grid; gap: 56px; }
+@media (min-width: 760px) { .work { grid-template-columns: 1fr 1fr; gap: 64px 40px; } }
+
+.work-link {
+  display: grid; gap: 18px; align-content: start;
+  width: 100%; padding: 0; border: 0; background: none;
+  color: inherit; text-align: left; font: inherit; cursor: pointer;
 }
-.project-when { font-size: 14px; color: var(--pencil); font-variant-numeric: tabular-nums; display: flex; flex-direction: column; gap: 2px; }
-.project-status { color: var(--ink); font-weight: 600; }
-.project-main { display: grid; gap: 6px; }
-.project-title { font-weight: 700; font-stretch: 108%; font-size: clamp(22px, 2.4vw, 28px); line-height: 1.2; letter-spacing: -0.015em; }
-.project-title > span {
+.work-link:focus-visible { outline-offset: 8px; }
+.work-frame {
+  position: relative; display: block;
+  aspect-ratio: 16 / 10; overflow: hidden; border-radius: 4px;
+}
+.work-frame img {
+  position: absolute; inset: 0;
+  display: block; width: 100%; height: 100%; object-fit: contain;
+  transition: transform .5s cubic-bezier(.2,.7,.2,1);
+}
+.work-link:hover .work-frame img, .work-link:focus-visible .work-frame img { transform: scale(1.03); }
+
+.work-text { display: grid; gap: 8px; }
+.work-meta { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--pencil); }
+.work-title { font-weight: 700; font-stretch: 108%; font-size: clamp(22px, 2.2vw, 26px); line-height: 1.2; letter-spacing: -0.015em; }
+.work-title > span {
   background-image: linear-gradient(var(--optic), var(--optic));
   background-repeat: no-repeat;
   background-size: 0% 40%;
   background-position: 0 88%;
   transition: background-size .35s cubic-bezier(.5,.05,.25,1);
 }
-.project-btn:hover .project-title > span,
-.project-btn:focus-visible .project-title > span { background-size: 100% 40%; }
-.site.dark .project-btn:hover .project-title > span,
-.site.dark .project-btn:focus-visible .project-title > span { background-size: 100% 12%; }
-.project-role { display: flex; align-items: center; gap: 8px; font-size: 15px; color: var(--pencil); }
-.ms-mark { flex-shrink: 0; }
-.project-summary { max-width: 40em; margin-top: 6px; text-wrap: pretty; }
-.project-tags { font-size: 14px; color: var(--pencil); margin-top: 4px; }
-.project-cta { font-size: 15px; font-weight: 600; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--pencil); }
-.project-btn:hover .project-cta { text-decoration-color: var(--ink); text-decoration-thickness: 2px; }
-.project-live { position: absolute; font-size: 15px; bottom: 28px; left: 170px; }
-@media (max-width: 899px) {
-  .project-btn { padding-bottom: 56px; }
-  .project-live { left: auto; right: 0; bottom: 28px; }
-  .project-cta { margin-top: 8px; }
-}
-@media (min-width: 900px) {
-  .project-btn { grid-template-columns: 150px minmax(0, 1fr) 170px; gap: 40px; padding: 34px 0; }
-  .project-when { padding-top: 6px; }
-  .project-cta { justify-self: end; padding-top: 6px; }
-  .project-live { left: auto; right: 0; top: 70px; bottom: auto; }
+.work-link:hover .work-title > span, .work-link:focus-visible .work-title > span { background-size: 100% 40%; }
+.site.dark .work-link:hover .work-title > span, .site.dark .work-link:focus-visible .work-title > span { background-size: 100% 12%; }
+.work-summary { max-width: 38em; text-wrap: pretty; }
+.work-foot { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 20px; margin-top: 4px; font-size: 15px; color: var(--pencil); }
+.work-status { color: var(--ink); font-weight: 600; }
+.work-cta { margin-left: auto; color: var(--ink); font-weight: 600; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--pencil); }
+.work-link:hover .work-cta { text-decoration-color: var(--ink); text-decoration-thickness: 2px; }
+.work-live { margin-top: 12px; font-size: 15px; }
+.work-result { display: flex; align-items: baseline; gap: 12px; margin-top: 6px; padding-top: 14px; border-top: 1px solid var(--rule); }
+.work-result b { font-weight: 800; font-stretch: 115%; font-size: 34px; line-height: 1; letter-spacing: -0.02em; }
+.work-result span { font-size: 15px; color: var(--pencil); max-width: 22em; }
+
+/* The first project gets a wide, side-by-side layout. */
+@media (min-width: 760px) { .work-item.is-featured { grid-column: 1 / -1; } }
+@media (min-width: 1000px) {
+  .is-featured .work-link { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 48px; align-items: center; }
+  .is-featured .work-title { font-size: clamp(28px, 3vw, 36px); }
+  .is-featured .work-summary { font-size: 18px; }
+  .is-featured .work-live { margin-left: calc(58.33% + 20px); }
 }
 
 /* ── Experience ──────────────────────────────────────────────── */

@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Moon, Sun, Menu, X, ArrowUpRight } from "lucide-react";
 
 import { NAV_ITEMS, LINKS, PROJECTS, EXPERIENCE, SKILLS_DATA } from "./data/portfolioData";
 import ProjectCaseStudy from "./components/ProjectCaseStudy";
+import { CASE_STUDY_PRESENTATION } from "./data/caseStudyPresentation";
 import "./site.css";
 
 // ─── HELPERS ──────────────────────────────────────────────────────────────────
@@ -15,6 +16,12 @@ function readStoredTheme() {
     // Storage can be blocked; fall through to the system setting.
   }
   return typeof window !== "undefined" && window.matchMedia?.("(prefers-color-scheme: dark)").matches;
+}
+
+// Case studies live at #/projects/<id> so the browser back button and shared links work.
+function projectFromHash() {
+  const match = window.location.hash.match(/^#\/projects\/([\w-]+)$/);
+  return match && PROJECTS.some((p) => p.id === match[1]) ? match[1] : null;
 }
 
 function MicrosoftMark() {
@@ -94,7 +101,9 @@ function ContactForm() {
 export default function Portfolio() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState(null);
-  const [currentPage, setCurrentPage] = useState(null);
+  const [currentPage, setCurrentPage] = useState(projectFromHash);
+  const openedFromList = useRef(false);
+  const lastProject = useRef(null);
   const [dm, setDm] = useState(readStoredTheme);
 
   const toggleDark = () =>
@@ -110,6 +119,39 @@ export default function Portfolio() {
   const scrollTo = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     setMenuOpen(false);
+  };
+
+  useEffect(() => {
+    const onHash = () => setCurrentPage(projectFromHash());
+    window.addEventListener("hashchange", onHash);
+    return () => window.removeEventListener("hashchange", onHash);
+  }, []);
+
+  // Coming back from a case study: return to the tile you opened.
+  useEffect(() => {
+    if (currentPage) { lastProject.current = currentPage; return; }
+    const id = lastProject.current;
+    if (!id) return;
+    requestAnimationFrame(() => {
+      const el = document.getElementById(`project-${id}`);
+      el?.scrollIntoView({ block: "center" });
+      el?.focus({ preventScroll: true });
+    });
+  }, [currentPage]);
+
+  const openProject = (id) => {
+    openedFromList.current = true;
+    window.location.assign(`#/projects/${id}`);
+  };
+
+  const closeProject = () => {
+    if (openedFromList.current) {
+      openedFromList.current = false;
+      window.history.back();
+    } else {
+      window.history.replaceState(null, "", window.location.pathname + window.location.search);
+      setCurrentPage(null);
+    }
   };
 
   useEffect(() => {
@@ -136,14 +178,8 @@ export default function Portfolio() {
         key={p.id}
         project={p}
         nextProject={next}
-        onNext={() => setCurrentPage(next.id)}
-        onBack={() => {
-          setCurrentPage(null);
-          setTimeout(() => {
-            document.getElementById(`project-${p.id}`)?.scrollIntoView({ block: "center" });
-            document.getElementById(`project-${p.id}`)?.focus({ preventScroll: true });
-          }, 50);
-        }}
+        onNext={() => window.location.replace(`#/projects/${next.id}`)}
+        onBack={closeProject}
         dm={dm}
       />
     );
@@ -227,36 +263,50 @@ export default function Portfolio() {
         <section id="projects" className="section wrap" aria-labelledby="projects-h">
           <div className="section-head">
             <h2 id="projects-h">Projects</h2>
-            <p>A capstone, some class projects, and a couple of things I built on my own. Each one has a full write-up.</p>
+            <p>A capstone with Microsoft, some class projects, and a couple of things I built on my own. Click any of them for the full story.</p>
           </div>
 
-          <ol className="projects">
-            {PROJECTS.map((p) => (
-              <li key={p.id} className="project">
-                <button id={`project-${p.id}`} className="project-btn" onClick={() => setCurrentPage(p.id)}>
-                  <span className="project-when">
-                    {p.period}
-                    {p.status === "In Progress" && <span className="project-status">Still building</span>}
-                  </span>
-                  <span className="project-main">
-                    <span className="project-title"><span>{p.title}</span></span>
-                    <span className="project-role">
-                      {p.microsoft && <MicrosoftMark />}
-                      {p.role}
+          <ul className="work">
+            {PROJECTS.map((p, i) => {
+              const pres = CASE_STUDY_PRESENTATION[p.id];
+              const featured = i === 0;
+              return (
+                <li key={p.id} className={`work-item${featured ? " is-featured" : ""}`}>
+                  <button id={`project-${p.id}`} className="work-link" onClick={() => openProject(p.id)}>
+                    <span className="work-frame" style={{ background: pres.thumb.bg }}>
+                      <img src={pres.thumb.src} alt="" width="1200" height="750" loading={i < 3 ? "eager" : "lazy"} style={pres.thumb.align ? { objectPosition: `center ${pres.thumb.align}` } : undefined} />
                     </span>
-                    <span className="project-summary">{p.summary}</span>
-                    <span className="project-tags">{p.tags.join(", ")}</span>
-                  </span>
-                  <span className="project-cta">Read the write-up</span>
-                </button>
-                {p.liveUrl && (
-                  <a className="project-live text-link" href={p.liveUrl} target="_blank" rel="noreferrer">
-                    Live site <ArrowUpRight size={14} aria-hidden="true" />
-                  </a>
-                )}
-              </li>
-            ))}
-          </ol>
+                    <span className="work-text">
+                      <span className="work-meta">
+                        {p.microsoft && <MicrosoftMark />}
+                        {pres.category}
+                      </span>
+                      <span className="work-title"><span>{p.title}</span></span>
+                      <span className="work-summary">{p.summary}</span>
+                      {featured && (
+                        <span className="work-result">
+                          <b>{pres.highlight.value}</b>
+                          <span>{pres.highlight.label}</span>
+                        </span>
+                      )}
+                      <span className="work-foot">
+                        <span>{p.period}</span>
+                        {p.status === "In Progress" && <span className="work-status">Still building</span>}
+                        <span className="work-cta">Read the case study</span>
+                      </span>
+                    </span>
+                  </button>
+                  {p.liveUrl && (
+                    <div className="work-live">
+                      <a className="text-link" href={p.liveUrl} target="_blank" rel="noreferrer">
+                        Visit the live site <ArrowUpRight size={14} aria-hidden="true" />
+                      </a>
+                    </div>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
         </section>
 
         {/* ── EXPERIENCE ── */}
