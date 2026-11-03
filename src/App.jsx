@@ -241,7 +241,7 @@ export default function Portfolio() {
               <p className="hero-intro">
                 I study Informatics at the University of Washington with a focus on cybersecurity, and I graduate in June 2027.
                 This past summer I interned on the security team at Velera, where I{" "}
-                <mark className="hl hl-1">wrote 15+ detection rules</mark> and triaged alerts every day.
+                <mark className="hl hl-1">engineered detection rules</mark> and triaged alerts every day.
               </p>
               <p className="hero-intro">
                 I'm <mark className="hl hl-2">looking for security roles</mark> that start in 2027.
