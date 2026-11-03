@@ -18,10 +18,11 @@ function readStoredTheme() {
   return typeof window !== "undefined" && window.matchMedia?.("(prefers-color-scheme: dark)").matches;
 }
 
-// Case studies live at #/projects/<id> so the browser back button and shared links work.
+// Case studies live at #<project-id> (for example #pentest) so the browser back button
+// and shared links work. A plain hash also survives embedded previews that drop "#/paths".
 function projectFromHash() {
-  const match = window.location.hash.match(/^#\/projects\/([\w-]+)$/);
-  return match && PROJECTS.some((p) => p.id === match[1]) ? match[1] : null;
+  const id = decodeURIComponent(window.location.hash.slice(1));
+  return PROJECTS.some((p) => p.id === id) ? id : null;
 }
 
 function MicrosoftMark() {
@@ -141,7 +142,7 @@ export default function Portfolio() {
 
   const openProject = (id) => {
     openedFromList.current = true;
-    window.location.assign(`#/projects/${id}`);
+    window.location.assign(`#${id}`);
   };
 
   const closeProject = () => {
@@ -178,7 +179,7 @@ export default function Portfolio() {
         key={p.id}
         project={p}
         nextProject={next}
-        onNext={() => window.location.replace(`#/projects/${next.id}`)}
+        onNext={() => window.location.replace(`#${next.id}`)}
         onBack={closeProject}
         dm={dm}
       />
@@ -254,7 +255,7 @@ export default function Portfolio() {
               </div>
             </div>
             <figure className="hero-photo">
-              <img src="/nathan.webp" alt="Nathan Salman" width="800" height="1200" />
+              <img src="nathan.webp" alt="Nathan Salman" width="800" height="1200" />
             </figure>
           </div>
         </header>
@@ -366,7 +367,7 @@ export default function Portfolio() {
               <div>
                 <dt>Certifications</dt>
                 <dd className="cert">
-                  <img src="/comptia-logo.svg" alt="" width="40" height="20" />
+                  <img src="comptia-logo.svg" alt="" width="40" height="20" />
                   <span className="cert-text">
                     CompTIA Security+
                     <span>Earned May 2026</span>

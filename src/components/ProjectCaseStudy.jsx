@@ -76,7 +76,7 @@ function RecordsCover() {
 
 function ProjectCover({ project, presentation }) {
   if (presentation.cover === 'screenshot') {
-    return <div className="cs-product-cover"><div className="cs-cover-caption"><span>TradeForge practice screen</span><span>Real screenshot</span></div><div className="cs-browser-frame"><div className="cs-browser-toolbar" aria-hidden="true"><span /><span /><span /><code>TradeForge</code></div><img src="/screenshots/practice.png" alt="TradeForge practice workspace, with historical chart replay, market overlays, and an order panel" fetchPriority="high" /></div></div>;
+    return <div className="cs-product-cover"><div className="cs-cover-caption"><span>TradeForge practice screen</span><span>Real screenshot</span></div><div className="cs-browser-frame"><div className="cs-browser-toolbar" aria-hidden="true"><span /><span /><span /><code>TradeForge</code></div><img src="screenshots/practice.png" alt="TradeForge practice workspace, with historical chart replay, market overlays, and an order panel" fetchPriority="high" /></div></div>;
   }
   if (presentation.cover === 'compliance') return <ComplianceCover presentation={presentation} />;
   if (presentation.cover === 'risk') return <RiskCover />;

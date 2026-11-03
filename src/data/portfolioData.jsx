@@ -97,10 +97,10 @@ export const PROJECTS = [
       { label: "Chart overlays", value: "Custom", sub: "Kill zones, FVG zones, TP/SL lines, and break and retest zones" }
     ],
     screenshots: [
-      { src: "/screenshots/dashboard.png", title: "Dashboard", caption: "Equity curve, prop and paper accounts, market clock, and live P&L." },
-      { src: "/screenshots/calendar.png", title: "Trade calendar", caption: "Daily P&L heatmap with economic events like CPI, FOMC, and NFP marked." },
-      { src: "/screenshots/practice.png", title: "Practice mode", caption: "Live chart with Asia, London, and New York kill zones, SMC overlays, and the order panel." },
-      { src: "/screenshots/backtest.png", title: "Backtest", caption: "Break and retest zones on the chart, with the visual entry rule builder." }
+      { src: "screenshots/dashboard.png", title: "Dashboard", caption: "Equity curve, prop and paper accounts, market clock, and live P&L." },
+      { src: "screenshots/calendar.png", title: "Trade calendar", caption: "Daily P&L heatmap with economic events like CPI, FOMC, and NFP marked." },
+      { src: "screenshots/practice.png", title: "Practice mode", caption: "Live chart with Asia, London, and New York kill zones, SMC overlays, and the order panel." },
+      { src: "screenshots/backtest.png", title: "Backtest", caption: "Break and retest zones on the chart, with the visual entry rule builder." }
     ],
     featureCards: [
       { title: "Market replay", desc: "Replay any historical market one candle at a time. Place market, limit, stop, and stop-limit orders that fill at the real historical price, with trailing stops and a P&L panel that updates as you go." },

@@ -4,7 +4,7 @@
 // bg is the image's edge color so the frame can letterbox it without a seam.
 export const CASE_STUDY_PRESENTATION = {
   'compliance-copilot': {
-    thumb: { src: '/projects/compliance-copilot.webp', bg: '#dce8f3' },
+    thumb: { src: 'projects/compliance-copilot.webp', bg: '#dce8f3' },
     category: 'Capstone sponsored by Microsoft',
     headline: 'Compliance teams spend weeks turning regulations into tasks.',
     intro: 'An AI-assisted workflow that finds compliance gaps and turns them into Azure DevOps work items you can trace back to the source.',
@@ -18,7 +18,7 @@ export const CASE_STUDY_PRESENTATION = {
     ],
   },
   'trading-simulator': {
-    thumb: { src: '/projects/trading-simulator.webp', bg: '#18273d', align: 'bottom' },
+    thumb: { src: 'projects/trading-simulator.webp', bg: '#18273d', align: 'bottom' },
     category: 'Personal project',
     headline: "TradingView's replay mode doesn't let you actually trade.",
     intro: 'Historical market replay, simulated orders, and a visual strategy builder in one app.',
@@ -27,7 +27,7 @@ export const CASE_STUDY_PRESENTATION = {
     highlight: { value: '5', label: 'pages that work together, from practice to reviewing your results', note: 'Dashboard, practice, backtest, learn, and glossary' },
   },
   'homesphere-erm': {
-    thumb: { src: '/projects/homesphere-erm.webp', bg: '#ede4d5' },
+    thumb: { src: 'projects/homesphere-erm.webp', bg: '#ede4d5' },
     category: 'Enterprise risk management course',
     headline: 'When a home robot fails, it can be a safety, privacy, and legal problem all at once.',
     intro: 'An interactive risk framework for a fictional robotics company that ties together impact, accountability, and governance.',
@@ -36,7 +36,7 @@ export const CASE_STUDY_PRESENTATION = {
     highlight: { value: '15', label: 'risks identified across six areas', note: 'HomeSphere Robotics is a made-up company for a course project' },
   },
   'zero-day-response': {
-    thumb: { src: '/projects/zero-day-response.webp', bg: '#303b31' },
+    thumb: { src: 'projects/zero-day-response.webp', bg: '#303b31' },
     category: 'ThinkCyber UW tabletop challenge',
     headline: 'Strange outbound traffic, unexpected file writes, and not much else to go on.',
     intro: 'Our five-person team investigated a simulated zero-day and presented a response plan to a panel of judges.',
@@ -50,7 +50,7 @@ export const CASE_STUDY_PRESENTATION = {
     ],
   },
   pentest: {
-    thumb: { src: '/projects/pentest.webp', bg: '#dad5e7' },
+    thumb: { src: 'projects/pentest.webp', bg: '#dad5e7' },
     category: 'Web app security assessment',
     headline: 'An app that handled credentials but had never been tested.',
     intro: 'A black-box test of a deliberately vulnerable app, from recon all the way to checking the fixes.',
@@ -60,7 +60,7 @@ export const CASE_STUDY_PRESENTATION = {
     findings: ['SQL injection', 'Stored XSS', 'Broken authentication', 'Security misconfiguration'],
   },
   'windows-monitoring': {
-    thumb: { src: '/projects/windows-monitoring.webp', bg: '#dce7ec' },
+    thumb: { src: 'projects/windows-monitoring.webp', bg: '#dce7ec' },
     category: 'Security monitoring in PowerShell',
     headline: "Small teams can't always pay for a SIEM, but they still need to see failed logins.",
     intro: 'A PowerShell tool that turns Windows event logs into alerts and an HTML dashboard.',
@@ -69,7 +69,7 @@ export const CASE_STUDY_PRESENTATION = {
     highlight: { value: '12s', label: 'to catch the simulated brute-force attack after it crossed the threshold', note: 'Course lab simulation' },
   },
   'student-data-system': {
-    thumb: { src: '/projects/student-data-system.webp', bg: '#e6e4d5' },
+    thumb: { src: 'projects/student-data-system.webp', bg: '#e6e4d5' },
     category: 'Full-stack app in Flask and MySQL',
     headline: 'Student records lived in spreadsheets anyone on staff could open.',
     intro: 'Role-based access, validated data, and faster queries for an app used by academic staff.',

@@ -7,7 +7,8 @@ Nathan Salman's personal portfolio. React + Vite, with a small Tailwind base lay
 - **Content**: `src/data/portfolioData.jsx` holds `PROJECTS`, `EXPERIENCE`, `SKILLS_DATA`, `NAV_ITEMS`, and `LINKS`. Add new items there, never hardcoded in `App.jsx`.
 - **Case study covers and headlines**: `src/data/caseStudyPresentation.js`, keyed by project id.
 - **Project previews on the homepage**: `public/projects/<id>.webp`, captured from each case study cover. `thumb.bg` in the presentation file is the image's edge color, used to letterbox it seamlessly. After changing a cover, rerun `node scripts/capture-project-thumbs.cjs` with the dev server on port 5173 and update `thumb.bg` if the cover's background changed. A new project needs a cover, a thumb, and a presentation entry.
-- **Routing**: case studies open at `#/projects/<id>` (see `projectFromHash` in `App.jsx`), so browser back and shared links work.
+- **Routing**: case studies open at `#<project-id>`, e.g. `#pentest` (see `projectFromHash` in `App.jsx`), so browser back and shared links work.
+- **Asset paths**: reference files in `public/` with relative paths (`projects/x.webp`, not `/projects/x.webp`); `vite.config.js` uses `base: './'`.
 - **Main page styles**: `src/site.css` (design tokens at the top). Case study styles: `src/components/ProjectCaseStudy.css`.
 
 ## Design direction (Nov 2026 redesign)
