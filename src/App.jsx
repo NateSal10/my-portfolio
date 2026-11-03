@@ -1,136 +1,48 @@
-import { useState, useEffect, useRef } from "react";
-import {
-  Menu, X, ExternalLink, Linkedin, Mail, ArrowLeft,
-  CheckCircle, AlertTriangle, Terminal, Eye, Database,
-  Shield, Code, Server, ChevronDown, ChevronUp,
-  TrendingUp, BarChart2, Layers, PlayCircle, Github
-} from "lucide-react";
+import { useState, useEffect } from "react";
+import { Moon, Sun, Menu, X, ArrowUpRight } from "lucide-react";
 
-import { NAV_ITEMS, PROJECTS, EXPERIENCE, SKILLS_DATA } from "./data/portfolioData";
+import { NAV_ITEMS, LINKS, PROJECTS, EXPERIENCE, SKILLS_DATA } from "./data/portfolioData";
 import ProjectCaseStudy from "./components/ProjectCaseStudy";
+import "./site.css";
 
-// ─── HOOKS & UTILITIES ────────────────────────────────────────────────────────
+// ─── HELPERS ──────────────────────────────────────────────────────────────────
 
-function useScrollProgress() {
-  const [progress, setProgress] = useState(0);
-  useEffect(() => {
-    const update = () => {
-      const total = document.documentElement.scrollHeight - window.innerHeight;
-      setProgress(total > 0 ? (window.scrollY / total) * 100 : 0);
-    };
-    window.addEventListener("scroll", update, { passive: true });
-    return () => window.removeEventListener("scroll", update);
-  }, []);
-  return progress;
+function readStoredTheme() {
+  try {
+    const stored = localStorage.getItem("dm");
+    if (stored !== null) return stored === "true";
+  } catch {
+    // Storage can be blocked; fall through to the system setting.
+  }
+  return typeof window !== "undefined" && window.matchMedia?.("(prefers-color-scheme: dark)").matches;
 }
 
-function FadeIn({ children, delay = 0, className = "" }) {
-  const [visible, setVisible] = useState(false);
-  const ref = useRef();
-  useEffect(() => {
-    const obs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) setVisible(true); },
-      { threshold: 0.05 }
-    );
-    if (ref.current) obs.observe(ref.current);
-    return () => obs.disconnect();
-  }, []);
+function MicrosoftMark() {
   return (
-    <div
-      ref={ref}
-      style={{ transitionDelay: `${delay}ms` }}
-      className={`transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"} ${className}`}
-    >
-      {children}
-    </div>
+    <svg className="ms-mark" viewBox="0 0 21 21" width="13" height="13" aria-hidden="true">
+      <rect x="0" y="0" width="10" height="10" fill="#f25022" />
+      <rect x="11" y="0" width="10" height="10" fill="#7fba00" />
+      <rect x="0" y="11" width="10" height="10" fill="#00a4ef" />
+      <rect x="11" y="11" width="10" height="10" fill="#ffb900" />
+    </svg>
   );
 }
-
-function TypingText({ words }) {
-  const [display, setDisplay] = useState("");
-  const [wordIdx, setWordIdx] = useState(0);
-  const [phase, setPhase] = useState("typing");
-
-  useEffect(() => {
-    const word = words[wordIdx];
-    let t;
-    if (phase === "typing") {
-      if (display.length < word.length) {
-        t = setTimeout(() => setDisplay(word.slice(0, display.length + 1)), 75);
-      } else {
-        t = setTimeout(() => setPhase("deleting"), 2400);
-      }
-    } else {
-      if (display.length > 0) {
-        t = setTimeout(() => setDisplay(display.slice(0, -1)), 40);
-      } else {
-        t = setTimeout(() => {
-          setWordIdx((wordIdx + 1) % words.length);
-          setPhase("typing");
-        }, 0);
-      }
-    }
-    return () => clearTimeout(t);
-  }, [display, wordIdx, phase, words]);
-
-  return (
-    <span>
-      {display}
-      <span className="cursor text-blue-400">|</span>
-    </span>
-  );
-}
-
-function BackToTop() {
-  const [visible, setVisible] = useState(false);
-  useEffect(() => {
-    const h = () => setVisible(window.scrollY > 600);
-    window.addEventListener("scroll", h, { passive: true });
-    return () => window.removeEventListener("scroll", h);
-  }, []);
-  return (
-    <button
-      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      aria-label="Back to top"
-      className={`fixed bottom-8 right-8 z-50 w-11 h-11 rounded-full bg-blue-500 hover:bg-blue-600 text-white shadow-lg shadow-blue-500/30 flex items-center justify-center transition-all duration-300 hover:scale-110 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"}`}
-    >
-      <ChevronUp size={20} />
-    </button>
-  );
-}
-
-function SectionLabel({ text, dm }) {
-  return (
-    <div className="flex items-center gap-3 mb-3">
-      <div className="h-px w-8 bg-gradient-to-r from-blue-500 to-cyan-400" />
-      <span className={`text-xs font-bold tracking-[0.2em] uppercase font-mono ${dm ? "text-blue-400" : "text-blue-500"}`}>{text}</span>
-    </div>
-  );
-}
-
-// ─── PROJECT PAGE ─────────────────────────────────────────────────────────────
 
 // ─── CONTACT FORM ─────────────────────────────────────────────────────────────
 
-function ContactForm({ dm }) {
+function ContactForm() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [status, setStatus] = useState("idle"); // idle | sending | sent | error
 
-  const inputCls = `w-full px-4 py-3 rounded-xl text-sm outline-none transition-all border font-sans ${
-    dm
-      ? "bg-slate-800/60 border-slate-700 text-slate-100 placeholder-slate-500 focus:border-blue-500 focus:bg-slate-800"
-      : "bg-slate-50 border-slate-200 text-slate-900 placeholder-slate-400 focus:border-blue-400 focus:bg-white"
-  }`;
-
-  const handleSubmit = async () => {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     if (!form.name || !form.email || !form.message) return;
     setStatus("sending");
     try {
-      // Replace "YOUR_FORMSPREE_ID" with your form ID from formspree.io (e.g. "xrgvwpqz")
       const res = await fetch("https://formspree.io/f/xpwzggqb", {
         method: "POST",
-        headers: { "Content-Type": "application/json", "Accept": "application/json" },
-        body: JSON.stringify({ name: form.name, email: form.email, message: form.message }),
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(form),
       });
       setStatus(res.ok ? "sent" : "error");
     } catch {
@@ -138,639 +50,320 @@ function ContactForm({ dm }) {
     }
   };
 
-  if (status === "sent") return (
-    <div className="text-center py-10">
-      <div className="w-14 h-14 rounded-2xl bg-green-500/12 border border-green-500/25 flex items-center justify-center mx-auto mb-4">
-        <CheckCircle size={24} className="text-green-400" />
+  if (status === "sent") {
+    return (
+      <div className="form-done" role="status">
+        <p className="form-done-title">Message sent.</p>
+        <p>Thanks, {form.name.split(" ")[0]}. I'll write back to {form.email}.</p>
       </div>
-      <p className="font-semibold text-green-400 text-lg mb-1">Message sent!</p>
-      <p className={`text-sm ${dm ? "text-slate-400" : "text-slate-500"}`}>Thanks for reaching out — I'll get back to you soon.</p>
-    </div>
-  );
+    );
+  }
+
+  const update = (key) => (e) => setForm({ ...form, [key]: e.target.value });
 
   return (
-    <div className="space-y-4">
-      <div className="grid sm:grid-cols-2 gap-4">
-        <input
-          placeholder="Your name"
-          value={form.name}
-          onChange={e => setForm({ ...form, name: e.target.value })}
-          className={inputCls}
-        />
-        <input
-          placeholder="Your email"
-          type="email"
-          value={form.email}
-          onChange={e => setForm({ ...form, email: e.target.value })}
-          className={inputCls}
-        />
+    <form className="contact-form" onSubmit={handleSubmit}>
+      <div className="field-row">
+        <label className="field">
+          <span>Name</span>
+          <input required value={form.name} onChange={update("name")} autoComplete="name" />
+        </label>
+        <label className="field">
+          <span>Email</span>
+          <input required type="email" value={form.email} onChange={update("email")} autoComplete="email" />
+        </label>
       </div>
-      <textarea
-        placeholder="Your message..."
-        rows={5}
-        value={form.message}
-        onChange={e => setForm({ ...form, message: e.target.value })}
-        className={inputCls + " resize-none"}
-      />
+      <label className="field">
+        <span>Message</span>
+        <textarea required rows={5} value={form.message} onChange={update("message")} />
+      </label>
       {status === "error" && (
-        <p className="text-red-400 text-xs font-mono">Something went wrong — please email me directly at nathansalman10@gmail.com</p>
+        <p className="form-error" role="alert">
+          That didn't go through. You can email me directly at {LINKS.email}.
+        </p>
       )}
-      <button
-        onClick={handleSubmit}
-        disabled={status === "sending"}
-        className="w-full py-3.5 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 rounded-xl font-semibold text-white transition-all hover:shadow-lg hover:shadow-blue-500/20 hover:scale-[1.01] active:scale-[0.99] disabled:opacity-60 disabled:cursor-not-allowed disabled:scale-100"
-      >
-        {status === "sending" ? "Sending…" : "Send Message"}
+      <button type="submit" className="btn" disabled={status === "sending"}>
+        {status === "sending" ? "Sending…" : "Send message"}
       </button>
-    </div>
+    </form>
   );
 }
 
 // ─── MAIN PORTFOLIO ───────────────────────────────────────────────────────────
 
 export default function Portfolio() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("about");
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState(null);
   const [currentPage, setCurrentPage] = useState(null);
-  const [darkMode, setDarkMode] = useState(() => {
-    const stored = localStorage.getItem("dm");
-    return stored !== null ? stored === "true" : true;
-  });
+  const [dm, setDm] = useState(readStoredTheme);
 
-  const toggleDark = () => setDarkMode(d => {
-    localStorage.setItem("dm", String(!d));
-    return !d;
-  });
+  const toggleDark = () =>
+    setDm((d) => {
+      try { localStorage.setItem("dm", String(!d)); } catch { /* ignore */ }
+      return !d;
+    });
 
-  const progress = useScrollProgress();
-  const dm = darkMode;
+  useEffect(() => {
+    document.documentElement.dataset.theme = dm ? "dark" : "light";
+  }, [dm]);
 
   const scrollTo = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-    setMobileMenuOpen(false);
+    setMenuOpen(false);
   };
 
   useEffect(() => {
+    if (currentPage) return;
     const handler = () => {
-      const sections = NAV_ITEMS.map(n => n.toLowerCase());
-      for (const id of [...sections].reverse()) {
+      let current = null;
+      for (const { id } of NAV_ITEMS) {
         const el = document.getElementById(id);
-        if (el && window.scrollY >= el.offsetTop - 120) { setActiveSection(id); break; }
+        if (el && window.scrollY >= el.offsetTop - 140) current = id;
       }
+      setActiveSection(current);
     };
+    handler();
     window.addEventListener("scroll", handler, { passive: true });
     return () => window.removeEventListener("scroll", handler);
-  }, []);
+  }, [currentPage]);
 
   if (currentPage) {
-    const p = PROJECTS.find(p => p.id === currentPage);
+    const index = PROJECTS.findIndex((item) => item.id === currentPage);
+    const p = PROJECTS[index];
+    const next = PROJECTS[(index + 1) % PROJECTS.length];
     return (
       <ProjectCaseStudy
         key={p.id}
-        nextProject={PROJECTS[(PROJECTS.findIndex(item => item.id === p.id) + 1) % PROJECTS.length]}
-        onNext={() => setCurrentPage(PROJECTS[(PROJECTS.findIndex(item => item.id === p.id) + 1) % PROJECTS.length].id)}
         project={p}
+        nextProject={next}
+        onNext={() => setCurrentPage(next.id)}
         onBack={() => {
           setCurrentPage(null);
           setTimeout(() => {
-            scrollTo("projects");
+            document.getElementById(`project-${p.id}`)?.scrollIntoView({ block: "center" });
             document.getElementById(`project-${p.id}`)?.focus({ preventScroll: true });
-          }, 100);
+          }, 50);
         }}
         dm={dm}
       />
     );
   }
 
-  const muted = dm ? "text-slate-400" : "text-slate-500";
-  const subtle = dm ? "text-slate-500" : "text-slate-400";
-  const border = dm ? "border-slate-800/70" : "border-slate-200";
-  const card = dm
-    ? "bg-slate-900/60 border border-slate-800 hover:border-slate-700"
-    : "bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-slate-300";
-
   return (
-    <div className={`min-h-screen font-sans ${dm ? "bg-[#030712] text-slate-100" : "bg-slate-50 text-slate-900"}`}>
-      <div className="scroll-progress" style={{ width: `${progress}%` }} />
-      <BackToTop />
+    <div className={`site ${dm ? "dark" : ""}`}>
+      <a className="skip" href="#projects">Skip to projects</a>
 
       {/* ── NAVIGATION ── */}
-      <nav className={`sticky top-0 z-50 backdrop-blur-xl border-b ${dm ? "bg-[#030712]/85 border-slate-800/60" : "bg-white/85 border-slate-200"}`}>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className={`font-bold text-lg tracking-tight select-none shrink-0 ${dm ? "text-slate-100" : "text-slate-900"}`}>
-              <span className={dm ? "text-cyan-300" : "text-blue-700"}>Nathan</span>
-              <span> Salman</span>
-            </div>
+      <nav className="topbar" aria-label="Main">
+        <div className="wrap topbar-inner">
+          <a href="#top" className="wordmark" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}>
+            Nathan Salman
+          </a>
 
-            <div className="hidden md:flex items-center gap-1">
-              {NAV_ITEMS.map(item => (
-                <button
-                  key={item}
-                  onClick={() => scrollTo(item.toLowerCase())}
-                  className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-all ${
-                    activeSection === item.toLowerCase()
-                      ? "text-blue-400"
-                      : dm
-                      ? "text-slate-400 hover:text-slate-100 hover:bg-slate-800/60"
-                      : "text-slate-500 hover:text-slate-900 hover:bg-slate-100"
-                  }`}
-                >
-                  {item}
-                  {activeSection === item.toLowerCase() && (
-                    <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-blue-400" />
-                  )}
-                </button>
-              ))}
-              <div className={`w-px h-4 mx-2 ${dm ? "bg-slate-700" : "bg-slate-200"}`} />
+          <div className="nav-links">
+            {NAV_ITEMS.map(({ id, label }) => (
               <a
-                href="https://github.com/NateSal10"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="GitHub"
-                className={`px-3 py-2 rounded-lg text-sm transition-colors ${dm ? "text-slate-400 hover:text-slate-200 hover:bg-slate-800/60" : "text-slate-500 hover:text-slate-900 hover:bg-slate-100"}`}
+                key={id}
+                href={`#${id}`}
+                onClick={(e) => { e.preventDefault(); scrollTo(id); }}
+                aria-current={activeSection === id ? "true" : undefined}
               >
-                <Github size={16} />
+                {label}
               </a>
-              <button
-                onClick={() => toggleDark()}
-                className={`px-3 py-2 rounded-lg text-sm transition-colors ${dm ? "text-slate-400 hover:text-slate-200 hover:bg-slate-800/60" : "text-slate-500 hover:text-slate-900 hover:bg-slate-100"}`}
-              >
-                {dm ? "☀️" : "🌙"}
-              </button>
-            </div>
+            ))}
+            <a href={LINKS.resume} target="_blank" rel="noreferrer">Resume</a>
+            <button className="icon-btn" onClick={toggleDark} aria-label={dm ? "Switch to light theme" : "Switch to dark theme"}>
+              {dm ? <Sun size={17} /> : <Moon size={17} />}
+            </button>
+          </div>
 
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className={`md:hidden p-2 rounded-lg transition-colors ${dm ? "text-slate-400 hover:bg-slate-800" : "text-slate-500 hover:bg-slate-100"}`}
-            >
-              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          <div className="nav-mobile">
+            <button className="icon-btn" onClick={toggleDark} aria-label={dm ? "Switch to light theme" : "Switch to dark theme"}>
+              {dm ? <Sun size={17} /> : <Moon size={17} />}
+            </button>
+            <button className="icon-btn" onClick={() => setMenuOpen(!menuOpen)} aria-expanded={menuOpen} aria-label="Menu">
+              {menuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
         </div>
-
-        {mobileMenuOpen && (
-          <div className={`md:hidden border-t ${dm ? "border-slate-800 bg-[#030712]" : "border-slate-200 bg-white"}`}>
-            <div className="max-w-6xl mx-auto px-4 py-3 space-y-1">
-              {NAV_ITEMS.map(item => (
-                <button
-                  key={item}
-                  onClick={() => scrollTo(item.toLowerCase())}
-                  className={`block w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                    activeSection === item.toLowerCase()
-                      ? "text-blue-400 bg-blue-500/10"
-                      : dm ? "text-slate-300 hover:bg-slate-800/60" : "text-slate-600 hover:bg-slate-100"
-                  }`}
-                >
-                  {item}
-                </button>
-              ))}
-              <a
-                href="https://github.com/NateSal10"
-                target="_blank"
-                rel="noreferrer"
-                className={`flex items-center gap-2 w-full px-4 py-2.5 rounded-lg text-sm transition-colors ${dm ? "text-slate-300 hover:bg-slate-800/60" : "text-slate-600 hover:bg-slate-100"}`}
-              >
-                <Github size={15} /> GitHub
-              </a>
-              <button
-                onClick={() => toggleDark()}
-                className={`block w-full text-left px-4 py-2.5 rounded-lg text-sm transition-colors ${muted}`}
-              >
-                {dm ? "☀️  Light Mode" : "🌙  Dark Mode"}
-              </button>
-            </div>
+        {menuOpen && (
+          <div className="mobile-menu wrap">
+            {NAV_ITEMS.map(({ id, label }) => (
+              <a key={id} href={`#${id}`} onClick={(e) => { e.preventDefault(); scrollTo(id); }}>{label}</a>
+            ))}
+            <a href={LINKS.resume} target="_blank" rel="noreferrer">Resume</a>
           </div>
         )}
       </nav>
 
-      {/* ── HERO ── */}
-      <section className="relative overflow-hidden min-h-[94vh] flex items-center">
-        <div className="absolute inset-0 dot-grid opacity-50 pointer-events-none" />
-        <div className="absolute -top-20 -left-40 w-[500px] h-[500px] bg-blue-600/15 rounded-full blur-3xl pointer-events-none animate-float-slow" />
-        <div className="absolute -bottom-20 -right-40 w-[400px] h-[400px] bg-cyan-500/12 rounded-full blur-3xl pointer-events-none animate-float-medium" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-blue-500/4 rounded-full blur-3xl pointer-events-none" />
-
-        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24 w-full">
-          <div className="grid lg:grid-cols-5 gap-12 lg:gap-16 items-center">
-          <FadeIn className="lg:col-span-3">
-            <h1 className="text-6xl sm:text-7xl lg:text-8xl font-black tracking-tight mb-5 leading-[0.93]">
-              Nathan<br />
-              <span className={dm ? "text-cyan-300" : "text-blue-600"}>
-                Salman.
-              </span>
-            </h1>
-
-            <div className={`text-xl sm:text-2xl font-semibold mb-6 h-9 font-mono ${dm ? "text-slate-300" : "text-slate-600"}`}>
-              <TypingText words={[
-                "Cybersecurity Specialist",
-                "Security Engineer",
-                "Penetration Tester",
-                "Compliance Analyst",
-                "Incident Responder"
-              ]} />
-            </div>
-
-            <p className={`text-lg max-w-xl mb-10 leading-relaxed ${muted}`}>
-              I'm a UW Informatics student building tools that make organizations safer. My experience includes security operations at Velera, AI-powered compliance automation, and incident response.
-            </p>
-
-            <div className="flex flex-wrap gap-3 mb-10">
-              <button
-                onClick={() => scrollTo("projects")}
-                className="px-7 py-3.5 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 rounded-xl font-semibold text-white text-sm transition-all hover:shadow-xl hover:shadow-blue-500/25 hover:scale-[1.03] active:scale-[0.98]"
-              >
-                View Projects
-              </button>
-              <a
-                href="https://docs.google.com/document/d/1BW5IYufl3V8Y4Fyp1LWWboyN8RkXFlUX6g6bCv54iQw/preview"
-                target="_blank"
-                rel="noreferrer"
-                className={`px-7 py-3.5 rounded-xl font-semibold text-sm transition-all border flex items-center gap-2 hover:scale-[1.03] active:scale-[0.98] ${
-                  dm
-                    ? "border-slate-700 hover:border-slate-500 text-slate-300 hover:bg-slate-800/60"
-                    : "border-slate-300 hover:border-slate-400 text-slate-700 hover:bg-slate-100"
-                }`}
-              >
-                <ExternalLink size={15} /> Resume
-              </a>
-              <a
-                href="https://www.linkedin.com/in/nathan-e-salman"
-                target="_blank"
-                rel="noreferrer"
-                className={`px-7 py-3.5 rounded-xl font-semibold text-sm transition-all border flex items-center gap-2 hover:scale-[1.03] active:scale-[0.98] ${
-                  dm
-                    ? "border-slate-700 hover:border-slate-500 text-slate-300 hover:bg-slate-800/60"
-                    : "border-slate-300 hover:border-slate-400 text-slate-700 hover:bg-slate-100"
-                }`}
-              >
-                <Linkedin size={15} /> LinkedIn
-              </a>
-              <a
-                href="https://github.com/NateSal10"
-                target="_blank"
-                rel="noreferrer"
-                className={`px-7 py-3.5 rounded-xl font-semibold text-sm transition-all border flex items-center gap-2 hover:scale-[1.03] active:scale-[0.98] ${
-                  dm
-                    ? "border-slate-700 hover:border-slate-500 text-slate-300 hover:bg-slate-800/60"
-                    : "border-slate-300 hover:border-slate-400 text-slate-700 hover:bg-slate-100"
-                }`}
-              >
-                <Github size={15} /> GitHub
-              </a>
-            </div>
-
-            {/* Stats */}
-            <div className={`flex flex-wrap gap-8 sm:gap-10 pt-6 border-t ${border}`}>
-              {[
-                { value: "7", label: "Projects Built" },
-                { value: "3.86", label: "GPA" },
-                { value: "Jun '27", label: "Graduation" },
-              ].map(s => (
-                <div key={s.label}>
-                  <div className={`text-2xl font-black leading-none mb-1 ${dm ? "text-cyan-300" : "text-blue-600"}`}>
-                    {s.value}
-                  </div>
-                  <div className={`text-xs font-medium font-mono ${subtle}`}>{s.label}</div>
-                </div>
-              ))}
-            </div>
-          </FadeIn>
-
-          {/* Photo */}
-          <FadeIn delay={200} className="hidden md:flex lg:col-span-2 justify-center items-center">
-            <div className="relative">
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 blur-2xl opacity-20 scale-105" />
-              <div className="relative w-80 h-[420px] rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-2xl">
-                <img
-                  src="/nathan.webp"
-                  alt="Nathan Salman, Cybersecurity student at UW"
-                  className="w-full h-full object-cover object-top"
-                />
+      <main id="top">
+        {/* ── HERO ── */}
+        <header className="hero wrap">
+          <h1 className="hero-name">Nathan Salman</h1>
+          <div className="hero-grid">
+            <div className="hero-copy">
+              <p className="hero-intro">
+                I study Informatics at the University of Washington with a focus on cybersecurity, and I graduate in June 2027.
+                This past summer I interned on the security team at Velera, where I{" "}
+                <mark className="hl hl-1">wrote 15+ detection rules</mark> and triaged alerts every day.
+              </p>
+              <p className="hero-intro">
+                I'm <mark className="hl hl-2">looking for security roles</mark> that start in 2027.
+              </p>
+              <div className="hero-actions">
+                <a className="btn" href={`mailto:${LINKS.email}`}>Email me</a>
+                <a className="text-link" href={LINKS.resume} target="_blank" rel="noreferrer">Resume</a>
+                <a className="text-link" href={LINKS.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
+                <a className="text-link" href={LINKS.github} target="_blank" rel="noreferrer">GitHub</a>
               </div>
             </div>
-          </FadeIn>
+            <figure className="hero-photo">
+              <img src="/nathan.webp" alt="Nathan Salman" width="800" height="1200" />
+            </figure>
           </div>
-        </div>
+        </header>
 
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-scroll-bounce">
-          <ChevronDown size={20} className={subtle} />
-        </div>
-      </section>
+        {/* ── PROJECTS ── */}
+        <section id="projects" className="section wrap" aria-labelledby="projects-h">
+          <div className="section-head">
+            <h2 id="projects-h">Projects</h2>
+            <p>A capstone, some class projects, and a couple of things I built on my own. Each one has a full write-up.</p>
+          </div>
 
-      {/* ── ABOUT ── */}
-      <section id="about" className={`border-t ${border}`}>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-          <FadeIn>
-            <SectionLabel text="Background" dm={dm} />
-            <h2 className="text-4xl font-bold mb-12">About Me</h2>
-            <div className="grid lg:grid-cols-5 gap-12 lg:gap-16">
-              <div className={`lg:col-span-3 space-y-5 text-base leading-relaxed ${muted}`}>
-                <p>
-                  I'm studying Informatics at the University of Washington with a specialization in cybersecurity, graduating in June 2027. I'm really interested in where security engineering meets automation, so I love building tools that help teams move fast without compromising on security.
-                </p>
-                <p>
-                  During my information security internship at Velera, I built 15+ detection rules in Rapid7 InsightIDR, triaged alerts across SIEM, EDR, and email security tools, and mapped detections to MITRE ATT&CK. I also completed a Microsoft-sponsored compliance capstone that achieved 80% accuracy in automated gap detection and cut manual review time by weeks per regulation.
-                </p>
-                <p>
-                  Outside of security, you'll usually find me on the tennis court. I love playing with friends and competing in my local USTA league. When I'm not playing sports, I enjoy getting creative in the kitchen and learning new recipes.
-                </p>
-              </div>
-
-              <div className="lg:col-span-2 space-y-4">
-                <div className={`p-5 rounded-2xl border transition-all ${card}`}>
-                  <div className="text-xs font-bold text-blue-400 uppercase tracking-[0.18em] mb-4 font-mono">Education</div>
-                  <div className="font-semibold">B.S. Informatics — Cybersecurity</div>
-                  <div className={`text-sm mt-1 ${muted}`}>University of Washington</div>
-                  <div className="flex justify-between items-center mt-3">
-                    <span className="text-green-400 font-bold text-sm">GPA: 3.86</span>
-                    <span className={`text-xs font-mono ${subtle}`}>Expected Jun 2027</span>
-                  </div>
-                </div>
-
-                <div className={`p-5 rounded-2xl border transition-all ${card}`}>
-                  <div className="text-xs font-bold text-blue-400 uppercase tracking-[0.18em] mb-4 font-mono">Certifications</div>
-                  <div className="space-y-3.5">
-                    <div className={`flex items-center gap-3 p-3 rounded-xl border ${dm ? "bg-blue-500/10 border-blue-400/30" : "bg-blue-50 border-blue-200"}`}>
-                      <div className="w-12 h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center flex-shrink-0 overflow-hidden">
-                        <img src="/comptia-logo.svg" alt="CompTIA logo" className="w-10 h-auto" />
-                      </div>
-                      <div>
-                        <div className={`text-sm font-semibold ${dm ? "text-slate-100" : "text-slate-900"}`}>CompTIA Security+</div>
-                        <div className={`text-xs font-mono ${dm ? "text-blue-200" : "text-blue-700"}`}>Issued May 2026</div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-xl bg-green-500/12 border border-green-500/25 flex items-center justify-center flex-shrink-0">
-                        <CheckCircle size={14} className="text-green-400" />
-                      </div>
-                      <div>
-                        <div className={`text-sm font-medium ${dm ? "text-slate-300" : "text-slate-700"}`}>Cybersecurity Certificate</div>
-                        <div className={`text-xs font-mono ${subtle}`}>Purdue / Simplilearn · August 2025</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </FadeIn>
-        </div>
-      </section>
-
-      {/* ── PROJECTS ── */}
-      <section id="projects" className={`border-t ${border}`}>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-          <FadeIn>
-            <SectionLabel text="Work" dm={dm} />
-            <div className="flex flex-wrap justify-between items-end gap-4 mb-12">
-              <div>
-                <h2 className="text-4xl font-bold mb-2">Projects</h2>
-                <p className={`${muted}`}>Click any completed project to see a full technical breakdown.</p>
-              </div>
-            </div>
-          </FadeIn>
-
-          {/* All projects — uniform grid */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {PROJECTS.map((p, i) => (
-              <FadeIn key={p.id} delay={i * 80}>
-                <div
-                  onClick={() => !p.noPage && setCurrentPage(p.id)}
-                  className={`group p-6 rounded-2xl border transition-all h-full ${
-                    !p.noPage ? "cursor-pointer hover:scale-[1.02] hover:shadow-2xl" : "cursor-default"
-                  } ${
-                    dm
-                      ? `bg-slate-900/60 border-slate-800 ${!p.noPage ? "hover:border-blue-500/40 hover:shadow-blue-500/5" : ""}`
-                      : `bg-white border-slate-200 shadow-sm ${!p.noPage ? "hover:border-blue-300 hover:shadow-blue-50" : ""}`
-                  }`}
-                >
-                  <div className={`inline-flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br ${p.color} text-white mb-5 shadow-md`}>
-                    {p.icon}
-                  </div>
-
-                  <div className="flex flex-wrap justify-between items-start gap-2 mb-3">
-                    <div className="flex flex-wrap gap-1.5">
-                      <span className={`text-xs font-bold px-2.5 py-1 rounded-full font-mono ${
-                        p.status === "In Progress"
-                          ? "bg-blue-500/12 text-blue-400 border border-blue-500/20"
-                          : "bg-emerald-500/12 text-emerald-400 border border-emerald-500/20"
-                      }`}>
-                        {p.status === "In Progress" ? "● In Progress" : "✓ Completed"}
-                      </span>
-                      {p.microsoft && (
-                        <span className="text-xs font-bold px-2.5 py-1 rounded-full font-mono bg-purple-500/12 text-purple-400 border border-purple-500/20">
-                          🏢 Microsoft
-                        </span>
-                      )}
-                    </div>
-                    <span className={`text-xs font-mono ${subtle}`}>{p.period}</span>
-                  </div>
-
-                  <h3 className={`text-base font-bold mb-1 transition-colors ${!p.noPage ? "group-hover:text-blue-400" : ""}`}>
-                    {p.title}
-                  </h3>
-                  <p className={`text-xs font-medium mb-2.5 ${muted}`}>{p.role}</p>
-                  <p className={`text-xs leading-relaxed mb-4 ${muted}`}>{p.summary}</p>
-
-                  <div className="flex flex-wrap gap-1.5 mb-4">
-                    {p.tags.slice(0, 3).map(t => (
-                      <span key={t} className={`text-xs px-2 py-0.5 rounded-full font-mono ${
-                        dm ? "bg-slate-800 text-slate-400 border border-slate-700/50" : "bg-slate-100 text-slate-500"
-                      }`}>
-                        {t}
-                      </span>
-                    ))}
-                    {p.tags.length > 3 && <span className={`text-xs px-2 py-0.5 ${subtle}`}>+{p.tags.length - 3}</span>}
-                  </div>
-
-                  <div className="flex items-center justify-between mt-auto">
-                    {!p.noPage
-                      ? <button
-                          id={`project-${p.id}`}
-                          aria-label={`View case study: ${p.title}`}
-                          onClick={event => { event.stopPropagation(); setCurrentPage(p.id); }}
-                          className="flex items-center gap-1.5 text-xs font-semibold text-blue-400 group-hover:gap-2.5 transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-400"
-                        >
-                          View case study <ExternalLink size={12} />
-                        </button>
-                      : <div className="flex items-center gap-1.5 text-xs font-mono text-blue-400/60 italic">
-                          <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse flex-shrink-0" />
-                          In development
-                        </div>
-                    }
-                    {p.liveUrl && (
-                      <a
-                        href={p.liveUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        onClick={e => e.stopPropagation()}
-                        className={`flex items-center gap-1 text-xs font-mono px-2 py-1 rounded-lg transition-colors ${dm ? "text-slate-400 hover:text-slate-200 hover:bg-slate-800" : "text-slate-500 hover:text-slate-700 hover:bg-slate-100"}`}
-                      >
-                        <ExternalLink size={11} /> Live
-                      </a>
-                    )}
-                  </div>
-                </div>
-              </FadeIn>
+          <ol className="projects">
+            {PROJECTS.map((p) => (
+              <li key={p.id} className="project">
+                <button id={`project-${p.id}`} className="project-btn" onClick={() => setCurrentPage(p.id)}>
+                  <span className="project-when">
+                    {p.period}
+                    {p.status === "In Progress" && <span className="project-status">Still building</span>}
+                  </span>
+                  <span className="project-main">
+                    <span className="project-title"><span>{p.title}</span></span>
+                    <span className="project-role">
+                      {p.microsoft && <MicrosoftMark />}
+                      {p.role}
+                    </span>
+                    <span className="project-summary">{p.summary}</span>
+                    <span className="project-tags">{p.tags.join(", ")}</span>
+                  </span>
+                  <span className="project-cta">Read the write-up</span>
+                </button>
+                {p.liveUrl && (
+                  <a className="project-live text-link" href={p.liveUrl} target="_blank" rel="noreferrer">
+                    Live site <ArrowUpRight size={14} aria-hidden="true" />
+                  </a>
+                )}
+              </li>
             ))}
+          </ol>
+        </section>
+
+        {/* ── EXPERIENCE ── */}
+        <section id="experience" className="section wrap" aria-labelledby="experience-h">
+          <div className="section-head">
+            <h2 id="experience-h">Experience</h2>
           </div>
-        </div>
-      </section>
-
-      {/* ── EXPERIENCE ── */}
-      <section id="experience" className={`border-t ${border}`}>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-          <FadeIn>
-            <SectionLabel text="Career" dm={dm} />
-            <h2 className="text-4xl font-bold mb-12">Experience</h2>
-
-            <div className="relative max-w-3xl">
-              <div className={`absolute left-0 top-3 bottom-0 w-px ${
-                dm
-                  ? "bg-gradient-to-b from-blue-500/50 via-blue-500/15 to-transparent"
-                  : "bg-gradient-to-b from-blue-400/40 via-blue-400/10 to-transparent"
-              }`} />
-
-              <div className="space-y-8">
-                {EXPERIENCE.map((job, i) => (
-                  <FadeIn key={i} delay={i * 100}>
-                    <div className="relative pl-10">
-                      <div className="absolute left-0 top-2 w-2 h-2 -translate-x-[3.5px] rounded-full bg-blue-500 ring-4 ring-blue-500/20" />
-                      <div className={`p-6 rounded-2xl border transition-all ${card}`}>
-                        <div className="flex flex-wrap justify-between items-start gap-3 mb-4">
-                          <div>
-                            <h3 className="font-bold text-base">{job.title}</h3>
-                            <p className="text-blue-400 font-semibold text-sm mt-0.5">
-                              {job.company}
-                              <span className={`font-normal text-sm ml-1 ${subtle}`}>· {job.location}</span>
-                            </p>
-                          </div>
-                          <div className="text-right flex-shrink-0">
-                            <div className={`text-xs font-mono mb-1.5 ${muted}`}>{job.period}</div>
-                            <span className={`text-xs px-2.5 py-1 rounded-full font-mono ${
-                              dm ? "bg-slate-800 text-slate-400 border border-slate-700" : "bg-slate-100 text-slate-500"
-                            }`}>{job.type}</span>
-                          </div>
-                        </div>
-                        <ul className="space-y-2.5">
-                          {job.bullets.map((b, j) => (
-                            <li key={j} className={`text-sm flex gap-3 leading-relaxed ${dm ? "text-slate-300" : "text-slate-600"}`}>
-                              <span className="text-blue-400 mt-2 flex-shrink-0 w-1 h-1 rounded-full bg-blue-400" />
-                              {b}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  </FadeIn>
-                ))}
-              </div>
-            </div>
-          </FadeIn>
-        </div>
-      </section>
-
-      {/* ── SKILLS ── */}
-      <section id="skills" className={`border-t ${border}`}>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-          <FadeIn>
-            <SectionLabel text="Expertise" dm={dm} />
-            <h2 className="text-4xl font-bold mb-12">Skills & Tools</h2>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {SKILLS_DATA.map((group, i) => (
-                <FadeIn key={group.category} delay={i * 80}>
-                  <div className={`p-6 rounded-2xl border h-full transition-all ${card}`}>
-                    <div className={`flex items-center gap-2.5 mb-5 ${group.color}`}>
-                      {group.icon}
-                      <span className="font-bold text-xs uppercase tracking-[0.18em] font-mono">{group.category}</span>
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      {group.items.map(skill => (
-                        <span
-                          key={skill}
-                          className={`text-xs px-3 py-1.5 rounded-lg border font-mono cursor-default transition-colors ${
-                            dm
-                              ? "bg-slate-800/70 border-slate-700/60 text-slate-300 hover:border-slate-600 hover:bg-slate-800"
-                              : "bg-slate-50 border-slate-200 text-slate-600 hover:bg-white hover:border-slate-300"
-                          }`}
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </FadeIn>
-              ))}
-            </div>
-          </FadeIn>
-        </div>
-      </section>
-
-      {/* ── CONTACT ── */}
-      <section id="contact" className={`border-t ${border}`}>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-          <FadeIn>
-            <SectionLabel text="Contact" dm={dm} />
-            <div className="grid lg:grid-cols-2 gap-16 lg:gap-20">
-              <div>
-                <h2 className="text-4xl font-bold mb-4">Let's Connect</h2>
-                <p className={`text-base leading-relaxed mb-10 max-w-md ${muted}`}>
-                  I'm actively looking for cybersecurity internship and full-time opportunities starting Summer/Fall 2027. Whether you have a role, a project, or just want to connect, my inbox is always open.
-                </p>
-                <div className="space-y-3">
-                  {[
-                    { icon: <Mail size={18} />, label: "Email", value: "nathansalman10@gmail.com", href: "mailto:nathansalman10@gmail.com" },
-                    { icon: <Linkedin size={18} />, label: "LinkedIn", value: "/in/nathan-e-salman", href: "https://www.linkedin.com/in/nathan-e-salman" },
-                    { icon: <Github size={18} />, label: "GitHub", value: "github.com/NateSal10", href: "https://github.com/NateSal10" },
-                  ].map(c => (
-                    <a
-                      key={c.label}
-                      href={c.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      className={`flex items-center gap-4 p-4 rounded-xl border transition-all group hover:border-blue-400/50 ${card}`}
-                    >
-                      <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:bg-blue-500/15 transition-colors flex-shrink-0">
-                        {c.icon}
-                      </div>
-                      <div className="min-w-0">
-                        <div className={`text-xs font-bold uppercase tracking-[0.18em] font-mono mb-0.5 ${subtle}`}>{c.label}</div>
-                        <div className={`text-sm font-medium truncate ${dm ? "text-slate-200" : "text-slate-700"}`}>{c.value}</div>
-                      </div>
-                      <ExternalLink size={14} className={`ml-auto flex-shrink-0 ${subtle} group-hover:text-blue-400 transition-colors`} />
-                    </a>
-                  ))}
+          <ol className="jobs">
+            {EXPERIENCE.map((job) => (
+              <li key={job.company + job.title} className="job">
+                <div className="job-when">
+                  {job.period}
+                  <span>{job.type}</span>
                 </div>
-              </div>
+                <div>
+                  <h3 className="job-title">{job.title}, {job.company}</h3>
+                  <p className="job-where">{job.location}</p>
+                  <ul className="job-bullets">
+                    {job.bullets.map((b) => <li key={b}>{b}</li>)}
+                  </ul>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
 
-              <div className={`p-8 rounded-2xl border ${dm ? "bg-slate-900/60 border-slate-800" : "bg-white border-slate-200 shadow-sm"}`}>
-                <h3 className="font-bold text-lg mb-6">Send a Message</h3>
-                <ContactForm dm={dm} />
-              </div>
+        {/* ── ABOUT ── */}
+        <section id="about" className="section wrap" aria-labelledby="about-h">
+          <div className="section-head">
+            <h2 id="about-h">About</h2>
+          </div>
+          <div className="about-grid">
+            <div className="about-copy">
+              <p>
+                My first tech job was at the front desk of Mill Creek Tennis Club, where I ended up handling the club's IT and rebuilding its website.
+                Now I study Informatics at UW with a focus on cybersecurity.
+              </p>
+              <p>
+                I'm most interested in where security meets automation: detection rules, compliance tooling, and anything that takes repetitive work off a security team's plate.
+                At Velera that meant writing rules in Rapid7. In my capstone it meant getting an AI agent to turn regulations into Azure DevOps tickets.
+              </p>
+              <p>
+                Away from a keyboard I'm usually on a tennis court, either with friends or in my local USTA league.
+                I also strung more than 1,500 rackets at Avanti Sports, so I have opinions about string tension.
+                When I'm not playing, I like cooking and trying new recipes.
+              </p>
             </div>
-          </FadeIn>
-        </div>
-      </section>
 
-      {/* ── FOOTER ── */}
-      <footer className={`border-t ${border}`}>
-        <div className={`max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm ${muted}`}>
-          <span className="font-mono text-xs">© 2026 Nathan Salman. All rights reserved.</span>
-          <div className="flex items-center gap-5">
-            <a href="mailto:nathansalman10@gmail.com" className="hover:text-blue-400 transition-colors" aria-label="Email">
-              <Mail size={16} />
-            </a>
-            <a href="https://www.linkedin.com/in/nathan-e-salman" target="_blank" rel="noreferrer" className="hover:text-blue-400 transition-colors" aria-label="LinkedIn">
-              <Linkedin size={16} />
-            </a>
-            <a href="https://github.com/NateSal10" target="_blank" rel="noreferrer" className="hover:text-blue-400 transition-colors" aria-label="GitHub">
-              <Github size={16} />
-            </a>
+            <dl className="facts">
+              <div>
+                <dt>School</dt>
+                <dd>
+                  B.S. in Informatics, cybersecurity track
+                  <span>University of Washington, graduating June 2027, 3.86 GPA</span>
+                </dd>
+              </div>
+              <div>
+                <dt>Certifications</dt>
+                <dd className="cert">
+                  <img src="/comptia-logo.svg" alt="" width="40" height="20" />
+                  <span className="cert-text">
+                    CompTIA Security+
+                    <span>Earned May 2026</span>
+                  </span>
+                </dd>
+                <dd>
+                  Cybersecurity Certificate
+                  <span>Purdue University and Simplilearn, August 2025</span>
+                </dd>
+              </div>
+            </dl>
           </div>
-          <div className="font-mono text-xs">
-            Built with React & Tailwind
+
+          <h3 className="tools-head">Tools and skills</h3>
+          <dl className="tools">
+            {SKILLS_DATA.map((group) => (
+              <div key={group.category}>
+                <dt>{group.category}</dt>
+                <dd>{group.items.join(", ")}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+
+        {/* ── CONTACT ── */}
+        <section id="contact" className="section wrap contact" aria-labelledby="contact-h">
+          <div className="contact-lead">
+            <h2 id="contact-h">Get in touch</h2>
+            <p>
+              If you're hiring for a security role in 2027, or you just want to talk about detection engineering or tennis, email me.
+            </p>
+            <a className="contact-email" href={`mailto:${LINKS.email}`}><span>{LINKS.email}</span></a>
+            <p className="contact-elsewhere">
+              Or find me on <a className="text-link" href={LINKS.linkedin} target="_blank" rel="noreferrer">LinkedIn</a> and{" "}
+              <a className="text-link" href={LINKS.github} target="_blank" rel="noreferrer">GitHub</a>.
+            </p>
           </div>
-        </div>
+          <div className="contact-form-wrap">
+            <h3>Or send a message here</h3>
+            <ContactForm />
+          </div>
+        </section>
+      </main>
+
+      <footer className="footer wrap">
+        <span>Nathan Salman, Seattle</span>
+        <span>© 2026</span>
       </footer>
     </div>
   );

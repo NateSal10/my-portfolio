@@ -2,27 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer utilities {
-  .dot-grid {
-    background-image: radial-gradient(rgba(100, 116, 139, 0.2) 1px, transparent 1px);
-    background-size: 24px 24px;
-  }
-}
-
-.scroll-progress {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 3px;
-  background: linear-gradient(to right, #3b82f6, #22d3ee);
-  z-index: 100;
-  transition: width 0.1s ease-out;
-}
-
 html {
   scroll-behavior: smooth;
+  background: #f5f6f2;
+}
+html[data-theme="dark"] {
+  background: #131a2a;
+  color-scheme: dark;
 }
 
-::selection {
-  background-color: rgba(59, 130, 246, 0.3);
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
 }
